@@ -2,7 +2,7 @@ import { PAGE_SIZE } from "../constants";
 import fetcher from "./fetcher";
 
 export const userApi = {
-  
+
   login: async (data) => {
     try {
       const response = await fetcher.post(

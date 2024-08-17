@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { AdminLayout } from "../layouts/AdminLayout";
 import { AuthLayout } from "../layouts/AuthLayout";
+import { UserLayout } from "../layouts/UserLayout";
 import { CinemaManagement } from "../modules/Admin/CinemaManagement";
 import { UserManagement } from "../modules/Admin/UserManagement";
 import { LoginPage } from "../modules/Auth/Login";
@@ -57,7 +58,10 @@ const useRouteElement = () => {
     // Home
     {
       path: PATH.HOME,
-      element: <HomePage />,
+      element:
+        <UserLayout>
+          <HomePage />
+        </UserLayout>,
     },
     // Auth
     {
