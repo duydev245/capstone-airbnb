@@ -1,11 +1,14 @@
 
 
-import Banner from "./Banner"
+import React from 'react'
+import ListLocations from './ListLocations'
+import ListPopularLocations from './ListPopularLocations'
 
 const Home = () => {
   return (
     <>
-      <Banner />
+      <ListLocations />
+      <ListPopularLocations/>
     </>
   )
 }
