@@ -1,8 +1,10 @@
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { AdminLayout } from "../layouts/AdminLayout";
 import { AuthLayout } from "../layouts/AuthLayout";
-import { CinemaManagement } from "../modules/Admin/CinemaManagement";
 import { UserManagement } from "../modules/Admin/UserManagement";
+import { LocationManagement } from "../modules/Admin/LocationManagement"
+import { RoomManagement } from "../modules/Admin/RoomManagement"
+import { BookingManagement } from "../modules/Admin/BookingManagement"
 import { LoginPage } from "../modules/Auth/Login";
 import { RegisterPage } from "../modules/Auth/Register";
 import { PATH } from "./path";
@@ -17,7 +19,7 @@ const RejectedRouter = () => {
     return <Outlet />;
   }
 
-  return currentUser.maLoaiNguoiDung === "Admin" ? (
+  return currentUser.role === "ADMIN" ? (
     <Navigate to={PATH.ADMIN} />
   ) : (
     <Navigate to={PATH.HOME} />
@@ -31,26 +33,26 @@ const ProtectedRouter = () => {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  return currentUser.maLoaiNguoiDung === "Admin" ? (
+  return currentUser.role === "ADMIN" ? (
     <Outlet />
   ) : (
     <Navigate to={PATH.HOME} />
   );
 };
 
-const ProtectedUserRouter = () => {
-  const { currentUser } = useSelector((state) => state.user);
+// const ProtectedUserRouter = () => {
+//   const { currentUser } = useSelector((state) => state.user);
 
-  if (currentUser === null) {
-    return <Navigate to={PATH.LOGIN} />;
-  }
+//   if (currentUser === null) {
+//     return <Navigate to={PATH.LOGIN} />;
+//   }
 
-  return currentUser.maLoaiNguoiDung === "USER" ? (
-    <Outlet />
-  ) : (
-    <Navigate to={PATH.HOME} />
-  );
-};
+//   return currentUser.role === "USER" ? (
+//     <Outlet />
+//   ) : (
+//     <Navigate to={PATH.HOME} />
+//   );
+// };
 
 const useRouteElement = () => {
   const routes = useRoutes([
@@ -61,9 +63,13 @@ const useRouteElement = () => {
     },
     // Auth
     {
-      path: "auth",
+      path: PATH.AUTH,
       element: <RejectedRouter />,
       children: [
+        {
+          index: true,
+          element: <Navigate to={PATH.LOGIN} />,
+        },
         {
           path: PATH.LOGIN,
           element: (
@@ -100,10 +106,26 @@ const useRouteElement = () => {
           ),
         },
         {
-          path: PATH.ADMIN_CINEMA,
+          path: PATH.ADMIN_LOCATION,
           element: (
             <AdminLayout>
-              <CinemaManagement />
+              <LocationManagement />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: PATH.ADMIN_ROOM,
+          element: (
+            <AdminLayout>
+              <RoomManagement />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: PATH.ADMIN_BOOKING,
+          element: (
+            <AdminLayout>
+              <BookingManagement />
             </AdminLayout>
           ),
         },
