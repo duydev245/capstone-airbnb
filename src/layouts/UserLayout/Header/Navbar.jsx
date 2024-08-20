@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-scroll';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -33,7 +33,7 @@ const Navbar = () => {
                 >
                     <div className='flex items-center gap-1'>
                         <img
-                            src="/public/logo.png"
+                            src="/logo.png"
                             className="h-9 cursor-pointer"
                             alt="Airbnb Logo"
                         />
@@ -86,7 +86,7 @@ const Navbar = () => {
                         <li>
                             <Link
                                 style={{ transition: '0.5s' }}
-                                to="auth/login"
+                                to="/auth/login"
                                 className="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-blue-600 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600 no-underline cursor-pointer"
                                 aria-current="page"
                             >
