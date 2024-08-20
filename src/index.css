@@ -15,6 +15,34 @@
   --primaryColor: rgb(254, 107, 110);
 }
 
+/* HomePage */
+
+.navbar {
+  color: #FBF9F1;
+  transition: 0.8s ease;
+}
+
+.navbar-scroll {
+  color: black;
+  transition: 0.8s ease;
+}
+
+.seachbar {
+  top: 650px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.hover-img {
+  transition: transform 0.3s ease-in-out;
+  /* Tạo hiệu ứng mượt mà khi tăng kích thước */
+}
+
+.hover-img:hover {
+  transform: scale(1.05);
+  /* Tăng kích thước ảnh lên 10% khi hover */
+}
+
 .authLayout {
   width: 100vw;
   height: 100vh;
