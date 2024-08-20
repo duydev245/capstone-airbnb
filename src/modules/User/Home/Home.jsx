@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
       <ListLocations />
-      <ListPopularLocations/>
+      <ListPopularLocations />
     </>
   )
 }

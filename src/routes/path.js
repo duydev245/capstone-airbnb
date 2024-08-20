@@ -9,5 +9,8 @@ export const PATH = {
   // ADMIN
   ADMIN: "/admin",
   ADMIN_USER: "/admin/user",
-  ADMIN_CINEMA: "/admin/cinema",
+  ADMIN_LOCATION: "/admin/location",
+  ADMIN_ROOM: "/admin/room",
+  ADMIN_BOOKING: "/admin/booking",
+
 };

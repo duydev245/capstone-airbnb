@@ -32,7 +32,7 @@ export const userApi = {
   getListUser: async () => {
     try {
       const response = await fetcher.get(
-        ``
+        `/users`
       );
       return response.data.content;
     } catch (error) {
@@ -51,18 +51,18 @@ export const userApi = {
   //   }
   // },
 
-  // addUser: async (payload: FormData) => {
-  //   try {
-  //     const response = await fetcher.post(
-  //       "/QuanLyNguoiDung/ThemNguoiDung",
-  //       payload
-  //     );
+  addUser: async (payload) => {
+    try {
+      const response = await fetcher.post(
+        "/users",
+        payload
+      );
 
-  //     return response.data.content;
-  //   } catch (error: any) {
-  //     throw Error(error.response.data.content);
-  //   }
-  // },
+      return response.data.content;
+    } catch (error) {
+      throw Error(error.response.data.content);
+    }
+  },
 
   // updateUser: async (payload: FormData) => {
   //   try {
@@ -77,14 +77,14 @@ export const userApi = {
   //   }
   // },
 
-  // deleteUser: async (idUser: string) => {
-  //   try {
-  //     const response = await fetcher.delete(
-  //       `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${idUser}`
-  //     );
-  //     return response.data.content;
-  //   } catch (error: any) {
-  //     throw Error(error.response.data.content);
-  //   }
-  // },
+  deleteUser: async (idUser) => {
+    try {
+      const response = await fetcher.delete(
+        `/users?id=${idUser}`
+      );
+      return response.data.content;
+    } catch (error) {
+      throw Error(error.response.data.content);
+    }
+  },
 };
