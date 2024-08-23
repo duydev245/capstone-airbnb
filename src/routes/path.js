@@ -12,5 +12,6 @@ export const PATH = {
   ADMIN_LOCATION: "/admin/location",
   ADMIN_ROOM: "/admin/room",
   ADMIN_BOOKING: "/admin/booking",
+  ADMIN_ACCOUNT_SETTINGS: "/admin/account-settings",
 
 };

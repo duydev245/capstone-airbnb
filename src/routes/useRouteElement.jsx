@@ -11,6 +11,7 @@ import { RegisterPage } from "../modules/Auth/Register";
 import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
+import { AccountSettings } from "../modules/Admin/AccountSettings";
 
 
 const RejectedRouter = () => {
@@ -130,6 +131,14 @@ const useRouteElement = () => {
           element: (
             <AdminLayout>
               <BookingManagement />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: PATH.ADMIN_ACCOUNT_SETTINGS,
+          element: (
+            <AdminLayout>
+              <AccountSettings />
             </AdminLayout>
           ),
         },

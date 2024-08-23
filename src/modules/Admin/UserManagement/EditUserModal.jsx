@@ -1,29 +1,27 @@
 import { Button, Col, Form, Input, Modal, Row, Select, Typography, Radio, DatePicker } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
+import { userApi } from "../../../apis/user.api";
+import { useQuery } from "@tanstack/react-query";
 
-
-const AddOrEditUserModal = ({
+const EditUserModal = ({
     isOpen,
     isPending,
     onCloseModal,
-    dataEdit,
     onSubmit,
+    idEdit
 }) => {
+
     const schema = yup.object({
         email: yup
             .string()
             .trim()
             .required("*Email không được bỏ trống !")
             .email("*Email không hợp lệ !"),
-        password: yup
-            .string()
-            .trim()
-            .required("*Mật khẩu không được bỏ trống !"),
+
         name: yup.string().trim().required("*Họ và tên không được bỏ trống !"),
         phone: yup
             .string()
@@ -50,8 +48,6 @@ const AddOrEditUserModal = ({
     } = useForm({
         defaultValues: {
             email: "",
-            password: "",
-            confirmPassword: "",
             name: "",
             phone: "",
             role: "",
@@ -62,17 +58,23 @@ const AddOrEditUserModal = ({
         criteriaMode: "all",
     });
 
+    const { data } = useQuery({
+        queryKey: ["info-user", idEdit],
+        queryFn: () => userApi.getInfoUser(idEdit),
+        enabled: !!idEdit,
+    });
+
     useEffect(() => {
-        if (dataEdit) {
-            setValue("email", dataEdit.email);
-            setValue("password", dataEdit.password);
-            setValue("name", dataEdit.name);
-            setValue("phone", dataEdit.phone);
-            setValue("birthday", dataEdit.birthday);
-            setValue("gender", dataEdit.gender);
-            setValue("role", dataEdit.maLoaiNguoiDung);
+        if (data) {
+            setValue("email", data.email);
+            setValue("password", data.password);
+            setValue("name", data.name);
+            setValue("phone", data.phone);
+            setValue("birthday", data.birthday);
+            setValue("gender", data.gender);
+            setValue("role", data.role);
         }
-    }, [dataEdit, setValue]);
+    }, [data, setValue]);
 
     useEffect(() => {
         if (!isOpen) {
@@ -85,7 +87,7 @@ const AddOrEditUserModal = ({
             open={isOpen}
             title={
                 <Typography className="text-2xl font-medium">
-                    {dataEdit ? "Edit user" : "Add user"}
+                    Edit user
                 </Typography>
             }
             centered
@@ -97,7 +99,10 @@ const AddOrEditUserModal = ({
                 <Row gutter={[48, 24]}>
                     {/* Email */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Email:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Email:
+                        </label>
                         {errors?.email && (
                             <>
                                 {" "}
@@ -123,38 +128,12 @@ const AddOrEditUserModal = ({
                             }}
                         />
                     </Col>
-                    {/* Mật khẩu */}
-                    <Col span={24}>
-                        <label className="text-base text-black">*Mật khẩu:</label>
-                        {errors?.password && (
-                            <span className="mt-1 text-base text-red-500">
-                                {" "}
-                                {errors.password.message}
-                            </span>
-                        )}
-                        <Controller
-                            name="password"
-                            control={control}
-                            render={({ field }) => {
-                                return (
-                                    <Input.Password
-                                        {...field}
-                                        type="password"
-                                        size="large"
-                                        className="mt-1"
-                                        placeholder="Vui lòng nhập mật khẩu..."
-                                        iconRender={(visible) =>
-                                            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                                        }
-                                        status={errors.password ? "error" : ""}
-                                    />
-                                );
-                            }}
-                        />
-                    </Col>
                     {/* Họ và tên */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Họ và tên:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Họ và tên:
+                        </label>
                         {errors?.name && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -180,7 +159,10 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Số điện thoại */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Số điện thoại:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Số điện thoại:
+                        </label>
                         {errors?.phone && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -206,7 +188,10 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Ngày Sinh Nhật */}
                     <Col span={12}>
-                        <label className="block text-base text-black">*Ngày Sinh Nhật:</label>
+                        <label className="block text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Ngày Sinh Nhật:
+                        </label>
                         {errors.birthday && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -221,12 +206,12 @@ const AddOrEditUserModal = ({
                                     {...field}
                                     size="large"
                                     className="mt-1 w-full"
-                                    placeholder="YYYY-MM-DD"
+                                    placeholder="DD/MM/YYYY"
                                     status={errors.birthday ? "error" : ""}
-                                    format={"YYYY-MM-DD"}
+                                    format={"DD/MM/YYYY"}
                                     value={field.value ? dayjs(field.value) : null}
                                     onChange={(date) =>
-                                        field.onChange(date ? date.format("YYYY-MM-DD") : null)
+                                        field.onChange(date ? date : null)
                                     }
                                 />
                             )}
@@ -234,7 +219,9 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Gender */}
                     <Col span={12}>
-                        <label className="block text-base text-black">*Giới Tính:</label>
+                        <label className="block text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Giới Tính:</label>
                         <Controller
                             name="gender"
                             control={control}
@@ -249,7 +236,8 @@ const AddOrEditUserModal = ({
                     {/* Role */}
                     <Col span={24}>
                         <label className="text-base block">
-                            *Loại người dùng
+                            <span className="text-red-600">* </span>
+                            Loại người dùng:
                         </label>
                         {errors.role && (
                             <span className="mt-1 text-base text-red-500">
@@ -263,7 +251,6 @@ const AddOrEditUserModal = ({
                             render={({ field }) => (
                                 <Select
                                     {...field}
-                                    disabled={!!dataEdit}
                                     className="mt-1"
                                     status={errors.role ? "error" : ""}
                                     style={{ width: `100%`, height: 45, display: "block" }}
@@ -287,13 +274,13 @@ const AddOrEditUserModal = ({
                             type="primary"
                             className="ml-3"
                         >
-                            {dataEdit ? "Edit user" : "Add user"}
+                            Update user
                         </Button>
                     </Col>
                 </Row>
             </Form>
         </Modal>
-    );
-};
+    )
+}
 
-export default AddOrEditUserModal;
+export default EditUserModal

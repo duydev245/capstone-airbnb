@@ -43,6 +43,7 @@ const Login = () => {
     mutationFn: (payload) => userApi.login(payload),
     onSuccess: (data) => {
       setLocalStorage("user", data?.user);
+      setLocalStorage("token", data?.token);
       dispatch(setUser(data?.user));
     },
     onError: (error) => {
