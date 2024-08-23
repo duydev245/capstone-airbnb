@@ -1,7 +1,7 @@
 
 
 import { useQuery } from '@tanstack/react-query'
-import { Button, Col, Row, Select } from 'antd'
+import { Col, Row, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { locationApi } from '../../../apis/location.api'
 import { DatePicker } from 'antd';
@@ -12,20 +12,22 @@ import { setLocation } from '../../../redux/slices/location.slice';
 
 const SeachBar = () => {
 
+    const guestOption = [
+        { option: "1 khách", value: "1" },
+        { option: "2 khách", value: "2" },
+        { option: "từ 3 đến 5 khách", value: "3" },
+    ];
+
     const [locationSelected, setLocationSelected] = useState('')
-    console.log('locationSelected: ', locationSelected);
+
+    const [optionSelected, setOptionSelected] = useState('')
 
     const dispatch = useDispatch()
 
-    const { data, isLoading, error } = useQuery({
+    const { data: listLocation, isLoading, error } = useQuery({
         queryKey: ['list-location'],
         queryFn: () => locationApi.getLocation(),
     });
-    console.log("location", data)
-
-    const handleOnSelect = (event) => {
-        setLocationSelected(event)
-    }
 
     //DatePick
     dayjs.extend(customParseFormat);
@@ -42,19 +44,31 @@ const SeachBar = () => {
         return current && current < dayjs().endOf('day');
     };
 
+    const handleOnSelect = (event) => {
+
+        const currentLocation = listLocation.find(location => location.tinhThanh === event);
+
+        if (currentLocation) {
+            if (currentLocation.tinhThanh === event) {
+                setLocationSelected(currentLocation.tinhThanh);
+            }
+        } else {
+            setOptionSelected(event);
+        }
+    }
+
     useEffect(() => {
-        dispatch(setLocation(data))
-    }, [data])
+        dispatch(setLocation(listLocation))
+    }, [listLocation, locationSelected, optionSelected])
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Something went wrong</div>;
-    if (!data) return ''
+    if (!listLocation) return ''
 
     return (
-        <Row gutter={24} style={{ margin: 'auto' }} className=" container mx-auto absolute seachbar border-2 shadow-xl border-gray-300 bg-white md:rounded-lg w-full">
+        <Row gutter={24} style={{ margin: 'auto' }} className=" max-w-screen-xl mx-auto absolute seachbar border-2 shadow-xl border-gray-300 bg-white md:rounded-lg w-full">
             <Col span={8} className="col-span-4 flex-1 px-6 py-3 flex flex-col justify-center items-center cursor-pointer">
                 <Select
-                    showSearch
                     onSelect={handleOnSelect}
                     className="h-[50px]"
                     style={{ width: 300 }}
@@ -64,7 +78,7 @@ const SeachBar = () => {
                         (option?.children ?? '').toLowerCase().includes(input.toLowerCase())
                     }
                 >
-                    {data.map((location) => (
+                    {listLocation.map((location) => (
                         <Select.Option key={location.id} value={location.tinhThanh}>
                             <div className={`flex gap-3 justify-start items-center hover:text-orange-600 ${locationSelected === location.tinhThanh ? 'text-orange-600 bg-[#D1E9F6]' : ''}`}>
                                 <img width={40} className=' h-[40px] rounded-md object-cover' src={location.hinhAnh} alt="img-tinhthanh" />
@@ -80,31 +94,21 @@ const SeachBar = () => {
 
             <Col span={8} className=" flex-1 p-3 flex justify-center items-center gap-3">
                 <Select
+                    onSelect={handleOnSelect}
                     className=' h-[50px]'
                     style={{
                         width: 300,
                     }}
                     placeholder={<span className="font-semibold">Số người ?</span>}
-                    options={[
-                        {
-                            value: '1',
-                            label: '1 người',
-                        },
-                        {
-                            value: '2',
-                            label: '2 người',
-                        },
-                        {
-                            value: '3',
-                            label: 'nhóm từ 3 tới 5 người',
-                        },
-                        {
-                            value: '5',
-                            label: 'nhóm từ 5 tới 10 người',
-                        },
-                    ]}
+                    options={guestOption.map(option => ({
+                        value: option.value,
+                        label:
+                            <div className={`flex gap-3 justify-start items-center hover:text-orange-600 ${optionSelected === option.value ? 'text-orange-600 bg-[#D1E9F6]' : ''}`}>
+                                <p className='text-lg font-mono'>{option.option}</p>
+                            </div>,
+                    }))}
                 />
-                <button style={{ transition: "0.5s" }} className=' text-white bg-orange-600 hover:bg-orange-800 p-1 h-[50px] rounded-md font-semibold'>Tìm phòng</button>
+                <button className='button-gradient text-white p-1 h-[50px] rounded-md font-semibold'>Tìm phòng</button>
             </Col>
 
         </Row>

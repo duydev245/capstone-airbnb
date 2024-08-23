@@ -15,18 +15,18 @@ const ListPopularLocations = () => {
     ]
 
     return (
-        <div className='container mx-auto my-16'>
+        <div className='max-w-screen-xl mx-auto my-8'>
             <Typography className=' text-2xl font-bold'>Ở bất cứ đâu</Typography>
             <Typography className=' text-md font-md'>Từ biệt thự, lâu đài cho đến nhà thuyền, chúng tôi đều có hết</Typography>
             <Row gutter={24} className='mt-5' >
                 {data.map((item, index) => (
                     <Col span={6} key={index}>
                         <Card
-                            className='p-3'
+                            className='hover-card hover-box-shadow p-3'
                             hoverable
-                            cover={<img className='hover-img h-[350px] object-cover ' alt="example" src={item.img} />}
+                            cover={<img className='hover-img object-cover ' alt="example" src={item.img} />}
                         >
-                            <Typography className='text-lg font-semibold'>{item.title}</Typography>
+                            <Typography className='title-changes-color text-lg font-semibold'>{item.title}</Typography>
                         </Card>
                     </Col>
                 ))}

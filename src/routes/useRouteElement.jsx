@@ -11,6 +11,7 @@ import { RegisterPage } from "../modules/Auth/Register";
 import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
+import { RoomsPage } from "../modules/User/ListRooms";
 
 
 const RejectedRouter = () => {
@@ -64,6 +65,14 @@ const useRouteElement = () => {
         <UserLayout>
           <HomePage />
         </UserLayout>,
+    },
+    //RoomsPage
+    {
+      path: PATH.ROOMS,
+      element:
+        <UserLayout>
+          <RoomsPage />
+        </UserLayout>
     },
     // Auth
     {

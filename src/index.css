@@ -8,7 +8,7 @@
   outline: 0;
   box-sizing: border-box;
   max-width: 100vw;
-  max-height: 100vh;
+  /* max-height: 100vh; */
 }
 
 :root {
@@ -33,15 +33,54 @@
   transform: translateX(-50%);
 }
 
+.button-gradient1 {
+  background-size: 300%;
+  transition: 0.5s ease;
+  background-image: linear-gradient(135deg, #ea580c 200%, #F7CE68 10%, #be3434 80%);
+}
+
+.button-gradient {
+  background-size: 300%;
+  transition: 0.5s ease;
+  background-image: linear-gradient(135deg, #ea580c 10%, #F7CE68 55%, #be3434 100%);
+}
+
+.button-gradient:hover {
+  background-position: right;
+}
+
 .hover-img {
   transition: transform 0.3s ease-in-out;
-  /* Tạo hiệu ứng mượt mà khi tăng kích thước */
 }
 
 .hover-img:hover {
   transform: scale(1.05);
-  /* Tăng kích thước ảnh lên 10% khi hover */
 }
+
+.title-changes-color {
+  transition: 0.3s;
+}
+
+.hover-card:hover .title-changes-color {
+  color: #ea580c;
+}
+
+.hover-box-shadow {
+  transition: 0.3s;
+}
+
+.hover-box-shadow:hover {
+  box-shadow: 0px 0px 20px 0px rgb(234, 88, 12, 0.50);
+}
+
+/* ImgRooms */
+.img-position {
+  transform: translateX(0);
+  object-fit: cover;
+  object-position: 0% center;
+}
+
+/* AuthLayout */
 
 .authLayout {
   width: 100vw;
