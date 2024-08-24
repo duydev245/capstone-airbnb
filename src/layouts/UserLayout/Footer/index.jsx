@@ -4,7 +4,7 @@ import React from 'react'
 
 const Footer = () => {
     return (
-        <footer className="bg-[#FCE9F1] rounded-lg shadow  m-4 pb-3">
+        <footer className="bg-[#FCE9F1] rounded-lg shadow pb-10">
             <div className="max-w-screen-xl mx-auto md:py-8">
                 <div className="sm:flex sm:justify-between">
                     <div className="space-y-3"><h2 className="font-bold uppercase">Giới thiệu</h2><ul className="text-sm space-y-3"><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Phương thức hoạt động của Airbnb</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Trang tin tức</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Nhà đầu tư</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Airbnb Plus</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Airbnb Luxe</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">HotelTonight</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Airbnb for Work</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Nhờ có Host, mọi điều đều có thể</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Cơ hội nghề nghiệp</a></li><li><a href="https://www.airbnb.com" target="blank" className="cursor-pointer hover:underline">Thư của nhà sáng lập</a></li></ul></div>

@@ -78,7 +78,6 @@ const ListRooms = () => {
                         <Card
                             key={room.id}
                             className='hover-card hover-box-shadow mt-5'
-                            hoverable
                         >
                             <Row gutter={24} className='h-[200px]'>
                                 <Col span={9} className='flex justify-center'>

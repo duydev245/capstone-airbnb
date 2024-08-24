@@ -23,21 +23,21 @@ const Navbar = () => {
 
     return (
         <nav
-            style={{ backgroundColor: `${!scroll ? 'transparent' : '#FAF3F0'} `, transition: "1.5s" }}
+            style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1.5s" }}
             className="border-gray-200 dark:border-gray-700 z-10 w-full fixed shadow-xl"
         >
             <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-0 h-16 ">
                 <Link
                     to="/"
-                    className="flex items-center space-x-3 rtl:space-x-reverse"
+                    className="space-x-3 rtl:space-x-reverse w-[185px]"
                 >
-                    <div className='flex items-center gap-1'>
+                    <div className='flex items-center justify-between w-full'>
                         <img
                             src="/public/logo.png"
-                            className="h-9 cursor-pointer"
+                            className="cursor-pointer h-9 "
                             alt="Airbnb Logo"
                         />
-                        <span className='text-2xl font-semibold text-orange-600 hover:text-red-600 cursor-pointer'>AirBnb</span>
+                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-red-600 cursor-pointer'>AirBnb</span>
                     </div>
                 </Link>
                 {/* <button
@@ -81,22 +81,22 @@ const Navbar = () => {
                     </ul>
 
                 </div>
-                <div>
-                    <ul className="list-none flex justify-center items-center">
-                        <li>
+                <div className='w-[185px]'>
+                    <ul className="list-none flex justify-center w-full ">
+                        <li className='w-1/2'>
                             <Link
                                 to="auth/login"
-                                className="button-gradient block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng nhập
                             </Link>
                         </li>
-                        <span className="text-xl mx-1 text-gray-500">|</span>
-                        <li>
+                        <span className="text-xl text-gray-500">|</span>
+                        <li className='w-1/2'>
                             <Link
                                 to="/auth/register"
-                                className="block button-gradient py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng ký
@@ -104,14 +104,15 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <ul className="list-none flex items-center">
-                        <li>
+                        {/* <li>
                             <Link
                                 className="no-underline block py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
-                                {/* <UserOutlined /> */}
+                                <UserOutlined />
                             </Link>
-                        </li>
+                        </li> */}
+
                         {/* <li>
                         <Button
                             className="mx- font-medium"

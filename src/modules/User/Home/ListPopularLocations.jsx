@@ -4,7 +4,6 @@ import React from 'react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Card, Col, Row, Typography } from 'antd';
-
 const ListPopularLocations = () => {
 
     const data = [
@@ -18,15 +17,15 @@ const ListPopularLocations = () => {
         <div className='max-w-screen-xl mx-auto my-8'>
             <Typography className=' text-2xl font-bold'>Ở bất cứ đâu</Typography>
             <Typography className=' text-md font-md'>Từ biệt thự, lâu đài cho đến nhà thuyền, chúng tôi đều có hết</Typography>
-            <Row gutter={24} className='mt-5' >
+            <Row gutter={24} className='mt-5 ' >
                 {data.map((item, index) => (
-                    <Col span={6} key={index}>
+                    <Col span={6} key={index} className='h-[380px]'>
                         <Card
-                            className='hover-card hover-box-shadow p-3'
-                            hoverable
-                            cover={<img className='hover-img object-cover ' alt="example" src={item.img} />}
+                            className='hover-card hover-box-shadow h-full cursor-pointer'
+                            cover={<img className='hover-img object-cover p-3' alt="example" src={item.img} />}
+                            size='small'
                         >
-                            <Typography className='title-changes-color text-lg font-semibold'>{item.title}</Typography>
+                            <Typography className='title-changes-color text-lg font-semibold '>{item.title}</Typography>
                         </Card>
                     </Col>
                 ))}

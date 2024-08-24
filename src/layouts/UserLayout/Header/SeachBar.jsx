@@ -32,20 +32,23 @@ const SeachBar = () => {
     //DatePick
     dayjs.extend(customParseFormat);
     const { RangePicker } = DatePicker;
-    const range = (start, end) => {
-        const result = [];
-        for (let i = start; i < end; i++) {
-            result.push(i);
-        }
-        return result;
-    };
+    // const range = (start, end) => {
+    //     const result = [];
+    //     for (let i = start; i < end; i++) {
+    //         result.push(i);
+    //     }
+    //     return result;
+    // };
 
     const disabledDate = (current) => {
         return current && current < dayjs().endOf('day');
     };
 
-    const handleOnSelect = (event) => {
+    const handleDateSelected = (dates, dateStrings) => {
+        console.log(" date selected", dateStrings);
+    }
 
+    const handleOnSelect = (event) => {
         const currentLocation = listLocation.find(location => location.tinhThanh === event);
 
         if (currentLocation) {
@@ -89,13 +92,19 @@ const SeachBar = () => {
                 </Select>
             </Col>
             <Col span={8} className='flex justify-center items-center'>
-                <RangePicker className='w-[300px] h-[50px] text-orange-600 font-semibold' placeholder={[`Ngày nhận phòng`, `Ngày trả phòng`]} disabledDate={disabledDate} />
+                <RangePicker
+                    format="DD/MM/YYYY"
+                    className='w-[300px] h-[50px] text-orange-600 font-semibold'
+                    placeholder={[`Ngày nhận phòng`, `Ngày trả phòng`]}
+                    disabledDate={disabledDate}
+                    onChange={handleDateSelected}
+                />
             </Col>
 
             <Col span={8} className=" flex-1 p-3 flex justify-center items-center gap-3">
                 <Select
                     onSelect={handleOnSelect}
-                    className=' h-[50px]'
+                    className='h-[50px]'
                     style={{
                         width: 300,
                     }}
