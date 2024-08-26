@@ -3,7 +3,7 @@
 import React from 'react'
 import Navbar from './Navbar'
 import Banner from './Banner'
-import SeachBar from './SeachBar'
+import SearchBar from './SearchBar'
 
 const Header = () => {
 
@@ -11,7 +11,7 @@ const Header = () => {
         <>
             <Navbar />
             <Banner />
-            <SeachBar />
+            <SearchBar />
         </>
     )
 }

@@ -1,6 +1,6 @@
 
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Col, Row, Typography } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBacon, faCar, faHandsBubbles, faHouseSignal, faKitchenSet, faSnowflake, faTv, faWaterLadder } from '@fortawesome/free-solid-svg-icons'
@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { roomApi } from '../../../apis/room.api'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import { getLocalStorage } from '../../../utils'
 
 
 
@@ -50,15 +51,34 @@ const ListRooms = () => {
 
     const { id } = useParams()
 
+    const seachParams = getLocalStorage("seachParams")
+    console.log('seachParams: ', seachParams);
+
     const listLocation = useSelector((state) => state.dataLocation.listLocation)
 
     const { data: roomsById, isLoading, error } = useQuery({
         queryKey: ['list-roomsbyid'],
         queryFn: () => roomApi.getRoomsById(id),
     });
+    console.log(roomsById)
 
     const currentLocation = listLocation?.find(location => location.id == id);
     const currentMap = currentLocation ? maps?.find(map => map.tenTinhThanh === currentLocation.tinhThanh) : null;
+
+    // const filterRooms = roomsById?.filter((room) => {
+    //     if (!seachParams) {
+    //         if (!seachParams.guest) {
+    //             return true; // Nếu không có seachParams, trả về tất cả các phòng
+    //         }
+    //     }
+    //     const guestCount = parseInt(seachParams.guest, 10);
+    //     return room.khach === guestCount
+    // });
+    // console.log('filterRooms: ', filterRooms);
+
+    useEffect(() => {
+
+    }, [listLocation, seachParams])
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Something went wrong</div>;
@@ -71,20 +91,20 @@ const ListRooms = () => {
                     {location.id == id ? `Danh sách phòng tại khu vực ${location.tenViTri}, ${location.tinhThanh}` : ``}
                 </Typography>
             ))}
-            <Typography className='text-md font-md'>Có {roomsById.length} phòng có thể đặt 23/08/2024 – 30/08/2024 </Typography>
+            <Typography className='text-md font-md'>Có {roomsById.length} phòng có thể đặt
+            </Typography>
             <Row gutter={24} className='mb-[100px] mt-5'>
                 <Col span={14} className=' overflow-auto h-[650px] pb-5'>
                     {roomsById.map((room) => (
                         <Card
                             key={room.id}
-                            className='hover-card hover-box-shadow mt-5'
+                            className="hover-card hover-box-shadow mt-5"
                         >
                             <Row gutter={24} className='h-[200px]'>
                                 <Col span={9} className='flex justify-center'>
                                     <img className='img-position h-full w-[290px] rounded-lg' alt="example" src={room.id === 232926 ? "https://shac.vn/wp-content/uploads/2019/05/y-tuong-trang-tri-noi-that-phong-ngu-hien-dai-doc-dao-theo-ca-tinh-cua-chu-nhan-can-phong.jpg" : room.hinhAnh}
                                     />
                                 </Col>
-
                                 <Col span={15} className='flex flex-col justify-between'>
                                     <Typography className='title-changes-color text-lg font-semibold'>{room.tenPhong}</Typography>
                                     <hr />
@@ -98,49 +118,49 @@ const ListRooms = () => {
                                     <ul className='grid grid-cols-3'>
                                         {room.tivi && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faTv} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faTv} />
                                                 <span>Tivi</span>
                                             </li>
                                         )}
                                         {room.wifi && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faHouseSignal} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faHouseSignal} />
                                                 <span>Wifi</span>
                                             </li>
                                         )}
                                         {room.dieuHoa && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faSnowflake} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faSnowflake} />
                                                 <span>Điều hòa</span>
                                             </li>
                                         )}
                                         {room.mayGiat && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faHandsBubbles} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faHandsBubbles} />
                                                 <span>Máy giặt</span>
                                             </li>
                                         )}
                                         {room.bep && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faKitchenSet} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faKitchenSet} />
                                                 <span>Bếp</span>
                                             </li>
                                         )}
                                         {room.banLa && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faBacon} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faBacon} />
                                                 <span>Bàn là</span>
                                             </li>
                                         )}
                                         {room.doXe && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faCar} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faCar} />
                                                 <span>Bãi đỗ xe</span>
                                             </li>
                                         )}
                                         {room.hoBoi && (
                                             <li className='inline-flex gap-1 items-center'>
-                                                <FontAwesomeIcon className='w-5' icon={faWaterLadder} />
+                                                <FontAwesomeIcon className='w-5 text-green-600' icon={faWaterLadder} />
                                                 <span>Hồ bơi</span>
                                             </li>
                                         )}
@@ -148,8 +168,15 @@ const ListRooms = () => {
                                     <Typography className='flex justify-end text-xl text-green-600'>{room.giaTien} $</Typography>
                                 </Col>
                             </Row>
-                        </Card>
-                    ))}
+                        </Card>))}
+                    {/* {filterRooms.length === 0 && (
+                        <Card
+                            className=" mt-5 flex justify-center text-center "
+                        >
+                            <Typography className=' text-xl text-red-500'>Danh sách trống!</Typography>
+                            <Typography className=' text-sm text-gray-400'>không có phòng dành cho 1 khách</Typography>
+                            <button className="button-gradient text-center py-2 px-3 mt-5 font-semibold rounded-md md:dark:text-white no-underline cursor-pointer">Xem tất cả phòng</button>
+                        </Card>)} */}
                 </Col>
                 <Col span={10} className='flex justify-center mt-5'>
                     {currentMap && (
@@ -163,8 +190,6 @@ const ListRooms = () => {
                         />
                     )}
                 </Col>
-
-
             </Row>
         </div>
     )
