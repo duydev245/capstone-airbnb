@@ -12,6 +12,8 @@ import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
 import { RoomsPage } from "../modules/User/ListRooms";
+import { AccountSettings } from "../modules/Admin/AccountSettings";
+import { RoomDetail } from "../modules/User/RoomDetail";
 
 
 const RejectedRouter = () => {
@@ -73,6 +75,13 @@ const useRouteElement = () => {
         <UserLayout>
           <RoomsPage />
         </UserLayout>
+    },
+    // Room details page
+    {
+      path: PATH.ROOM_DETAIL,
+      element: (
+        <RoomDetail />
+      ),
     },
     // Auth
     {
@@ -139,6 +148,14 @@ const useRouteElement = () => {
           element: (
             <AdminLayout>
               <BookingManagement />
+            </AdminLayout>
+          ),
+        },
+        {
+          path: PATH.ADMIN_ACCOUNT_SETTINGS,
+          element: (
+            <AdminLayout>
+              <AccountSettings />
             </AdminLayout>
           ),
         },

@@ -5,6 +5,7 @@ import {
   CalendarOutlined,
   PictureOutlined,
   HomeOutlined,
+  SettingOutlined
 } from "@ant-design/icons";
 import { Button, Layout, Menu, theme } from "antd";
 import React, { useEffect, useState } from "react";
@@ -31,6 +32,7 @@ const AdminLayout = ({ children }) => {
   const handleLogOut = () => {
     dispatch(removeUser(null));
     removeLocalStorage("user");
+    removeLocalStorage("token");
     window.location.reload();
   };
 
@@ -80,6 +82,11 @@ const AdminLayout = ({ children }) => {
                     key: PATH.ADMIN_LOCATION,
                     icon: <PictureOutlined />,
                     label: "Location Management",
+                  },
+                  {
+                    key: PATH.ADMIN_ACCOUNT_SETTINGS,
+                    icon: <SettingOutlined />,
+                    label: "Account Settings",
                   },
                 ]}
               />

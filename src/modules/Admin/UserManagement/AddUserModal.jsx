@@ -6,13 +6,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
 
-
-const AddOrEditUserModal = ({
+const AddUserModal = ({
     isOpen,
-    isPending,
     onCloseModal,
-    dataEdit,
     onSubmit,
+    isPending
 }) => {
     const schema = yup.object({
         email: yup
@@ -24,6 +22,11 @@ const AddOrEditUserModal = ({
             .string()
             .trim()
             .required("*Mật khẩu không được bỏ trống !"),
+        confirmPassword: yup
+            .string()
+            .trim()
+            .required("*Xác Nhận mật khẩu không được bỏ trống !")
+            .oneOf([yup.ref("password")], "Xác Nhận Mật Khẩu Sai"),
         name: yup.string().trim().required("*Họ và tên không được bỏ trống !"),
         phone: yup
             .string()
@@ -63,18 +66,6 @@ const AddOrEditUserModal = ({
     });
 
     useEffect(() => {
-        if (dataEdit) {
-            setValue("email", dataEdit.email);
-            setValue("password", dataEdit.password);
-            setValue("name", dataEdit.name);
-            setValue("phone", dataEdit.phone);
-            setValue("birthday", dataEdit.birthday);
-            setValue("gender", dataEdit.gender);
-            setValue("role", dataEdit.maLoaiNguoiDung);
-        }
-    }, [dataEdit, setValue]);
-
-    useEffect(() => {
         if (!isOpen) {
             reset();
         }
@@ -85,7 +76,7 @@ const AddOrEditUserModal = ({
             open={isOpen}
             title={
                 <Typography className="text-2xl font-medium">
-                    {dataEdit ? "Edit user" : "Add user"}
+                    Add user
                 </Typography>
             }
             centered
@@ -97,7 +88,10 @@ const AddOrEditUserModal = ({
                 <Row gutter={[48, 24]}>
                     {/* Email */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Email:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Email:
+                        </label>
                         {errors?.email && (
                             <>
                                 {" "}
@@ -125,7 +119,10 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Mật khẩu */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Mật khẩu:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Mật khẩu:
+                        </label>
                         {errors?.password && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -152,9 +149,45 @@ const AddOrEditUserModal = ({
                             }}
                         />
                     </Col>
+                    {/* Xác nhận mật khẩu */}
+                    <Col span={24}>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Xác nhận mật khẩu:
+                        </label>
+                        {errors?.confirmPassword && (
+                            <>
+                                {" "}
+                                <span className="mt-1 text-base text-red-500">
+                                    {errors.confirmPassword.message}
+                                </span>
+                            </>
+                        )}
+                        <Controller
+                            name="confirmPassword"
+                            control={control}
+                            render={({ field }) => {
+                                return (
+                                    <Input.Password
+                                        {...field}
+                                        size="large"
+                                        className="mt-1"
+                                        placeholder="Vui lòng nhập lại mật khẩu..."
+                                        iconRender={(visible) =>
+                                            visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                                        }
+                                        status={errors.confirmPassword ? "error" : ""}
+                                    />
+                                );
+                            }}
+                        />
+                    </Col>
                     {/* Họ và tên */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Họ và tên:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Họ và tên:
+                        </label>
                         {errors?.name && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -180,7 +213,10 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Số điện thoại */}
                     <Col span={24}>
-                        <label className="text-base text-black">*Số điện thoại:</label>
+                        <label className="text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Số điện thoại:
+                        </label>
                         {errors?.phone && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -206,7 +242,10 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Ngày Sinh Nhật */}
                     <Col span={12}>
-                        <label className="block text-base text-black">*Ngày Sinh Nhật:</label>
+                        <label className="block text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Ngày Sinh Nhật:
+                        </label>
                         {errors.birthday && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
@@ -221,12 +260,12 @@ const AddOrEditUserModal = ({
                                     {...field}
                                     size="large"
                                     className="mt-1 w-full"
-                                    placeholder="YYYY-MM-DD"
+                                    placeholder="DD/MM/YYYY"
                                     status={errors.birthday ? "error" : ""}
-                                    format={"YYYY-MM-DD"}
+                                    format={"DD/MM/YYYY"}
                                     value={field.value ? dayjs(field.value) : null}
                                     onChange={(date) =>
-                                        field.onChange(date ? date.format("YYYY-MM-DD") : null)
+                                        field.onChange(date ? date : null)
                                     }
                                 />
                             )}
@@ -234,7 +273,9 @@ const AddOrEditUserModal = ({
                     </Col>
                     {/* Gender */}
                     <Col span={12}>
-                        <label className="block text-base text-black">*Giới Tính:</label>
+                        <label className="block text-base text-black">
+                            <span className="text-red-600">* </span>
+                            Giới Tính:</label>
                         <Controller
                             name="gender"
                             control={control}
@@ -249,7 +290,8 @@ const AddOrEditUserModal = ({
                     {/* Role */}
                     <Col span={24}>
                         <label className="text-base block">
-                            *Loại người dùng
+                            <span className="text-red-600">* </span>
+                            Loại người dùng:
                         </label>
                         {errors.role && (
                             <span className="mt-1 text-base text-red-500">
@@ -263,7 +305,6 @@ const AddOrEditUserModal = ({
                             render={({ field }) => (
                                 <Select
                                     {...field}
-                                    disabled={!!dataEdit}
                                     className="mt-1"
                                     status={errors.role ? "error" : ""}
                                     style={{ width: `100%`, height: 45, display: "block" }}
@@ -287,13 +328,13 @@ const AddOrEditUserModal = ({
                             type="primary"
                             className="ml-3"
                         >
-                            {dataEdit ? "Edit user" : "Add user"}
+                            Add user
                         </Button>
                     </Col>
                 </Row>
             </Form>
         </Modal>
-    );
-};
+    )
+}
 
-export default AddOrEditUserModal;
+export default AddUserModal

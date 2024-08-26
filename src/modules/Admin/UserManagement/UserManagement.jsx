@@ -10,21 +10,24 @@ import {
 } from "antd";
 import {
   DeleteOutlined,
-  EditOutlined,
   UserAddOutlined,
+  EditOutlined
 } from "@ant-design/icons";
 import { useState } from "react";
 import { userApi } from "../../../apis/user.api";
 import { useOpenModal } from "../../../hooks/useOpenModal";
-import AddOrEditUserModal from "./AddOrEditUserModal";
+import dayjs from 'dayjs';
+import AddUserModal from "./AddUserModal";
+import EditUserModal from "./EditUserModal";
 
 const UserManagement = () => {
-  const [dataEdit, setDataEdit] = useState(undefined);
+  const [idEdit, setIdEdit] = useState(0);
 
   const [messageApi, contextHolder] = message.useMessage();
   const queryClient = useQueryClient();
 
-  const { isOpen, openModal, closeModal } = useOpenModal();
+  const { isOpen: isOpenAddModal, openModal: openAddModal, closeModal: closeAddModal } = useOpenModal();
+  const { isOpen: isOpenEditModal, openModal: openEditModal, closeModal: closeEditModal } = useOpenModal();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["list-user"],
@@ -35,13 +38,13 @@ const UserManagement = () => {
   const { mutate: handleAddUserApi, isPending: isCreating } = useMutation({
     mutationFn: (payload) => userApi.addUser(payload),
     onSuccess: (data) => {
-      console.log("🚀 ~ UserManagement ~ data:", data);
+      console.log("🚀 ~ Add User ~ data:", data)
       messageApi.open({
         content: "Thêm user thành công",
         type: "success",
         duration: 3,
       });
-      closeModal();
+      closeAddModal();
       queryClient.refetchQueries({
         queryKey: ["list-user"],
         type: "active",
@@ -58,30 +61,31 @@ const UserManagement = () => {
   });
 
   // Update User
-  // const { mutate: handleUpdateUserApi, isPending: isUpdating } = useMutation({
-  //   mutationFn: (payload: FormData) => userApi.updateUser(payload),
-  //   onSuccess: (data) => {
-  //     console.log("🚀 ~ UserManagement ~ data:", data);
-  //     messageApi.open({
-  //       content: "Update user thành công",
-  //       type: "success",
-  //       duration: 3,
-  //     });
-  //     closeModal();
-  //     queryClient.refetchQueries({
-  //       queryKey: ["list-user", { currentPage }],
-  //       type: "active",
-  //     });
-  //   },
-  //   onError: (error: any) => {
-  //     console.log("🚀 ~ UserManagement ~ error:", error?.message);
-  //     messageApi.open({
-  //       content: error?.message,
-  //       type: "error",
-  //       duration: 3,
-  //     });
-  //   },
-  // });
+  const { mutate: handleUpdateUserApi, isPending: isUpdating } = useMutation({
+    mutationFn: (payload) => userApi.updateUser(payload),
+    onSuccess: (data) => {
+      console.log("🚀 ~ Update User ~ data:", data);
+      messageApi.open({
+        content: "Update thông tin thành công",
+        type: "success",
+        duration: 3,
+      });
+      closeEditModal();
+      setIdEdit('');
+      queryClient.refetchQueries({
+        queryKey: ["list-user"],
+        type: "active",
+      });
+    },
+    onError: (error) => {
+      console.log("🚀 ~ UserManagement ~ error:", error?.message);
+      messageApi.open({
+        content: error?.message,
+        type: "error",
+        duration: 3,
+      });
+    },
+  });
 
   // Delete user
   const { mutate: handleDeleteUserApi, isPending: isDeleting } = useMutation({
@@ -140,6 +144,9 @@ const UserManagement = () => {
       title: "Birthday",
       key: "User-birthday",
       dataIndex: "birthday",
+      render: (date) => {
+        return <Typography>{dayjs(date).format('DD/MM/YYYY')}</Typography>;
+      },
     },
     // role
     {
@@ -161,13 +168,14 @@ const UserManagement = () => {
               type="primary"
               className="mr-2"
               onClick={() => {
-                setDataEdit(record);
-                openModal();
+                setIdEdit(record.id)
+                openEditModal();
               }}
-              loading={false}
+              loading={isUpdating}
             >
               <EditOutlined />
             </Button>
+
             <Popconfirm
               title="Delete user"
               description="Are you sure to delete this user?"
@@ -191,6 +199,7 @@ const UserManagement = () => {
 
   const handleSubmit = (values) => {
     const payload = {
+      id: idEdit ? idEdit : 0,
       email: values.email,
       password: values.password,
       name: values.name,
@@ -199,8 +208,7 @@ const UserManagement = () => {
       gender: values.gender,
       role: values.role,
     };
-    // dataEdit ? handleUpdateUserApi(formData) :
-    handleAddUserApi(payload);
+    idEdit ? handleUpdateUserApi(payload) : handleAddUserApi(payload);
   };
 
   if (!isLoading && error) {
@@ -228,8 +236,7 @@ const UserManagement = () => {
           size="large"
           type="primary"
           onClick={() => {
-            setDataEdit(undefined)
-            openModal();
+            openAddModal();
           }}
         >
           <UserAddOutlined />
@@ -245,14 +252,23 @@ const UserManagement = () => {
         loading={isLoading}
       />
 
-      <AddOrEditUserModal
-        key={dataEdit ? "edit" : "add"}
-        dataEdit={dataEdit}
-        isOpen={isOpen}
-        isPending={isCreating }
-        onCloseModal={closeModal}
+      <AddUserModal
+        key={"add"}
+        isOpen={isOpenAddModal}
+        isPending={isCreating}
+        onCloseModal={closeAddModal}
         onSubmit={handleSubmit}
       />
+
+      <EditUserModal
+        key={"edit"}
+        idEdit={idEdit}
+        isOpen={isOpenEditModal}
+        isPending={isUpdating}
+        onCloseModal={closeEditModal}
+        onSubmit={handleSubmit}
+      />
+
     </>
   );
 };

@@ -1,31 +1,47 @@
-import { useMutation } from "@tanstack/react-query";
-import { Col, DatePicker, Form, Input, Radio, Row, Typography, message, } from "antd";
-import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import {
+  Breadcrumb,
+  Button,
+  Col,
+  DatePicker,
+  Form,
+  Input,
+  message,
+  Radio,
+  Row,
+  Select,
+} from "antd";
+import {
+  EditOutlined,
+  EyeInvisibleOutlined,
+  EyeTwoTone,
+} from "@ant-design/icons";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
-import { userApi } from "../../../apis/user.api";
-import { useNavigate } from "react-router-dom";
-import { PATH } from "../../../routes/path";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { userApi } from "../../../apis/user.api";
 import dayjs from "dayjs";
 
-const Register = () => {
+
+const AccountSettings = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const queryClient = useQueryClient();
+
+  const { currentUser } = useSelector((state) => state.user);
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["info-user"],
+    queryFn: () => userApi.getInfoUser(currentUser.id),
+  });
+
   const schema = yup.object({
     email: yup
       .string()
       .trim()
       .required("*Email không được bỏ trống !")
       .email("*Email không hợp lệ !"),
-    password: yup
-      .string()
-      .trim()
-      .required("*Mật khẩu không được bỏ trống !"),
-    confirmPassword: yup
-      .string()
-      .trim()
-      .required("*Xác Nhận mật khẩu không được bỏ trống !")
-      .oneOf([yup.ref("password")], "Xác Nhận Mật Khẩu Sai"),
     name: yup.string().trim().required("*Họ và tên không được bỏ trống !"),
     phone: yup
       .string()
@@ -38,43 +54,48 @@ const Register = () => {
       .string()
       .nullable()
       .required("*Ngày Sinh Nhật không được bỏ trống ! "),
+    role: yup
+      .string()
+      .required("*Loại người dùng không được bỏ trống ! "),
   });
 
   const {
-    handleSubmit,
     control,
+    handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
-      name: "",
-      phone: "",
-      birthday: null,
-      gender: true,
+      email: data?.email || "",
+      name: data?.name || "",
+      phone: data?.phone || "",
+      role: data?.role || "",
+      birthday: data?.birthday || null,
+      gender: data?.gender,
     },
     resolver: yupResolver(schema),
     criteriaMode: "all",
   });
 
-  const [messageApi, contextHolder] = message.useMessage();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { mutate: handleRegister } = useMutation({
-    mutationFn: (payload) => userApi.register(payload),
-    onSuccess: () => {
+  // Update Info Api
+  const { mutate: handleUpdateUserApi, isPending } = useMutation({
+    mutationFn: (payload) => userApi.updateUser(payload),
+    onSuccess: (data) => {
+      console.log("🚀 ~ UserManagement ~ data:", data);
       messageApi.open({
-        content: "Đăng ký thành công",
+        content: "Update thông tin thành công",
         type: "success",
         duration: 3,
       });
-      navigate(PATH.LOGIN);
+      queryClient.refetchQueries({
+        queryKey: ["info-user"],
+        type: "active",
+      });
     },
     onError: (error) => {
+      console.log("🚀 ~ UserManagement ~ error:", error?.message);
       messageApi.open({
-        content: error.message,
+        content: error?.message,
         type: "error",
         duration: 3,
       });
@@ -83,32 +104,61 @@ const Register = () => {
 
   const onSubmit = (values) => {
     const payload = {
+      id: currentUser.id,
       email: values.email,
-      password: values.password,
       name: values.name,
       phone: values.phone,
       birthday: values.birthday,
       gender: values.gender,
-      role: "USER",
+      role: values.role,
     };
-    handleRegister(payload);
+    handleUpdateUserApi(payload);
   };
 
-  const { Title } = Typography;
-  return (
-    <div className="container">
-      {contextHolder}
-      <div className="mt-3 mb-3 text-center">
-        <Typography className="text-black">
-          <Title level={2}>Đăng ký tài khoản Airbnb</Title>
-        </Typography>
-      </div>
+  useEffect(() => {
+    if (data) {
+      const userData = data;
+      setValue("email", userData?.email);
+      setValue("name", userData?.name);
+      setValue("phone", userData?.phone);
+      setValue("birthday", userData?.birthday);
+      setValue("gender", userData?.gender);
+      setValue("role", userData?.role);
+    }
+  }, [data]);
 
-      <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
-        <Row gutter={[48, 16]}>
+  if (!isLoading && error) {
+    return <div>Something went wrong</div>;
+  }
+
+  return (
+    <>
+      {contextHolder}
+
+      <div className="flex items-center justify-between">
+        <Breadcrumb
+          separator=">"
+          items={[
+            {
+              title: "Dashboard",
+            },
+            {
+              title: "Account Settings",
+              href: "",
+            },
+          ]}
+        />
+      </div>
+      <h3 className="font-medium text-3xl mb-3"> Your information:</h3>
+
+      <Form className="my-4" onFinish={handleSubmit(onSubmit)}>
+        <Row gutter={[48, 24]}>
           {/* Email */}
           <Col span={24}>
-            <label className="text-base text-black">*Email:</label>
+            <label className="text-base text-black">
+              <span className="text-red-600">* </span>
+              Email:
+            </label>
             {errors?.email && (
               <>
                 {" "}
@@ -120,6 +170,7 @@ const Register = () => {
             <Controller
               name="email"
               control={control}
+
               render={({ field }) => {
                 return (
                   <Input
@@ -134,68 +185,12 @@ const Register = () => {
               }}
             />
           </Col>
-          {/* Mật khẩu */}
-          <Col span={24}>
-            <label className="text-base text-black">*Mật khẩu:</label>
-            {errors?.password && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.password.message}
-              </span>
-            )}
-            <Controller
-              name="password"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <Input.Password
-                    {...field}
-                    type="password"
-                    size="large"
-                    className="mt-1"
-                    placeholder="Vui lòng nhập mật khẩu..."
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
-                    status={errors.password ? "error" : ""}
-                  />
-                );
-              }}
-            />
-          </Col>
-          {/* Xác nhận mật khẩu */}
-          <Col span={24}>
-            <label className="text-base text-black">*Xác nhận mật khẩu:</label>
-            {errors?.confirmPassword && (
-              <>
-                {" "}
-                <span className="mt-1 text-base text-red-500">
-                  {errors.confirmPassword.message}
-                </span>
-              </>
-            )}
-            <Controller
-              name="confirmPassword"
-              control={control}
-              render={({ field }) => {
-                return (
-                  <Input.Password
-                    {...field}
-                    size="large"
-                    className="mt-1"
-                    placeholder="Vui lòng nhập lại mật khẩu..."
-                    iconRender={(visible) =>
-                      visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                    }
-                    status={errors.confirmPassword ? "error" : ""}
-                  />
-                );
-              }}
-            />
-          </Col>
           {/* Họ và tên */}
           <Col span={24}>
-            <label className="text-base text-black">*Họ và tên:</label>
+            <label className="text-base text-black">
+              <span className="text-red-600">* </span>
+              Họ và tên:
+            </label>
             {errors?.name && (
               <span className="mt-1 text-base text-red-500">
                 {" "}
@@ -205,6 +200,7 @@ const Register = () => {
             <Controller
               name="name"
               control={control}
+
               render={({ field }) => {
                 return (
                   <Input
@@ -221,7 +217,10 @@ const Register = () => {
           </Col>
           {/* Số điện thoại */}
           <Col span={24}>
-            <label className="text-base text-black">*Số điện thoại:</label>
+            <label className="text-base text-black">
+              <span className="text-red-600">* </span>
+              Số điện thoại:
+            </label>
             {errors?.phone && (
               <span className="mt-1 text-base text-red-500">
                 {" "}
@@ -230,6 +229,7 @@ const Register = () => {
             )}
             <Controller
               name="phone"
+
               control={control}
               render={({ field }) => {
                 return (
@@ -247,7 +247,10 @@ const Register = () => {
           </Col>
           {/* Ngày Sinh Nhật */}
           <Col span={12}>
-            <label className="block text-base text-black">*Ngày Sinh Nhật:</label>
+            <label className="block text-base text-black">
+              <span className="text-red-600">* </span>
+              Ngày Sinh Nhật:
+            </label>
             {errors.birthday && (
               <span className="mt-1 text-base text-red-500">
                 {" "}
@@ -257,17 +260,18 @@ const Register = () => {
             <Controller
               name="birthday"
               control={control}
+
               render={({ field }) => (
                 <DatePicker
                   {...field}
                   size="large"
                   className="mt-1 w-full"
-                  placeholder="DD/MM/YYYY"
+                  placeholder="YYYY-MM-DD"
                   status={errors.birthday ? "error" : ""}
-                  format={"DD/MM/YYYY"}
+                  format={"YYYY-MM-DD"}
                   value={field.value ? dayjs(field.value) : null}
                   onChange={(date) =>
-                    field.onChange(date ? date : null)
+                    field.onChange(date ? date.format("YYYY-MM-DD") : null)
                   }
                 />
               )}
@@ -275,9 +279,12 @@ const Register = () => {
           </Col>
           {/* Gender */}
           <Col span={12}>
-            <label className="block text-base text-black">*Giới Tính:</label>
+            <label className="block text-base text-black">
+              <span className="text-red-600">* </span>
+              Giới Tính:</label>
             <Controller
               name="gender"
+
               control={control}
               render={({ field }) => (
                 <Radio.Group {...field} className="mt-1" defaultValue={false}>
@@ -287,31 +294,52 @@ const Register = () => {
               )}
             />
           </Col>
-
+          {/* Role */}
           <Col span={24}>
-            <Typography className="text-sm text-black">
-              Đã có tài khoản?{" "}
-              <span
-                className="text-blue-400 font-medium cursor-pointer"
-                onClick={() => navigate(PATH.LOGIN)}
-              >
-                Đăng nhập
+            <label className="text-base block">
+              <span className="text-red-600">* </span>
+              Loại người dùng:
+            </label>
+            {errors.role && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.role.message}
               </span>
-            </Typography>
+            )}
+            <Controller
+              name="role"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  disabled={true}
+                  className="mt-1"
+                  status={errors.role ? "error" : ""}
+                  style={{ width: `100%`, height: 45, display: "block" }}
+                  options={[
+                    { value: "USER", label: "User" },
+                    { value: "ADMIN", label: "Admin" },
+                  ]}
+                />
+              )}
+            />
           </Col>
 
-          <Col span={24}>
-            <button
-              className="btn-theme"
-              type="submit"
+          <Col span={24} className="flex justify-end">
+            <Button
+              loading={isPending}
+              htmlType="submit"
+              size="large"
+              type="primary"
+              className="ml-3"
             >
-              Đăng ký
-            </button>
+              <EditOutlined />
+            </Button>
           </Col>
         </Row>
       </Form>
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default Register;
+export default AccountSettings

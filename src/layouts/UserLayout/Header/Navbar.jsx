@@ -21,6 +21,7 @@ const Navbar = () => {
         };
     }, []);
 
+
     return (
         <nav
             style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1.5s" }}
@@ -85,7 +86,7 @@ const Navbar = () => {
                     <ul className="list-none flex justify-center w-full ">
                         <li className='w-1/2'>
                             <Link
-                                to="auth/login"
+                                to="/auth/login"
                                 className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >

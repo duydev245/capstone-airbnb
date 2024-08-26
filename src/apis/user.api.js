@@ -40,16 +40,16 @@ export const userApi = {
     }
   },
 
-  // getInfoUser: async (maNhom: string, taiKhoan: string) => {
-  //   try {
-  //     const response = await fetcher.get<ApiResponse<UserItem>>(
-  //       `/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${maNhom}&tuKhoa=${taiKhoan}`
-  //     );
-  //     return response.data.content;
-  //   } catch (error: any) {
-  //     throw Error(error.response.data.content);
-  //   }
-  // },
+  getInfoUser: async (idUser) => {
+    try {
+      const response = await fetcher.get(
+        `/users/${idUser}`
+      );
+      return response.data.content;
+    } catch (error) {
+      throw Error(error.response.data.content);
+    }
+  },
 
   addUser: async (payload) => {
     try {
@@ -64,18 +64,18 @@ export const userApi = {
     }
   },
 
-  // updateUser: async (payload: FormData) => {
-  //   try {
-  //     const response = await fetcher.post(
-  //       "/QuanLyNguoiDung/CapNhatThongTinNguoiDung",
-  //       payload
-  //     );
+  updateUser: async (payload) => {
+    try {
+      const response = await fetcher.put(
+        `/users/${payload.id}`,
+        payload
+      );
 
-  //     return response.data.content;
-  //   } catch (error: any) {
-  //     throw Error(error.response.data.content);
-  //   }
-  // },
+      return response.data.content;
+    } catch (error) {
+      throw Error(error.response.data.content);
+    }
+  },
 
   deleteUser: async (idUser) => {
     try {
