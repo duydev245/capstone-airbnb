@@ -21,23 +21,24 @@ const Navbar = () => {
         };
     }, []);
 
+
     return (
         <nav
-            style={{ backgroundColor: `${!scroll ? 'transparent' : '#FAF3F0'} `, transition: "1.5s" }}
+            style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1.5s" }}
             className="border-gray-200 dark:border-gray-700 z-10 w-full fixed shadow-xl"
         >
             <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-0 h-16 ">
                 <Link
                     to="/"
-                    className="flex items-center space-x-3 rtl:space-x-reverse"
+                    className="space-x-3 rtl:space-x-reverse w-[185px]"
                 >
-                    <div className='flex items-center gap-1'>
+                    <div className='flex items-center justify-between w-full'>
                         <img
                             src="/logo.png"
-                            className="h-9 cursor-pointer"
+                            className="cursor-pointer h-9 "
                             alt="Airbnb Logo"
                         />
-                        <span className='text-2xl font-semibold text-orange-600 hover:text-red-600 cursor-pointer'>AirBnb</span>
+                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-red-600 cursor-pointer'>AirBnb</span>
                     </div>
                 </Link>
                 {/* <button
@@ -67,7 +68,7 @@ const Navbar = () => {
                 <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
                     <ul className="list-none flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:border-gray-700 bg-transparent">
                         <li>
-                            <a href="#" className="block py-2 px-3 md:p-0 text-white bg-blue-900 rounded md:bg-transparent md:text-blue-600 md:dark:text-orange-600 font-sans text-lg" aria-current="page">Home</a>
+                            <a href="/" className="block py-2 px-3 md:p-0 text-white bg-blue-900 rounded md:bg-transparent md:text-blue-600 md:dark:text-orange-600 font-sans text-lg" aria-current="page">Home</a>
                         </li>
                         <li>
                             <a href="#" className={`${!scroll ? 'navbar' : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>About</a>
@@ -81,24 +82,22 @@ const Navbar = () => {
                     </ul>
 
                 </div>
-                <div>
-                    <ul className="list-none flex justify-center items-center">
-                        <li>
+                <div className='w-[185px]'>
+                    <ul className="list-none flex justify-center w-full ">
+                        <li className='w-1/2'>
                             <Link
-                                style={{ transition: '0.5s' }}
                                 to="/auth/login"
-                                className="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-blue-600 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600 no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng nhập
                             </Link>
                         </li>
                         <span className="text-xl text-gray-500">|</span>
-                        <li>
+                        <li className='w-1/2'>
                             <Link
-                                style={{ transition: '0.5s' }}
                                 to="/auth/register"
-                                className="block py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-blue-600 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600 no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng ký
@@ -106,14 +105,15 @@ const Navbar = () => {
                         </li>
                     </ul>
                     <ul className="list-none flex items-center">
-                        <li>
+                        {/* <li>
                             <Link
                                 className="no-underline block py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
-                                {/* <UserOutlined /> */}
+                                <UserOutlined />
                             </Link>
-                        </li>
+                        </li> */}
+
                         {/* <li>
                         <Button
                             className="mx- font-medium"

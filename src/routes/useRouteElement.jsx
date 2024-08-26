@@ -11,6 +11,7 @@ import { RegisterPage } from "../modules/Auth/Register";
 import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
+import { RoomsPage } from "../modules/User/ListRooms";
 import { AccountSettings } from "../modules/Admin/AccountSettings";
 import { RoomDetail } from "../modules/User/RoomDetail";
 
@@ -67,7 +68,15 @@ const useRouteElement = () => {
           <HomePage />
         </UserLayout>,
     },
-    // Movie details page
+    //RoomsPage
+    {
+      path: PATH.ROOMS,
+      element:
+        <UserLayout>
+          <RoomsPage />
+        </UserLayout>
+    },
+    // Room details page
     {
       path: PATH.ROOM_DETAIL,
       element: (
