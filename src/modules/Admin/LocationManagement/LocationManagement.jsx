@@ -6,14 +6,16 @@ import {
   PlusSquareOutlined,
   UploadOutlined
 } from "@ant-design/icons";
-import React from 'react'
+import React, { useState } from 'react'
 import { locationApi } from '../../../apis/location.api';
 import { useOpenModal } from '../../../hooks/useOpenModal';
 import AddLocationModal from './AddLocationModal';
+import EditLocationModal from './EditLocationModal';
 
 const LocationManagement = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const queryClient = useQueryClient();
+  const [idEdit, setIdEdit] = useState(0);
 
   const { isOpen: isOpenAddModal, openModal: openAddModal, closeModal: closeAddModal } = useOpenModal();
   const { isOpen: isOpenEditModal, openModal: openEditModal, closeModal: closeEditModal } = useOpenModal();
@@ -26,27 +28,11 @@ const LocationManagement = () => {
   // Add location
   const { mutate: handleAddLocationApi, isPending: isCreating } = useMutation({
     mutationFn: (payload) => locationApi.addLocation(payload),
-    onSuccess: (data) => {
-      console.log("🚀 ~ LocationManagement ~ data:", data)
-      messageApi.open({
-        content: "Thêm vị trí thành công",
-        type: "success",
-        duration: 3,
-      });
-      closeAddModal();
-      queryClient.refetchQueries({
-        queryKey: ["list-location"],
-        type: "active",
-      });
-    },
-    onError: (error) => {
-      console.log("🚀 ~ LocationManagement ~ error:", error)
-      messageApi.open({
-        content: error?.message,
-        type: "error",
-        duration: 3,
-      });
-    },
+  });
+
+  // Update location
+  const { mutate: handleUpdateLocationApi, isPending: isUpdating } = useMutation({
+    mutationFn: (payload) => locationApi.updateLocation(payload),
   });
 
   // Delete user
@@ -76,12 +62,7 @@ const LocationManagement = () => {
   //Upload hình Ảnh
   const { mutate: handleUpload } = useMutation({
     mutationFn: (payload) => locationApi.uploadImgLocation(payload.idLocation, payload.formData),
-    onSuccess: (data) => {
-      messageApi.open({
-        content: "Upload hình thành công",
-        type: "success",
-        duration: 3,
-      });
+    onSuccess: () => {
       queryClient.refetchQueries({
         queryKey: ["list-location"],
         type: "active",
@@ -97,37 +78,6 @@ const LocationManagement = () => {
     },
   });
 
-  const props = {
-    name: 'formFile',
-    onChange(info, record) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (info.file.status === 'done') {
-        const formData = new FormData();
-        formData.append("formFile", info.file.originFileObj);
-
-        console.log("🚀 ~ onChange ~ formData:", formData)
-        // handleUpload({ idLocation: record.id, formData });
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
-  };
-
-  const handleOnChange = (data, record) => {    
-    const formData = new FormData();
-    formData.append("hinhAnh", data);
-
-    // Or use this method for a clearer log
-    formData.forEach((value, key) => {
-      console.log(`${key}:`, value);
-    });
-
-    handleUpload({ idLocation: record.id, formData });
-  }
-
-
   const dataSource = data || [];
 
   const columns = [
@@ -142,16 +92,12 @@ const LocationManagement = () => {
       title: "Image",
       key: "hinhAnh",
       render: (record) => {
-        return record.hinhAnh ? (
+        return record.hinhAnh && (
           <img
             src={record.hinhAnh}
             alt={record.tenViTri}
-            className="w-[120px] h-[140px] rounded-sm object-cover"
+            className="w-[200px] h-[140px] rounded-sm object-cover"
           />
-        ) : (
-          <Upload beforeUpload={() => false} onChange={({ file }) => handleOnChange(file, record)}>
-            <Button icon={<UploadOutlined />}>Click to Upload</Button>
-          </Upload>
         );
       },
     },
@@ -184,13 +130,10 @@ const LocationManagement = () => {
               type="primary"
               className="mr-2"
               onClick={() => {
-                alert(record.id)
-                console.log(record);
-
-                // setDataEdit(record);
-                // openModal();
+                setIdEdit(record.id)
+                openEditModal();
               }}
-              loading={false}
+              loading={isUpdating}
             >
               <EditOutlined />
             </Button>
@@ -215,13 +158,71 @@ const LocationManagement = () => {
 
   const handleSubmit = (values) => {
     const payload = {
+      id: idEdit ? idEdit : 0,
       tenViTri: values.tenViTri,
       tinhThanh: values.tinhThanh,
       quocGia: values.quocGia,
-      hinhAnh: values.hinhAnh,
     };
-    console.log("🚀 ~ handleSubmit ~ payload:", payload)
-    handleAddLocationApi(payload)
+
+    if (idEdit) {
+      handleUpdateLocationApi(payload, {
+        onSuccess: () => {
+          messageApi.open({
+            content: "Cập nhật vị trí thành công",
+            type: "success",
+            duration: 3,
+          });
+          if (typeof values.hinhAnh !== "string") {
+            const formData = new FormData();
+            formData.append("formFile", values.hinhAnh);
+
+            handleUpload({ idLocation: idEdit, formData });
+          }
+          closeEditModal();
+          queryClient.refetchQueries({
+            queryKey: ["list-location"],
+            type: "active",
+          });
+        },
+        onError: (error) => {
+          console.log("🚀 ~ LocationManagement ~ error:", error)
+          messageApi.open({
+            content: error?.message,
+            type: "error",
+            duration: 3,
+          });
+        },
+      });
+    } else {
+      handleAddLocationApi(payload, {
+        onSuccess: (data) => {
+          messageApi.open({
+            content: "Thêm vị trí thành công",
+            type: "success",
+            duration: 3,
+          });
+          const idLocation = data?.id;
+          if (values.hinhAnh && idLocation) {
+            const formData = new FormData();
+            formData.append("formFile", values.hinhAnh);
+            handleUpload({ idLocation, formData });
+          }
+          closeAddModal();
+          queryClient.refetchQueries({
+            queryKey: ["list-location"],
+            type: "active",
+          });
+        },
+        onError: (error) => {
+          console.log("🚀 ~ LocationManagement ~ error:", error)
+          messageApi.open({
+            content: error?.message,
+            type: "error",
+            duration: 3,
+          });
+        },
+      });
+    }
   };
 
   if (!isLoading && error) {
@@ -266,9 +267,19 @@ const LocationManagement = () => {
       />
 
       <AddLocationModal
+        key={"add"}
         isOpen={isOpenAddModal}
         isPending={isCreating}
         onCloseModal={closeAddModal}
+        onSubmit={handleSubmit}
+      />
+
+      <EditLocationModal
+        key={"edit"}
+        idEdit={idEdit}
+        isOpen={isOpenEditModal}
+        isPending={false}
+        onCloseModal={closeEditModal}
         onSubmit={handleSubmit}
       />
 

@@ -171,7 +171,7 @@ const UserManagement = () => {
                 setIdEdit(record.id)
                 openEditModal();
               }}
-              loading={false}
+              loading={isUpdating}
             >
               <EditOutlined />
             </Button>

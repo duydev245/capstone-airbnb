@@ -8,5 +8,16 @@ export const roomApi = {
         } catch (error) {
             throw Error(error.response.data.content);
         }
-    }
+    },
+
+    getRoomDetail: async (id) => {
+        try {
+            const response = await fetcher.get(`/phong-thue/${id}`);
+            return response.data.content;
+        } catch (error) {
+            throw Error(error.response.data.content);
+        }
+    },
+
+
 }

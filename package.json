@@ -30,8 +30,10 @@
     "react-scroll": "^1.9.0",
     "react-slick": "^0.30.2",
     "redux": "^5.0.1",
+    "rsuite": "^5.70.0",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.12.4",
+    "swiper": "^11.1.10",
     "yup": "^1.4.0"
   },
   "devDependencies": {

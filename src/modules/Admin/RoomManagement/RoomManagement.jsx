@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Breadcrumb, Button, message, Popconfirm, Table, Typography, Upload } from 'antd';
 import {
   DeleteOutlined,
-  EditOutlined,
+  PlusSquareOutlined,
+  EditOutlined
 } from "@ant-design/icons";
 import React from 'react'
 import dayjs from 'dayjs';
@@ -124,6 +125,16 @@ const RoomManagement = () => {
             },
           ]}
         />
+
+        <Button
+          size="large"
+          type="primary"
+          onClick={() => {
+            alert('add room');
+          }}
+        >
+          <PlusSquareOutlined />
+        </Button>
       </div>
 
       <h3 className="font-medium text-3xl mb-3">List Room</h3>

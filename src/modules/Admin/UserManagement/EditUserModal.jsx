@@ -21,7 +21,6 @@ const EditUserModal = ({
             .trim()
             .required("*Email không được bỏ trống !")
             .email("*Email không hợp lệ !"),
-
         name: yup.string().trim().required("*Họ và tên không được bỏ trống !"),
         phone: yup
             .string()

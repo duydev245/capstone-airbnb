@@ -12,6 +12,7 @@ import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
 import { AccountSettings } from "../modules/Admin/AccountSettings";
+import { RoomDetail } from "../modules/User/RoomDetail";
 
 
 const RejectedRouter = () => {
@@ -65,6 +66,13 @@ const useRouteElement = () => {
         <UserLayout>
           <HomePage />
         </UserLayout>,
+    },
+    // Movie details page
+    {
+      path: PATH.ROOM_DETAIL,
+      element: (
+        <RoomDetail />
+      ),
     },
     // Auth
     {

@@ -5,7 +5,9 @@ export const PATH = {
   REGISTER: "/auth/register",
   // USER
   HOME: "/",
-
+  ROOM_DETAIL: "/room-details/:id",
+  BOOKING: "/booking/:id",
+  PROFILE: "/profile",
   // ADMIN
   ADMIN: "/admin",
   ADMIN_USER: "/admin/user",

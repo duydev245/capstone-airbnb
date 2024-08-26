@@ -7,8 +7,8 @@
   padding: 0;
   outline: 0;
   box-sizing: border-box;
-  max-width: 100vw;
-  max-height: 100vh;
+  /* max-width: 100vw; */
+  /* max-height: 100vh; */
 }
 
 :root {
@@ -137,5 +137,15 @@
 
 .btn-theme:hover {
   color: #f8f9fa;
+  background-color: rgb(173, 73, 75);
+}
+
+.btn-rate {
+  color: white;
+  background-color: var(--primaryColor);
+  transition: all .5s;
+}
+
+.btn-rate:hover {
   background-color: rgb(173, 73, 75);
 }

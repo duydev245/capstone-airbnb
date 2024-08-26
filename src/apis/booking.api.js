@@ -8,5 +8,15 @@ export const bookingApi = {
         } catch (error) {
             throw Error(error.response.data.content);
         }
-    }
+    },
+
+    postBookingRoom: async (payload) => {
+        try {
+            const response = await fetcher.post(`/dat-phong`, payload);
+            return response.data.content;
+        } catch (error) {
+            throw Error(error.response.data.content);
+        }
+    },
+
 }

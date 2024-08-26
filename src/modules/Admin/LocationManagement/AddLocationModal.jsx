@@ -19,8 +19,11 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
             .trim()
             .required("*Quốc gia không được bỏ trống !")
             .matches(/^[^\d]*$/, "*Quốc gia không được chứa số !"),
+        hinhAnh: yup
+            .mixed()
+            .nullable()
+            .required("*Hình ảnh không được bỏ trống !"),
     });
-
 
     const {
         control,
@@ -34,18 +37,25 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
             tenViTri: "",
             tinhThanh: "",
             quocGia: "",
-            hinhAnh: "",
+            hinhAnh: undefined,
         },
         resolver: yupResolver(schema),
         criteriaMode: "all",
     });
 
-    const [imageUpload, setImageUpload] = useState("");
+    const [imageUpload, setImageUpload] = useState(undefined);
     const watchHinhAnh = watch("hinhAnh");
 
-    useEffect(() => {
-        setValue("hinhAnh", imageUpload);
-    }, [imageUpload])
+    const getErrorMessage = (error) => {
+        if (!error) return undefined;
+        if (typeof error === "string") return error;
+        if ("message" in error) return error.message;
+        return undefined;
+    };
+
+    // useEffect(() => {
+    //     setValue("hinhAnh", imageUpload);
+    // }, [imageUpload])
 
     useEffect(() => {
         if (!isOpen) {
@@ -159,45 +169,15 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                     </Col>
 
                     {/* hinhAnh */}
-
-                    {/* <Col span={24}>
+                    <Col span={24}>
                         <label className="text-base text-black">
                             <span className="text-red-600">* </span>
                             Hình Ảnh:
                         </label>
                         {errors.hinhAnh && (
-                            <span className="mt-1 text-sm text-red-500">
+                            <span className="mt-1 text-base text-red-500">
                                 {" "}
-                                {errors.hinhAnh.message}
-                            </span>
-                        )}
-                        <Controller
-                            name="hinhAnh"
-                            control={control}
-                            render={({ field }) => {
-                                return (
-                                    <Input
-                                        {...field}
-                                        type="text"
-                                        size="large"
-                                        className="mt-1"
-                                        placeholder="Vui lòng nhập link hình ảnh..."
-                                        status={errors.hinhAnh ? "error" : ""}
-                                    />
-                                );
-                            }}
-                        />
-                    </Col> */}
-
-                    {/* <Col span={24}>
-                        <label className="text-base text-black">
-                            <span className="text-red-600">* </span>
-                            Hình Ảnh:
-                        </label>
-                        {errors.hinhAnh && (
-                            <span className="mt-1 text-sm text-red-500">
-                                {" "}
-                                {errors.hinhAnh.message}
+                                {getErrorMessage(errors.hinhAnh)}
                             </span>
                         )}
                         <Controller
@@ -212,16 +192,7 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                         listType="picture-card"
                                         className="avatar-uploader w-fit"
                                         showUploadList={false}
-                                        beforeUpload={(file) => {
-                                            const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-                                            if (!isJpgOrPng) {
-                                                setValue("hinhAnh", undefined);
-                                                setImageUpload("");
-                                                return Upload.LIST_IGNORE; // Ignore the file if not jpg/png
-                                            }
-                                            onChange(file);
-                                            return false; // Return false to prevent upload
-                                        }}
+                                        beforeUpload={() => false}
                                         onChange={({ file }) => {
                                             onChange(file);
                                         }}
@@ -250,7 +221,7 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                                         onClick={(event) => {
                                                             event.stopPropagation();
                                                             setValue("hinhAnh", undefined);
-                                                            setImageUpload("");
+                                                            setImageUpload(undefined);
                                                         }}
                                                     >
                                                         <DeleteOutlined />
@@ -267,7 +238,7 @@ const AddLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                 );
                             }}
                         />
-                    </Col> */}
+                    </Col>
 
                     <Col span={24} className="flex justify-end">
                         <Button size="large" type="default" onClick={onCloseModal}>
