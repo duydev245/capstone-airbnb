@@ -11,7 +11,7 @@ const Header = () => {
         <>
             <Navbar />
             <Banner />
-            <SeachBar />
+            {/* <SeachBar /> */}
         </>
     )
 }

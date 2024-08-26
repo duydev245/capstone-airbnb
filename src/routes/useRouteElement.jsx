@@ -67,7 +67,7 @@ const useRouteElement = () => {
           <HomePage />
         </UserLayout>,
     },
-    // Movie details page
+    // Room details page
     {
       path: PATH.ROOM_DETAIL,
       element: (
