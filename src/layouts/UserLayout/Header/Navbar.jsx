@@ -33,7 +33,7 @@ const Navbar = () => {
                 >
                     <div className='flex items-center justify-between w-full'>
                         <img
-                            src="/public/logo.png"
+                            src="/logo.png"
                             className="cursor-pointer h-9 "
                             alt="Airbnb Logo"
                         />
