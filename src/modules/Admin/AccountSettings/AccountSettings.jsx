@@ -19,15 +19,18 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { userApi } from "../../../apis/user.api";
 import dayjs from "dayjs";
+import { setLocalStorage } from "../../../utils";
+import { setUser } from "../../../redux/slices/user.slice";
 
 
 const AccountSettings = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const queryClient = useQueryClient();
+  const dispatch = useDispatch();
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -82,6 +85,8 @@ const AccountSettings = () => {
     mutationFn: (payload) => userApi.updateUser(payload),
     onSuccess: (data) => {
       console.log("🚀 ~ UserManagement ~ data:", data);
+      setLocalStorage("user", data);
+      dispatch(setUser(data));
       messageApi.open({
         content: "Update thông tin thành công",
         type: "success",
@@ -266,12 +271,12 @@ const AccountSettings = () => {
                   {...field}
                   size="large"
                   className="mt-1 w-full"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="DD/MM/YYYY"
                   status={errors.birthday ? "error" : ""}
-                  format={"YYYY-MM-DD"}
+                  format={"DD/MM/YYYY"}
                   value={field.value ? dayjs(field.value) : null}
                   onChange={(date) =>
-                    field.onChange(date ? date.format("YYYY-MM-DD") : null)
+                    field.onChange(date ? date : null)
                   }
                 />
               )}
