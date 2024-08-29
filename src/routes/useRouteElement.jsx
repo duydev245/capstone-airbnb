@@ -48,15 +48,20 @@ const ProtectedRouter = () => {
 const ProtectedUserRouter = () => {
   const { currentUser } = useSelector((state) => state.user);
 
-  if (currentUser === null) {
+  if (!currentUser) {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  return currentUser.role === "USER" ? (
-    <ProfileUser />
-  ) : (
-    <Navigate to={PATH.HOME} />
-  );
+  if (currentUser.role === 'ADMIN') {
+    return <Navigate to={PATH.ADMIN} />;
+  }
+
+  if (currentUser.role === 'USER') {
+    return <ProfileUser />;
+  }
+
+  // Fallback redirect if role is not 'ADMIN' or 'USER'
+  return <Navigate to={PATH.HOME} />;
 };
 
 const useRouteElement = () => {
