@@ -53,7 +53,7 @@ const ProtectedUserRouter = () => {
   }
 
   return currentUser.role === "USER" ? (
-    <Outlet />
+    <ProfileUser />
   ) : (
     <Navigate to={PATH.HOME} />
   );
@@ -88,7 +88,7 @@ const useRouteElement = () => {
     {
       path: PATH.PROFILE,
       element: (
-        <ProfileUser />
+        <ProtectedUserRouter />
       ),
     },
     // Auth
