@@ -1,9 +1,21 @@
+import { UserOutlined } from '@ant-design/icons';
+import { current } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Button } from 'react-scroll';
+import { removeLocalStorage } from '../../../utils';
 
 const Navbar = () => {
 
     const [scroll, setScroll] = useState(false);
+
+    const currentUser = useSelector(state => state.user.currentUser)
+
+    const handleLogOut = () => {
+        removeLocalStorage("user");
+        window.location.reload();
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,7 +36,7 @@ const Navbar = () => {
 
     return (
         <nav
-            style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1.5s" }}
+            style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1s" }}
             className="border-gray-200 dark:border-gray-700 z-10 w-full fixed shadow-xl"
         >
             <div className=" max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-0 h-16 ">
@@ -82,8 +94,9 @@ const Navbar = () => {
                     </ul>
 
                 </div>
-                <div className='w-[185px]'>
-                    <ul className="list-none flex justify-center w-full ">
+                <div className='w-[185px] h-16 flex items-center'>
+
+                    {!currentUser ? (<ul className="list-none flex justify-center w-full">
                         <li className='w-1/2'>
                             <Link
                                 to="/auth/login"
@@ -103,28 +116,32 @@ const Navbar = () => {
                                 Đăng ký
                             </Link>
                         </li>
-                    </ul>
-                    <ul className="list-none flex items-center">
-                        {/* <li>
+                    </ul>) : (<ul className="list-none flex items-center justify-between w-full h-full">
+                        <li className='w-1/2'>
                             <Link
-                                className="no-underline block py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
+                                to='/profile'
+                                className="no-underline flex gap-1 py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
-                                <UserOutlined />
+                                <img src={currentUser.avatar} alt="" className=' w-[40px] h-[40px] rounded-full' />
+                                <span className={` ${!scroll ? 'navbar' : 'navbar-scroll'} text-sm hover:text-red-600`}>{currentUser?.name}</span>
                             </Link>
-                        </li> */}
+                        </li>
+                        <li className=''>
+                            <Button
+                                onClick={handleLogOut}
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                size="small"
+                                type="default"
+                                danger
+                            >
+                                Đăng xuất
+                            </Button>
+                        </li>
+                    </ul>)}
 
-                        {/* <li>
-                        <Button
-                            className="mx- font-medium"
-                            size="small"
-                            type="default"
-                            danger
-                        >
-                            Đăng xuất
-                        </Button>
-                    </li> */}
-                    </ul>
+
+
                 </div>
             </div>
         </nav>
