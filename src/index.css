@@ -188,8 +188,6 @@
   background-color: rgb(173, 73, 75);
 }
 
-
-
 /* profile */
 .mask {
   background-position: 50%;
@@ -203,4 +201,37 @@
 
 .bg-gradient-dark {
   background-image: linear-gradient(195deg, #4c4c4c, #191919);
+}
+
+@media screen and (min-width: 320px) and (max-width: 1024px) {
+  .banner-responsive {
+    padding-top: 40px;
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1536px) {
+  .banner-responsive {
+    width: 100%;
+    z-index: -1;
+  }
+}
+
+@media (max-width: 768px) {
+  .smm\:h-\[50vh\] {
+      height: 50vh !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:h-\[50vh\] {
+      height: 50vh !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:h-\[40vh\] {
+      height: 40vh !important;
+  }
 }
