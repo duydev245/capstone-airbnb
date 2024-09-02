@@ -86,7 +86,8 @@ const RoomDetail = () => {
     return (
         <>
             <Navbar />
-            <Banner />
+            <div className="pb-16 border-b-2 bg-black"></div>
+            {/* <Banner /> */}
             {contextHolder}
 
             <div className='container mx-auto py-5'>

@@ -87,4 +87,17 @@ export const userApi = {
       throw Error(error.response.data.content);
     }
   },
+
+  uploadAvatar: async (payload) => {
+    try {
+      const response = await fetcher.post(`users/upload-avatar`, payload, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data.content
+    } catch (error) {
+      throw Error(error.response.data.content);
+    }
+  },
 };
