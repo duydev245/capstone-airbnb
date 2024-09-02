@@ -17,13 +17,13 @@
 
 /* HomePage */
 .navbar {
-  color: #FBF9F1;
-  transition: 0.8s ease;
+  color: white;
+  transition: 0.5s all;
 }
 
 .navbar-scroll {
   color: black;
-  transition: 0.8s ease;
+  transition: 0.5 all;
 }
 
 .seachbar {
@@ -32,11 +32,11 @@
   transform: translateX(-50%);
 }
 
-.button-gradient1 {
+/* .button-gradient1 {
   background-size: 300%;
   transition: 0.5s ease;
   background-image: linear-gradient(135deg, #ea580c 100%, #F7CE68 10%, #be3434 80%);
-}
+} */
 
 .button-gradient {
   background-size: 300%;

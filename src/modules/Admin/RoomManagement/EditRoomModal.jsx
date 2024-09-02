@@ -6,10 +6,62 @@ import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { roomApi } from '../../../apis/room.api'
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) => {
 
-    const { handleSubmit, control, setValue, watch } = useForm({
+    const schema = yup.object({
+        maViTri: yup.string()
+            .trim()
+            .min(0, "*Tên phòng phải có ít nhất 1 số !")
+            .required("*Mã vị trí không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Mã vị trí không được là kí tự !"),
+        // .notOneOf(["0"], "*Tên vị trí không được là '0' !"),
+        // hinhAnh: yup.string()
+        //     .trim()
+        //     .required("*Tên vị trí không được bỏ trống !"),
+        tenPhong: yup.string()
+            .trim()
+            .required("*Tên phòng không được bỏ trống !")
+            .min(3, "*Tên phòng phải có ít nhất 3 ký tự !"),
+        moTa: yup.string()
+            .trim()
+            .required("*Mô tả không được bỏ trống !")
+            .min(10, "*Mô tả phải có ít nhất 10 ký tự !"),
+        khach: yup.string()
+            .min(0, "*Khách không được âm !")
+            .required("*Khách không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Khách không được là kí tự !"),
+        giuong: yup.string()
+            .min(0, "*Giường không được âm !")
+            .required("*Giường không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Giường không được là kí tự !"),
+        phongNgu: yup.string()
+            .min(0, "*Phòng ngủ không được âm !")
+            .required("*Phòng ngủ không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Phòng ngủ không được là kí tự !"),
+        phongTam: yup.string()
+            .min(0, "*Phòng tắm không được âm !")
+            .required("*Phòng tắm không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Phòng tắm không được là kí tự !"),
+        giaTien: yup.string()
+            .required("*Giá tiền không được bỏ trống !")
+            .matches(/^[0-9]+$/, "*Giá tiền không được là kí tự !")
+            .min(0, "*Giá tiền không được âm !")
+            .typeError("*Giá tiền phải là số !"),
+        // tivi: false,
+        // wifi: false,
+        // mayGiat: false,
+        // banLa: false,
+        // dieuHoa: false,
+        // bep: false,
+        // doXe: false,
+        // hoBoi: false,
+    });
+
+    const { handleSubmit, control, setValue, watch, formState: { errors } } = useForm({
+
         defaultValues: {
             maViTri: 0,
             // hinhAnh: undefined,
@@ -28,7 +80,9 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
             doXe: false,
             hoBoi: false,
             giaTien: 0,
-        }
+        },
+        resolver: yupResolver(schema),
+        criteriaMode: "all",
     })
 
     const { data } = useQuery({
@@ -85,6 +139,14 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                             <span className="text-red-600">* </span>
                             Mã vị trí
                         </label>
+                        {errors?.maViTri && (
+                            <>
+                                {" "}
+                                <span className="mt-1 text-base text-red-500">
+                                    {errors.maViTri.message}
+                                </span>
+                            </>
+                        )}
                         <Controller
                             name='maViTri'
                             control={control}
@@ -98,6 +160,12 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                             <span className="text-red-600">* </span>
                             Hình ảnh
                         </label>
+                        {/* {errors.hinhAnh && (
+                            <span className="mt-1 text-base text-red-500">
+                                {" "}
+                                {getErrorMessage(errors.hinhAnh)}
+                            </span>
+                        )} */}
                         <Controller
                             name='hinhAnh'
                             control={control}
@@ -150,6 +218,14 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                             <span className="text-red-600">* </span>
                             Tên phòng
                         </label>
+                        {errors?.tenPhong && (
+                            <>
+                                {" "}
+                                <span className="mt-1 text-base text-red-500">
+                                    {errors.tenPhong.message}
+                                </span>
+                            </>
+                        )}
                         <Controller
                             name='tenPhong'
                             control={control}
@@ -163,18 +239,34 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                             <span className="text-red-600">* </span>
                             Mô tả
                         </label>
+                        {errors?.moTa && (
+                            <>
+                                {" "}
+                                <span className="mt-1 text-base text-red-500">
+                                    {errors.moTa.message}
+                                </span>
+                            </>
+                        )}
                         <Controller
                             name='moTa'
                             control={control}
                             render={({ field }) =>
-                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='tên phòng' />
+                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='mô tả' />
                             }
                         />
                     </Col>
                     <Col span={24}>
                         <label className="text-xl text-black block">
                             <span className="text-red-600">* </span>
-                            Option
+                            Tùy chọn
+                            {(errors?.khach || errors?.giuong || errors?.phongNgu || errors?.phongTam) && (
+                                <>
+                                    {" "}
+                                    <span className="mt-1 text-base text-red-500">
+                                        {errors?.khach?.message || errors?.giuong?.message || errors?.phongNgu?.message || errors?.phongTam?.message}
+                                    </span>
+                                </>
+                            )}
                         </label>
                         <div className='flex gap-2'>
                             <div className='w-full'>
@@ -231,7 +323,7 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                     <Col span={24}>
                         <label className="text-xl text-black block">
                             <span className="text-red-600">* </span>
-                            Amenities
+                            Tiện ích
                         </label>
                         <div className='flex justify-between mt-1'>
                             <Controller
@@ -296,7 +388,7 @@ const EditRoomModal = ({ idEdit, isOpen, isPending, onCloseModal, onSubmit }) =>
                     <Col span={24}>
                         <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
-                            Price
+                            Giá phòng
                         </label>
                         <Controller
                             name='giaTien'

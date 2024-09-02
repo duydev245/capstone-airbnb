@@ -127,13 +127,13 @@ const RoomsList = () => {
                 {searchParams && (<Typography className='text-md font-md'>{searchParams.date[0]} - {searchParams.date[1]}</Typography>)}
             </div>
             <Row gutter={24} className='mb-[100px] mt-5'>
-                <Col span={3} className='h-[650px] border border-gray-200 rounded-lg p-2'>
+                <Col span={3} className='border border-gray-200 rounded-lg p-2 mt-3 lg:sticky top-0 lg:top-20 h-fit'>
                     <Typography className='text-lg font-semibold'>
                         Tùy chọn chỗ nghỉ :
                     </Typography>
                     <RoomFilter filters={filters} setFilters={setFilters} />
                 </Col>
-                <Col span={13} className=' pb-5 overflow-auto h-[650px]'>
+                <Col span={13} className=' pb-5 overflow-auto pt-3'>
                     {filterRooms.map((room) => (
                         <Card
                             onClick={() => { handleDetailRoom(room.id) }}
@@ -219,7 +219,7 @@ const RoomsList = () => {
                             <button onClick={handleShowAll} className="button-gradient text-center py-2 px-3 mt-5 font-semibold rounded-md md:dark:text-white no-underline cursor-pointer">Xem tất cả phòng</button>
                         </Card>)}
                 </Col>
-                <Col span={8} className='flex justify-center'>
+                <Col span={8} className='flex justify-center lg:sticky top-0 lg:top-20 h-fit mt-3'>
                     <Maps id={id} listLocation={listLocation} />
                 </Col>
             </Row>
