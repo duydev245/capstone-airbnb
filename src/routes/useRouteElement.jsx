@@ -11,9 +11,9 @@ import { RegisterPage } from "../modules/Auth/Register";
 import { PATH } from "./path";
 import { useSelector } from "react-redux";
 import { HomePage } from "../modules/User/Home"
-import { RoomsPage } from "../modules/User/ListRooms";
 import { AccountSettings } from "../modules/Admin/AccountSettings";
 import { RoomDetail } from "../modules/User/RoomDetail";
+import { RoomsListPage } from "../modules/User/RoomsList";
 
 
 const RejectedRouter = () => {
@@ -73,7 +73,7 @@ const useRouteElement = () => {
       path: PATH.ROOMS,
       element:
         <UserLayout>
-          <RoomsPage />
+          <RoomsListPage />
         </UserLayout>
     },
     // Room details page

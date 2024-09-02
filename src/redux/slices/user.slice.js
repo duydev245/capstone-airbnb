@@ -5,6 +5,7 @@ const userLocalStorage = getLocalStorage('user');
 
 const initialState = {
   currentUser: userLocalStorage,
+  searchParams: null,
 };
 
 const userSlice = createSlice({
@@ -15,10 +16,17 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
     removeUser: (state) => {
-      state.currentUser = null;
-    }
+      state.searchParams = null;
+    },
+    // Search 
+    setSearchParams: (state, action) => {
+      state.searchParams = action.payload;
+    },
+    clearSearchParams: (state) => {
+      state.searchParams = null;
+    },
   },
 });
 
-export const { setUser, removeUser } = userSlice.actions;
+export const { setUser, removeUser, setSearchParams, clearSearchParams } = userSlice.actions;
 export default userSlice;

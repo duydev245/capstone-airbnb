@@ -44,13 +44,13 @@ const EditLocationModal = ({ isOpen, onCloseModal, onSubmit, isPending, idEdit }
     resolver: yupResolver(schema),
     criteriaMode: "all",
   });
-  
+
   const [imageUpload, setImageUpload] = useState(undefined);
   const watchHinhAnh = watch("hinhAnh");
   console.log("🚀 ~ EditLocationModal ~ imageUpload:", imageUpload)
   console.log("🚀 ~ EditLocationModal ~ watchHinhAnh:", watchHinhAnh)
   console.log("🚀 ~ EditLocationModal ~ errors:", errors)
-  
+
   const getErrorMessage = (error) => {
     if (!error) return undefined;
     if (typeof error === "string") return error;
