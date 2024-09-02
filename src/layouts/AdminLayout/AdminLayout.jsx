@@ -52,7 +52,7 @@ const AdminLayout = ({ children }) => {
         ) : (
           <Layout className="h-screen">
             <Sider trigger={null} collapsible collapsed={collapsed}>
-              <div className="text-center flex items-center h-[80px] justify-center cursor-pointer">
+              <div className="text-center flex items-center h-[80px] justify-center cursor-pointer" onClick={() => navigate(PATH.HOME)}>
                 <img src="/logo.png" width={40} />
               </div>
               <Menu

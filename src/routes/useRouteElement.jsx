@@ -14,6 +14,7 @@ import { HomePage } from "../modules/User/Home"
 import { RoomsPage } from "../modules/User/ListRooms";
 import { AccountSettings } from "../modules/Admin/AccountSettings";
 import { RoomDetail } from "../modules/User/RoomDetail";
+import { ProfileUser } from "../modules/User/ProfileUser";
 
 
 const RejectedRouter = () => {
@@ -44,19 +45,24 @@ const ProtectedRouter = () => {
   );
 };
 
-// const ProtectedUserRouter = () => {
-//   const { currentUser } = useSelector((state) => state.user);
+const ProtectedUserRouter = () => {
+  const { currentUser } = useSelector((state) => state.user);
 
-//   if (currentUser === null) {
-//     return <Navigate to={PATH.LOGIN} />;
-//   }
+  if (!currentUser) {
+    return <Navigate to={PATH.LOGIN} />;
+  }
 
-//   return currentUser.role === "USER" ? (
-//     <Outlet />
-//   ) : (
-//     <Navigate to={PATH.HOME} />
-//   );
-// };
+  if (currentUser.role === 'ADMIN') {
+    return <Navigate to={PATH.ADMIN} />;
+  }
+
+  if (currentUser.role === 'USER') {
+    return <ProfileUser />;
+  }
+
+  // Fallback redirect if role is not 'ADMIN' or 'USER'
+  return <Navigate to={PATH.HOME} />;
+};
 
 const useRouteElement = () => {
   const routes = useRoutes([
@@ -81,6 +87,13 @@ const useRouteElement = () => {
       path: PATH.ROOM_DETAIL,
       element: (
         <RoomDetail />
+      ),
+    },
+    // Profile User
+    {
+      path: PATH.PROFILE,
+      element: (
+        <ProtectedUserRouter />
       ),
     },
     // Auth
