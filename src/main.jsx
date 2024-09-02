@@ -8,7 +8,16 @@ import { BrowserRouter } from 'react-router-dom/dist/index.js'
 import { Provider } from 'react-redux'
 import store from './redux/store.js'
 
-const queryClient = new QueryClient({})
+const queryClient = new QueryClient({
+  // defaultOptions: {
+  //   queries: {
+  //     refetchOnWindowFocus: false,
+  //   },
+  //   mutations: {
+
+  //   }
+  // }
+})
 
 createRoot(document.getElementById('root')).render(
   <Provider store={store}>

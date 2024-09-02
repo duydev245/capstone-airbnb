@@ -87,17 +87,17 @@ const Navbar = () => {
                         <li className='w-1/2'>
                             <Link
                                 to="/auth/login"
-                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng nhập
                             </Link>
                         </li>
-                        <span className="text-xl text-gray-500">|</span>
+                        <span className="text-lg text-gray-400">|</span>
                         <li className='w-1/2'>
                             <Link
                                 to="/auth/register"
-                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 aria-current="page"
                             >
                                 Đăng ký

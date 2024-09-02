@@ -9,28 +9,18 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useDispatch } from 'react-redux';
 import { setLocation } from '../../../redux/slices/location.slice';
-import { Link, useLocation } from 'react-router-dom';
-import { setLocalStorage } from '../../../utils';
+import { useNavigate } from 'react-router-dom';
+import { setSearchParams } from '../../../redux/slices/user.slice';
 
 const SearchBar = () => {
 
-    //Date Select
-    dayjs.extend(customParseFormat);
-    const { RangePicker } = DatePicker;
-
-    const guestOptions = [
-        { option: "1 khách", value: "1" },
-        { option: "2 khách", value: "2" },
-        { option: "từ 3 khách trở lên", value: "3" },
-    ];
-
-    const [locationSelected, setLocationSelected] = useState('');
-    const [datesSelected, setDatesSelected] = useState('');
-    const [guestSelected, setGuestSelected] = useState('');
+    const [locationSelected, setLocationSelected] = useState(null);
+    const [datesSelected, setDatesSelected] = useState(null);
+    const [guestCount, setGuestCount] = useState(0);
 
     const dispatch = useDispatch()
 
-    const { pathname } = useLocation()
+    const navigate = useNavigate()
 
     const { data: listLocation, isLoading, error } = useQuery({
         queryKey: ['list-location'],
@@ -49,23 +39,51 @@ const SearchBar = () => {
                 setLocationSelected(currentLocation.id);
             }
         } else {
-            setGuestSelected(value);
+            setGuestCount(value);
         }
     }
 
-    const seachParams = {
-        date: datesSelected,
-        guest: guestSelected,
+    //Date Select
+    dayjs.extend(customParseFormat);
+    const { RangePicker } = DatePicker;
+
+    const disabledDate = (current) => {
+        return current && current < dayjs().endOf('day');
+    };
+
+    // guestCount quantity
+    const handleDropdownVisibleChange = (open) => {
+        if (open && guestCount === 0) {
+            setGuestCount(1);
+        }
+    };
+    const decreaseGuestCount = () => {
+        if (guestCount > 1) {
+            setGuestCount(guestCount - 1);
+        }
+
+    };
+    const increaseGuestCount = () => {
+        setGuestCount(guestCount + 1);
+    };
+
+    const handleSearchRoom = (room) => {
+        if (locationSelected && datesSelected && guestCount) {
+            navigate(`/rooms/${room}`)
+            dispatch(setSearchParams(searchParams))
+        }
     }
 
+    const searchParams = {
+        date: datesSelected,
+        guest: guestCount,
+    }
 
     useEffect(() => {
-        dispatch(setLocation(listLocation))
-        if (seachParams.guest) {
-            // setLocalStorage('seachParams', seachParams)
-        }
 
-    }, [listLocation, seachParams])
+        dispatch(setLocation(listLocation))
+
+    }, [listLocation, searchParams, guestCount])
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Something went wrong</div>;
@@ -77,7 +95,7 @@ const SearchBar = () => {
                 <Col span={8} className="col-span-4 flex-1 px-6 py-3 flex flex-col justify-center items-center">
                     <Select
                         onSelect={handleOnSelect}
-                        className="h-[50px] cursor-pointer"
+                        className="h-[50px]"
                         style={{ width: 300 }}
                         placeholder={<span className="font-semibold">Bạn muốn đến đâu ?</span>}
                         options={listLocation.map((location) => ({
@@ -93,36 +111,44 @@ const SearchBar = () => {
                 </Col>
                 <Col span={8} className='flex justify-center items-center'>
                     <RangePicker
+                        disabledDate={disabledDate}
                         format="DD/MM/YYYY"
-                        className='w-[300px] h-[50px] text-orange-600 font-semibold'
+                        className='w-[300px] h-[50px]'
                         placeholder={[`Ngày nhận phòng`, `Ngày trả phòng`]}
                         onChange={handleDateSelected}
+                        allowClear={false}
+                        inputReadOnly={true}
                     />
                 </Col>
                 <Col span={8} className=" flex-1 p-3 flex justify-center items-center gap-3">
                     <Select
-                        onSelect={handleOnSelect}
-                        className='h-[50px]'
+                        className='h-[50px] customselect'
                         style={{ width: 300 }}
                         placeholder={<span className="font-semibold">Số khách ?</span>}
-                        options={guestOptions.map((guest) => ({
-                            value: guest.value,
-                            label: (
-                                <div className={`flex gap-3 justify-start items-center hover:text-orange-600 ${guestSelected === guest.value ? 'text-orange-600 bg-[#D1E9F6]' : ''}`}>
-                                    <p className='text-lg font-mono'>{guest.option}</p>
-                                </div>
-                            )
-                        }))}
+                        value={guestCount === 0 ? null : `${guestCount} khách`}
+                        onDropdownVisibleChange={handleDropdownVisibleChange}
+                        dropdownRender={() => (
+                            <div className='flex justify-between items-center p-4 '>
+                                <button
+                                    className="font-bold w-9 h-9 text-white button-gradient rounded-md duration-300 flex items-center justify-center"
+                                    onClick={decreaseGuestCount}
+                                >
+                                    <div>–</div>
+                                </button>
+                                <div className='text-lg font-mono'>{guestCount} khách</div>
+                                <button
+                                    className="font-bold w-9 h-9 text-white button-gradient rounded-md duration-300 flex items-center justify-center"
+                                    onClick={increaseGuestCount}
+                                >
+                                    <div>+</div>
+                                </button>
+                            </div>
+                        )}
                     />
-                    {locationSelected ? (
-                        <Link to={pathname === "/" ? `rooms/${locationSelected}` : `/rooms/${locationSelected}`}>
-                            <button className='button-gradient text-white p-1 h-[50px] rounded-md font-semibold'>Tìm phòng</button>
-                        </Link>
-                    ) : (
-                        <button className='button-gradient text-white p-1 h-[50px] rounded-md font-semibold'>
-                            Tìm phòng
-                        </button>
-                    )}
+                    <button onClick={() => { handleSearchRoom(locationSelected) }} className='button-gradient text-white p-1 h-[50px] rounded-md font-semibold'>
+                        Tìm phòng
+                    </button>
+
                 </Col>
 
             </Row>
