@@ -6,9 +6,10 @@ import { useQuery } from '@tanstack/react-query'
 import { roomApi } from '../../../apis/room.api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Maps from './maps'
+// import Maps from './maps'
 import RoomFilter from './RoomFilter'
 import { clearSearchParams } from '../../../redux/slices/user.slice'
+import Map from './Map'
 
 
 const RoomsList = () => {
@@ -41,26 +42,6 @@ const RoomsList = () => {
     );
 
     const filterRooms = roomsById?.filter((room) => {
-
-        // if (searchParams) {
-
-        //     if (searchParams.guest === room.khach) {
-        //         return true
-        //     } else if (!searchParams.guest) {
-        //         return true
-        //     }
-        // } else {
-        //     return true
-        // }
-
-        // if (filters.khach === room.khach || filterRooms.giuong === room.giuong || filters.phongNgu === room.phongNgu || filterRooms.phongTam === room.phongTam) {
-        //     return true
-        // }
-
-        // if (showAll) {
-        //     return true;
-
-        // }
 
         const matchKhach = !filters.khach || room.khach === filters.khach;
         const matchGiuong = !filters.giuong || room.giuong === filters.giuong;
@@ -218,7 +199,8 @@ const RoomsList = () => {
                         </Card>)}
                 </Col>
                 <Col span={8} className='flex justify-center lg:sticky top-0 lg:top-20 h-fit mt-3'>
-                    <Maps id={id} listLocation={listLocation} />
+                    {/* <Maps id={id} listLocation={listLocation} /> */}
+                    <Map id={id} listLocation={listLocation} />
                 </Col>
             </Row>
         </div>
