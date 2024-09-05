@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react'
 import { Card, Col, Row, Typography } from 'antd'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -11,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Maps from './Maps'
 import RoomFilter from './RoomFilter'
 import { clearSearchParams } from '../../../redux/slices/user.slice'
-
 
 const RoomsList = () => {
 
@@ -43,26 +40,6 @@ const RoomsList = () => {
     );
 
     const filterRooms = roomsById?.filter((room) => {
-
-        // if (searchParams) {
-
-        //     if (searchParams.guest === room.khach) {
-        //         return true
-        //     } else if (!searchParams.guest) {
-        //         return true
-        //     }
-        // } else {
-        //     return true
-        // }
-
-        // if (filters.khach === room.khach || filterRooms.giuong === room.giuong || filters.phongNgu === room.phongNgu || filterRooms.phongTam === room.phongTam) {
-        //     return true
-        // }
-
-        // if (showAll) {
-        //     return true;
-
-        // }
 
         const matchKhach = !filters.khach || room.khach === filters.khach;
         const matchGiuong = !filters.giuong || room.giuong === filters.giuong;
