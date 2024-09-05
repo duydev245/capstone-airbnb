@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { roomApi } from '../../../apis/room.api'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import Maps from './maps'
+import Maps from './Maps'
 import RoomFilter from './RoomFilter'
 import { clearSearchParams } from '../../../redux/slices/user.slice'
 

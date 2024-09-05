@@ -12,11 +12,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
 
     const schema = yup.object({
-        maViTri: yup.string()
-            .trim()
-            .min(0, "*Tên phòng phải có ít nhất 1 số !")
-            .required("*Mã vị trí không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Mã vị trí không được là kí tự !"),
+        maViTri: yup.number()
+            .min(1, "*Tên phòng phải có ít nhất 1 số !")
+            .required("*Mã vị trí không được bỏ trống !"),
         // .notOneOf(["0"], "*Tên vị trí không được là '0' !"),
         // hinhAnh: yup.string()
         //     .trim()
@@ -29,47 +27,34 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
             .trim()
             .required("*Mô tả không được bỏ trống !")
             .min(10, "*Mô tả phải có ít nhất 10 ký tự !"),
-        khach: yup.string()
+        khach: yup.number()
             .min(0, "*Khách không được âm !")
-            .required("*Khách không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Khách không được là kí tự !"),
-        giuong: yup.string()
+            .required("*Khách không được bỏ trống !"),
+        giuong: yup.number()
             .min(0, "*Giường không được âm !")
-            .required("*Giường không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Giường không được là kí tự !"),
-        phongNgu: yup.string()
+            .required("*Giường không được bỏ trống !"),
+        phongNgu: yup.number()
             .min(0, "*Phòng ngủ không được âm !")
-            .required("*Phòng ngủ không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Phòng ngủ không được là kí tự !"),
-        phongTam: yup.string()
+            .required("*Phòng ngủ không được bỏ trống !"),
+        phongTam: yup.number()
             .min(0, "*Phòng tắm không được âm !")
-            .required("*Phòng tắm không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Phòng tắm không được là kí tự !"),
-        giaTien: yup.string()
+            .required("*Phòng tắm không được bỏ trống !"),
+        giaTien: yup.number()
             .required("*Giá tiền không được bỏ trống !")
-            .matches(/^[0-9]+$/, "*Giá tiền không được là kí tự !")
             .min(0, "*Giá tiền không được âm !")
             .typeError("*Giá tiền phải là số !"),
-        // tivi: false,
-        // wifi: false,
-        // mayGiat: false,
-        // banLa: false,
-        // dieuHoa: false,
-        // bep: false,
-        // doXe: false,
-        // hoBoi: false,
     });
 
     const { handleSubmit, control, setValue, watch, reset, formState: { errors } } = useForm({
         defaultValues: {
-            maViTri: "",
+            maViTri: null,
             hinhAnh: undefined,
-            tenPhong: '',
-            moTa: '',
-            khach: "",
-            giuong: "",
-            phongNgu: "",
-            phongTam: "",
+            tenPhong: "",
+            moTa: "",
+            khach: null,
+            giuong: null,
+            phongNgu: null,
+            phongTam: null,
             tivi: false,
             wifi: false,
             mayGiat: false,
@@ -78,7 +63,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
             bep: false,
             doXe: false,
             hoBoi: false,
-            giaTien: "",
+            giaTien: null,
         },
         resolver: yupResolver(schema),
         criteriaMode: "all",
@@ -127,7 +112,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} className='mt-1' size='middle' placeholder='mã vị tri' />
+                                    <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập mã vị trí...' />
                                 )
                             }
                             }
@@ -208,7 +193,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             name='tenPhong'
                             control={control}
                             render={({ field }) =>
-                                <Input {...field} className='mt-1' size='middle' placeholder='tên phòng' />
+                                <Input {...field} className='mt-1' size='middle' placeholder='Nhập tên phòng...' />
                             }
                         />
                     </Col>
@@ -229,7 +214,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             name='moTa'
                             control={control}
                             render={({ field }) =>
-                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='mô tả' />
+                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='Nhập mô tả' />
                             }
                         />
                     </Col>
@@ -255,7 +240,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                     name='khach'
                                     control={control}
                                     render={({ field }) =>
-                                        <Input {...field} className='mt-1' size='middle' placeholder='số khách' />
+                                        <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập số khách...' />
                                     }
                                 />
                             </div>
@@ -267,7 +252,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                     name='giuong'
                                     control={control}
                                     render={({ field }) =>
-                                        <Input {...field} className='mt-1' size='middle' placeholder='số giường' />
+                                        <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập số giường...' />
                                     }
                                 />
                             </div>
@@ -279,7 +264,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                     name='phongNgu'
                                     control={control}
                                     render={({ field }) =>
-                                        <Input {...field} className='mt-1' size='middle' placeholder='số phòng ngủ' />
+                                        <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập số phòng ngủ...' />
                                     }
                                 />
                             </div>
@@ -291,7 +276,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                     name='phongTam'
                                     control={control}
                                     render={({ field }) =>
-                                        <Input {...field} className='mt-1' size='middle' placeholder='số phòng tắm' />
+                                        <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập số phòng tắm...' />
                                     }
                                 />
                             </div>
@@ -380,7 +365,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             name='giaTien'
                             control={control}
                             render={({ field }) =>
-                                <Input {...field} className='mt-1' size='middle' placeholder='giá' />
+                                <Input {...field} type='number' className='mt-1' size='middle' placeholder='Nhập giá phòng...' />
                             }
                         />
                     </Col>

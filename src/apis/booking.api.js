@@ -19,13 +19,34 @@ export const bookingApi = {
         }
     },
 
+    deleteBookedRoom: async (idBooked) => {
+        try {
+            const response = await fetcher.delete(`/dat-phong/${idBooked}`)
+            return response.data.content;
+        } catch (error) {
+            console.log('error: ', error);
+            throw Error(error.response.data.content);
+        }
+    },
+
     getListBookingRoomById: async (idUser) => {
         try {
             const response = await fetcher.get(`/dat-phong/lay-theo-nguoi-dung/${idUser}`);
             return response.data.content;
         } catch (error) {
+            console.log('error: ', error);
             throw Error(error.response.data.content);
         }
     },
+
+    updateBookedRoom: async (payload) => {
+        try {
+            const response = await fetcher.put(`/dat-phong/${payload.id}`, payload)
+            return response.data.content;
+        } catch (error) {
+            console.log('error: ', error);
+            throw Error(error.response.data.content);
+        }
+    }
 
 }

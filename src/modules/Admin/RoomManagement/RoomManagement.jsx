@@ -7,7 +7,7 @@ import {
   CheckSquareOutlined,
   CloseSquareOutlined
 } from "@ant-design/icons";
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs';
 import { roomApi } from '../../../apis/room.api';
 import { render } from 'rsuite/esm/internals/utils';
@@ -59,6 +59,7 @@ const RoomManagement = () => {
       closeAddModal();
     }
   })
+
   //Edit Room
   const { mutate: handleUpdateRoomApi, isPending: isUpdating } = useMutation({
     mutationFn: (payload) => roomApi.updateRoom(payload),
@@ -357,18 +358,11 @@ const RoomManagement = () => {
         key={"edit"}
         idEdit={idEdit}
         isOpen={isOpenEditModal}
+        setIdEdit={setIdEdit}
         isPending={false}
         onCloseModal={closeEditModal}
         onSubmit={handleSubmit}
       />
-      {/* <div>
-        <Pagination
-          total={100}
-          defaultCurrent={1}
-          onChange={(page, pSize) => { }}
-          showSizeChanger={false}
-        />
-      </div> */}
     </>
   )
 }

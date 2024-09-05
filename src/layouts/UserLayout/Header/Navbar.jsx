@@ -120,17 +120,17 @@ const Navbar = () => {
                         <li className='w-1/2'>
                             <Link
                                 to='/profile'
-                                className="no-underline flex gap-1 py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
+                                className="no-underline flex justify-center items-center gap-1 py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
                                 <img src={currentUser.avatar} alt="" className=' w-[40px] h-[40px] rounded-full' />
                                 <span className={` ${!scroll ? 'navbar' : 'navbar-scroll'} text-sm hover:text-red-600`}>{currentUser?.name}</span>
                             </Link>
                         </li>
-                        <li className=''>
+                        <li className='w-1/2'>
                             <Button
                                 onClick={handleLogOut}
-                                className="button-gradient block text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block w-full text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 size="small"
                                 type="default"
                                 danger
