@@ -106,12 +106,12 @@ const RoomsList = () => {
                 {searchParams && (<Typography className='text-md font-md'>{searchParams.date[0]} - {searchParams.date[1]}</Typography>)}
             </div>
             <Row gutter={24} className='mb-[50px] mt-5'>
-                <Col xs={{ span: 24 }} md={{ span: 6 }} xl={{ span: 3 }} className=' border border-gray-200 rounded-lg p-2 mt-3 lg:sticky lg:top-20 h-fit'>
+                <Col xs={{ span: 24 }} md={{ span: 6 }} xl={{ span: 6 }} xxl={{ span: 3 }} className=' border border-gray-200 rounded-lg p-2 mt-3 lg:sticky lg:top-20 h-fit'>
                     <Typography className='text-lg font-semibold'>
                         Tùy chọn chỗ nghỉ :
                     </Typography>
                     <RoomFilter filters={filters} setFilters={setFilters} />
-                    <div className='text-center mt-4'>
+                    <div className=' lg:block xl:block 2xl:hidden text-center mt-4'>
                         <button onClick={() => setIsModalOpen(true)} className='button-gradient text-white font-mono rounded-md px-3 py-2'>
                             Xem bản đồ
                         </button>
@@ -127,7 +127,7 @@ const RoomsList = () => {
                     </div>
 
                 </Col>
-                <Col xs={{ span: 24 }} md={{ span: 18 }} xl={{ span: 13 }} className='pb-5 pt-3'>
+                <Col xs={{ span: 24 }} md={{ span: 18 }} xl={{ span: 18 }} xxl={{ span: 13 }} className='pb-5 pt-3'>
                     {filterRooms.map((room) => (
                         <Card
                             bordered={true}
@@ -214,7 +214,7 @@ const RoomsList = () => {
                             <button onClick={handleShowAll} className="button-gradient text-center py-2 px-3 mt-5 font-semibold rounded-md md:dark:text-white no-underline cursor-pointer">Xem tất cả phòng</button>
                         </Card>)}
                 </Col>
-                <Col span={8} className='flex xs:hidden md:hidden xl:block justify-center lg:sticky lg:top-20 h-fit mt-3'>
+                <Col span={8} className='flex xs:hidden lg:hidden xl:hidden 2xl:block justify-center lg:sticky lg:top-20 h-fit mt-3'>
                     <Maps id={id} listLocation={listLocation} />
                 </Col>
             </Row>
