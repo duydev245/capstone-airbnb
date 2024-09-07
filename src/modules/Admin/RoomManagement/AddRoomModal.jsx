@@ -214,7 +214,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             name='moTa'
                             control={control}
                             render={({ field }) =>
-                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='Nhập mô tả' />
+                                <Input.TextArea {...field} rows={3} className='mt-1' size='middle' placeholder='Nhập mô tả...' />
                             }
                         />
                     </Col>
@@ -270,7 +270,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             </div>
                             <div className='w-full'>
                                 <Typography className='text-base '>
-                                    Phòng Tắm
+                                    Phòng tắm
                                 </Typography>
                                 <Controller
                                     name='phongTam'

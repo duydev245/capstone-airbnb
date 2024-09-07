@@ -6,17 +6,42 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { useQuery } from '@tanstack/react-query';
 import { bookingApi } from '../../../apis/booking.api';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, onCloseModal, onSubmit, isPending }) => {
 
-    const { handleSubmit, control, setValue, formState: { errors } } = useForm({
+    const schema = yup.object({
+        maPhong: yup.number()
+            .required('*Nhập mã phòng')
+            .min(1, '*Mã phòng phải >= 1'),
+        maNguoiDung: yup.number()
+            .required('*Nhập mã người dùng')
+            .min(1, '*Mã phòng phải >= 1'),
+        ngayDen: yup.date()
+            .required('*Chọn ngày đến')
+            .typeError('*Chọn ngày đến'),
+        ngayDi: yup.date()
+            .required('*Chọn ngày đi')
+            .typeError('*Chọn ngày đi')
+            .min(yup.ref('ngayDen'), '*Ngày chưa đúng'),
+        soLuongKhach: yup.number()
+            .required('*Nhập số khách')
+            .min(1, '*Số lượng khách phải >= 1')
+            .typeError('*Phải là số'),
+    })
+
+
+    const { handleSubmit, control, setValue, formState: { errors }, reset } = useForm({
         defaultValues: {
             maPhong: 0,
             maNguoiDung: 0,
             ngayDen: "",
             ngayDi: "",
             soLuongKhach: 0,
-        }
+        },
+        resolver: yupResolver(schema),
+        criteriaMode: "all",
     })
 
     //Date Select
@@ -44,7 +69,12 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
             setValue("ngayDi", bookedById.ngayDi);
             setValue("soLuongKhach", bookedById.soLuongKhach);
         }
-    }, [bookedByIdUser, bookedById, setValue])
+
+        if (!isOpen) {
+            reset()
+        }
+
+    }, [bookedByIdUser, bookedById, setValue, isOpen])
 
 
     return (
@@ -67,7 +97,7 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
             <Form className='my-4' onFinish={handleSubmit(onSubmit)}>
                 <Row gutter={[48, 15]}>
                     <Col span={24}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Mã người dùng
                         </label>
@@ -85,14 +115,14 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                             disabled={true}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập mã người dùng...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập mã người dùng...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Mã phòng
                         </label>
@@ -109,14 +139,14 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập mã phòng...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập mã phòng...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Số khách
                         </label>
@@ -133,14 +163,14 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập số khách...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập số khách...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Ngày nhận phòng
                         </label>
@@ -164,7 +194,7 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                                         placeholder="DD/MM/YYYY"
                                         format={"DD/MM/YYYY"}
                                         value={field.value ? dayjs(field.value) : null}
-                                        className='w-full'
+                                        className='w-full mt-1'
                                     />
                                 )
                             }
@@ -172,7 +202,7 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                         />
                     </Col>
                     <Col span={12} >
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Ngày trả phòng
                         </label>
@@ -196,7 +226,7 @@ const EditBookingModal = ({ isOpen, idUser, setIdUser, setIdBooked, idBooked, on
                                         placeholder="DD/MM/YYYY"
                                         format={"DD/MM/YYYY"}
                                         value={field.value ? dayjs(field.value) : null}
-                                        className='w-full'
+                                        className='w-full mt-1'
                                     />
                                 )
                             }

@@ -1,7 +1,7 @@
 
 
 import { useQuery } from '@tanstack/react-query'
-import { Col, Row, Select } from 'antd'
+import { Col, message, Row, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { locationApi } from '../../../apis/location.api'
 import { DatePicker } from 'antd';
@@ -11,8 +11,11 @@ import { useDispatch } from 'react-redux';
 import { setLocation } from '../../../redux/slices/location.slice';
 import { useNavigate } from 'react-router-dom';
 import { setSearchParams } from '../../../redux/slices/user.slice';
+import { SearchOutlined } from '@ant-design/icons';
 
 const SearchBar = () => {
+
+    const [messageApi, contextHolder] = message.useMessage();
 
     const [locationSelected, setLocationSelected] = useState(null);
     const [datesSelected, setDatesSelected] = useState(null);
@@ -71,6 +74,15 @@ const SearchBar = () => {
         if (locationSelected && datesSelected && guestCount) {
             navigate(`/rooms/${room}`)
             dispatch(setSearchParams(searchParams))
+        } else {
+            messageApi.open({
+                content: "Chọn thông tin phòng muốn tìm kiếm!",
+                type: "error",
+                duration: 2,
+                style: {
+                    marginTop: '8vh',
+                },
+            });
         }
     }
 
@@ -91,12 +103,12 @@ const SearchBar = () => {
 
     return (
         <>
-            <Row gutter={24} style={{ margin: 'auto' }} className=" max-w-screen-xl mx-auto absolute seachbar border-2 shadow-xl border-gray-400 bg-white md:rounded-lg w-full">
-                <Col span={8} className="col-span-4 flex-1 px-6 py-3 flex flex-col justify-center items-center">
+            {contextHolder}
+            <Row gutter={24} style={{ margin: 'auto' }} className=" container seachbar border-2 shadow-xl border-gray-400 bg-white xs:mb-8 xs-plus:mb-8 xs:rounded-b-lg xs-plus:rounded-b-lg md:rounded-lg w-full">
+                <Col xs={{ span: 24 }} md={{ span: 8 }} className="col-span-4 flex-1 px-6 py-3 flex flex-col justify-center items-center">
                     <Select
                         onSelect={handleOnSelect}
-                        className="h-[50px]"
-                        style={{ width: 300 }}
+                        className="xs:h-10 xs-plus:h-10 md:h-14 xs:w-full xs-plus:w-full xl:w-72"
                         placeholder={<span className="font-semibold">Bạn muốn đến đâu ?</span>}
                         options={listLocation.map((location) => ({
                             value: location.id,
@@ -109,20 +121,22 @@ const SearchBar = () => {
                         }))}
                     />
                 </Col>
-                <Col span={8} className='flex justify-center items-center'>
+                <Col xs={{ span: 24 }} md={{ span: 8 }} className='flex justify-center items-center'>
                     <RangePicker
                         disabledDate={disabledDate}
+                        disabled={locationSelected ? false : true}
                         format="DD/MM/YYYY"
-                        className='w-[300px] h-[50px]'
+                        className="xs:h-10 xs-plus:h-10 md:h-14 xs:w-full xs-plus:w-full xl:w-72"
                         placeholder={[`Ngày nhận phòng`, `Ngày trả phòng`]}
                         onChange={handleDateSelected}
                         allowClear={false}
                         inputReadOnly={true}
                     />
                 </Col>
-                <Col span={8} className=" flex-1 p-3 flex justify-center items-center gap-3">
+                <Col xs={{ span: 24 }} md={{ span: 8 }} className=" p-3 flex justify-center items-center gap-3">
                     <Select
-                        className='h-[50px] customselect'
+                        disabled={datesSelected ? false : true}
+                        className="customselect xs:h-10 xs-plus:h-10 md:h-14 xs:w-full xs-plus:w-full xl:w-72"
                         style={{ width: 300 }}
                         placeholder={<span className="font-semibold">Số khách ?</span>}
                         value={guestCount === 0 ? null : `${guestCount} khách`}
@@ -145,8 +159,8 @@ const SearchBar = () => {
                             </div>
                         )}
                     />
-                    <button onClick={() => { handleSearchRoom(locationSelected) }} className='button-gradient text-white p-1 h-[50px] rounded-md font-semibold'>
-                        Tìm phòng
+                    <button onClick={() => { handleSearchRoom(locationSelected) }} className='button-gradient text-white p-1 h-full w-[100px] rounded-md font-medium    '>
+                        <SearchOutlined style={{ marginRight: 3 }} /> Tìm
                     </button>
 
                 </Col>
