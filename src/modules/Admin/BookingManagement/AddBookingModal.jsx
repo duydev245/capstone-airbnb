@@ -13,22 +13,22 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
 
     const schema = yup.object({
         maPhong: yup.number()
-            .required('Mã phòng là bắt buộc')
-            .min(1, 'Mã phòng phải lớn hơn hoặc bằng 1'),
+            .required('*Nhập mã phòng')
+            .min(1, '*Mã phòng phải >= 1'),
         maNguoiDung: yup.number()
-            .required('Mã người dùng là bắt buộc')
-            .min(1, 'Mã phòng phải lớn hơn hoặc bằng 1'),
+            .required('*Nhập mã người dùng')
+            .min(1, '*Mã phòng phải >= 1'),
         ngayDen: yup.date()
-            .required('Ngày đến là bắt buộc')
-            .typeError('Ngày đến phải đúng định dạng'),
+            .required('*Chọn ngày đến')
+            .typeError('*Chọn ngày đến'),
         ngayDi: yup.date()
-            .required('Ngày đi là bắt buộc')
-            .typeError('Ngày đi phải đúng định dạng')
-            .min(yup.ref('ngayDen'), 'Ngày đi phải lớn hơn ngày đến'),
+            .required('*Chọn ngày đi')
+            .typeError('*Chọn ngày đi')
+            .min(yup.ref('ngayDen'), '*Ngày chưa đúng'),
         soLuongKhach: yup.number()
-            .required('Số lượng khách là bắt buộc')
-            .min(1, 'Số lượng khách phải lớn hơn hoặc bằng 1')
-            .typeError('Số lượng khách phải là số hợp lệ'),
+            .required('*Nhập số khách')
+            .min(1, '*Số lượng khách phải >= 1')
+            .typeError('*Phải là số'),
     })
 
     const { handleSubmit, control, reset, formState: { errors } } = useForm({
@@ -73,7 +73,7 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
             <Form className='my-4' onFinish={handleSubmit(onSubmit)}>
                 <Row gutter={[48, 15]}>
                     <Col span={24}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Mã người dùng
                         </label>
@@ -90,14 +90,14 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập mã người dùng...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập mã người dùng...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Mã phòng
                         </label>
@@ -114,14 +114,14 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập mã phòng...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập mã phòng...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Số khách
                         </label>
@@ -138,14 +138,14 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             control={control}
                             render={({ field }) => {
                                 return (
-                                    <Input {...field} size='large' type='number' placeholder='Nhập số khách...' />
+                                    <Input {...field} size='large' type='number' className='mt-1' placeholder='Nhập số khách...' />
                                 )
                             }
                             }
                         />
                     </Col>
                     <Col span={12}>
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Ngày nhận phòng
                         </label>
@@ -168,7 +168,7 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                         size="large"
                                         placeholder="DD/MM/YYYY"
                                         format={"DD/MM/YYYY"}
-                                        className='w-full'
+                                        className='w-full mt-1'
                                     />
                                 )
                             }
@@ -176,7 +176,7 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                         />
                     </Col>
                     <Col span={12} >
-                        <label className="text-xl text-black block mb-3">
+                        <label className="text-xl text-black">
                             <span className="text-red-600">* </span>
                             Ngày trả phòng
                         </label>
@@ -199,7 +199,7 @@ const AddBookingModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                         size="large"
                                         placeholder="DD/MM/YYYY"
                                         format={"DD/MM/YYYY"}
-                                        className='w-full'
+                                        className='w-full mt-1'
                                     />
                                 )
                             }

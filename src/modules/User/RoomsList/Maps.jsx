@@ -45,9 +45,8 @@ const Maps = ({ id, listLocation }) => {
             {currentMap && (
                 <iframe
                     src={currentMap.linkMap}
-                    width="600"
                     height="650"
-                    style={{ border: 0 }}
+                    className='w-full'
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                 />

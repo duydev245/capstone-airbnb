@@ -45,7 +45,7 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
             .typeError("*Giá tiền phải là số !"),
     });
 
-    const { handleSubmit, control, setValue, watch, formState: { errors } } = useForm({
+    const { handleSubmit, control, setValue, watch, formState: { errors }, reset } = useForm({
 
         defaultValues: {
             maViTri: null,
@@ -101,6 +101,10 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
             setValue('bep', data.bep)
             setValue('doXe', data.doXe)
             setValue('hoBoi', data.hoBoi)
+        }
+
+        if (!isOpen) {
+            reset()
         }
     }, [data, setValue]);
 
@@ -295,7 +299,7 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
                             </div>
                             <div className='w-full'>
                                 <Typography className='text-base '>
-                                    Phòng Tắm
+                                    Phòng tắm
                                 </Typography>
                                 <Controller
                                     name='phongTam'

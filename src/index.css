@@ -15,7 +15,7 @@
   --primaryColor: #ea580c;
 }
 
-/* HomePage */
+/* HomePage
 .navbar {
   color: white;
   transition: 0.5s all;
@@ -24,18 +24,12 @@
 .navbar-scroll {
   color: black;
   transition: 0.5 all;
-}
+} */
 
-.seachbar {
+/* .seachbar {
   top: 660px;
   left: 50%;
   transform: translateX(-50%);
-}
-
-/* .button-gradient1 {
-  background-size: 300%;
-  transition: 0.5s ease;
-  background-image: linear-gradient(135deg, #ea580c 100%, #F7CE68 10%, #be3434 80%);
 } */
 
 .button-gradient {
@@ -218,20 +212,48 @@
   }
 }
 
+/* @media (min-width: 414px) {} */
+
 @media (max-width: 768px) {
   .smm\:h-\[50vh\] {
-      height: 50vh !important;
+    height: 50vh !important;
   }
 }
 
 @media (min-width: 768px) {
   .md\:h-\[50vh\] {
-      height: 50vh !important;
+    height: 50vh !important;
   }
+
+  /* HomePage */
+  .navbar {
+    color: white;
+    transition: 0.5s all;
+  }
+
+  .navbar-scroll {
+    color: black;
+    transition: 0.5 all;
+  }
+
+  .seachbar {
+    position: absolute;
+    top: 560px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
 }
 
 @media (min-width: 1024px) {
   .lg\:h-\[40vh\] {
-      height: 40vh !important;
+    height: 40vh !important;
+  }
+
+  .seachbar {
+    position: absolute;
+    top: 760px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
