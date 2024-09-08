@@ -1,6 +1,6 @@
 
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 const RoomFilter = ({ filters, setFilters }) => {
     console.log('filters: ', filters);
