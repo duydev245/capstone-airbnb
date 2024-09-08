@@ -86,7 +86,7 @@ const Navbar = () => {
                     </button>
                 </div>
                 <div className={`${dropdownOpen ? 'block' : 'hidden'} block w-full md:block md:w-auto`} id="navbar-dropdown">
-                    <ul className="list-none flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-500 rounded-lg xs:bg-zinc-700 xs-plus:bg-zinc-700 sm:bg-zinc-700 md:bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
+                    <ul className="list-none flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg xs:bg-gray-400 md:bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                         <li>
                             <a href="/" className="block py-2 px-3 md:p-0 xs:text-white xs-plus:text-white sm:text-white rounded md:bg-transparent xs:bg-orange-500 xs-plus:bg-orange-500 sm:bg-orange-500 md:text-orange-600 font-sans text-lg" aria-current="page">Home</a>
                         </li>

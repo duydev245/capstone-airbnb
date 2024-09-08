@@ -9,6 +9,10 @@
   box-sizing: border-box;
 }
 
+.container {
+  padding: 0 15px;
+}
+
 :root {
   --primaryColor: #ea580c;
 }
@@ -204,7 +208,7 @@
     height: 50vh !important;
   }
 
-  /* HomePage */
+  /* SearchBar */
   .navbar {
     color: white;
     transition: 0.5s all;
@@ -212,7 +216,7 @@
 
   .navbar-scroll {
     color: black;
-    transition: 0.5 all;
+    transition: 0.5s all;
   }
 
   .seachbar {
