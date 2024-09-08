@@ -7,30 +7,11 @@
   padding: 0;
   outline: 0;
   box-sizing: border-box;
-  /* max-width: 100vw; */
-  /* max-height: 100vh; */
 }
 
 :root {
   --primaryColor: #ea580c;
 }
-
-/* HomePage
-.navbar {
-  color: white;
-  transition: 0.5s all;
-}
-
-.navbar-scroll {
-  color: black;
-  transition: 0.5 all;
-} */
-
-/* .seachbar {
-  top: 660px;
-  left: 50%;
-  transform: translateX(-50%);
-} */
 
 .button-gradient {
   background-size: 300%;
@@ -212,8 +193,6 @@
   }
 }
 
-/* @media (min-width: 414px) {} */
-
 @media (max-width: 768px) {
   .smm\:h-\[50vh\] {
     height: 50vh !important;
@@ -246,6 +225,19 @@
 }
 
 @media (min-width: 1024px) {
+  .lg\:h-\[40vh\] {
+    height: 40vh !important;
+  }
+
+  .seachbar {
+    position: absolute;
+    top: 560px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+@media (min-width: 1536px) {
   .lg\:h-\[40vh\] {
     height: 40vh !important;
   }

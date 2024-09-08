@@ -1,11 +1,9 @@
 
 
-import { DeleteOutlined, FieldTimeOutlined, PlusOutlined } from '@ant-design/icons';
-import { useMutation } from '@tanstack/react-query';
-import { Button, Checkbox, Col, DatePicker, Form, Input, Modal, Radio, Row, Typography, Upload } from 'antd';
-import React, { useEffect, useState } from 'react'
+import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Col, Form, Input, Modal, Row, Typography, Upload } from 'antd';
+import React, { useEffect } from 'react'
 import { Controller, useForm } from 'react-hook-form';
-import { roomApi } from '../../../apis/room.api';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -373,7 +371,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                         <Button onClick={onCloseModal} type='default' size='large'>Cancel</Button>
                         <Button
                             loading={isPending}
-                            // disabled={isPending}
+                            disabled={isPending}
                             type='primary'
                             htmlType='submit'
                             size='large'
