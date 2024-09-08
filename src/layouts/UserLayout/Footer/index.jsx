@@ -5,7 +5,7 @@ import React from 'react'
 const Footer = () => {
     return (
         <footer className="border-t mt-5 pt-5 bg-gray-100">
-            <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 py-6 gap-12 ">
+            <div className="container mx-auto xs:pb-8 md:pb-24 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 py-6 gap-12 ">
                 <div className="space-y-3">
                     <h2 className="font-bold uppercase">Giới thiệu</h2>
                     <ul className="text-sm space-y-3">

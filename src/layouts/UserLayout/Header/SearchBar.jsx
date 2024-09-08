@@ -104,7 +104,7 @@ const SearchBar = () => {
     return (
         <>
             {contextHolder}
-            <Row gutter={24} style={{ margin: 'auto' }} className=" container seachbar border-2 shadow-xl border-gray-400 bg-white xs:mb-8 xs-plus:mb-8 xs:rounded-b-lg xs-plus:rounded-b-lg md:rounded-lg w-full">
+            <Row gutter={24} style={{ padding: '0' }} className=" container mx-auto seachbar border-2 shadow-xl border-gray-400 bg-white xs:mb-8 xs-plus:mb-8 xs:rounded-b-lg xs-plus:rounded-b-lg md:rounded-lg w-full">
                 <Col xs={{ span: 24 }} md={{ span: 8 }} className="col-span-4 flex-1 px-6 py-3 flex flex-col justify-center items-center">
                     <Select
                         onSelect={handleOnSelect}
