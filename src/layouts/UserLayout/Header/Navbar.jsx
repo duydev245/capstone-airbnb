@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-scroll';
-import { removeLocalStorage } from '../../../utils';
+import { getLocalStorage, removeLocalStorage } from '../../../utils';
 
 const Navbar = () => {
 
     const [scroll, setScroll] = useState(false);
 
-    const currentUser = useSelector(state => state.user.currentUser)
+    const currentUser = getLocalStorage("user");
+    console.log('currentUser: ', currentUser);
 
     const handleLogOut = () => {
         removeLocalStorage("user");
@@ -127,7 +127,7 @@ const Navbar = () => {
                                         className="no-underline flex justify-start items-center w-fit gap-3 py-2 px-3 text-white text-xl rounded"
                                         aria-current="page"
                                     >
-                                        <img src={currentUser.avatar} alt="" className=' w-[40px] h-[40px] rounded-full' />
+                                        <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className='w-[50px] h-[50px] rounded-full object-cover' />
                                         <span className={` text-sm hover:text-gray-400`}>{currentUser?.name}</span>
                                     </Link>
                                 </li>
@@ -176,7 +176,7 @@ const Navbar = () => {
                                 className="no-underline flex justify-center items-center gap-1 py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
-                                <img src={currentUser.avatar} alt="" className=' w-[40px] h-[40px] rounded-full' />
+                                <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className=' w-[40px] h-[40px] rounded-full object-cover' />
                                 <span className={` ${!scroll ? 'navbar' : 'navbar-scroll'} text-sm hover:text-red-600`}>{currentUser?.name}</span>
                             </Link>
                         </li>

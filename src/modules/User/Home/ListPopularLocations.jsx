@@ -21,7 +21,7 @@ const ListPopularLocations = () => {
                 {data.map((item, index) => (
                     <Col xs={{ span: 12 }} sm={{ span: 12 }} md={{ span: 12 }} lg={{ span: 12 }} xl={{ span: 6 }} key={index} className='h-fit xs:mb-4 xs-plus:mb-4 sm:mb-5 md:mb-6 flex justify-center'>
                         <Card
-                            className='hover-card hover-box-shadow cursor-pointer w-[400px]'
+                            className='border border-gray-200 rounded-lg hover-card hover-box-shadow cursor-pointer md:w-[300px] lg:w-[400px]'
                             cover={<img className='hover-img object-cover p-4 ' alt="example" src={item.img} />}
                             size='small'
                         >
