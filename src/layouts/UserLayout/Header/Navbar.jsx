@@ -4,6 +4,7 @@ import { Button } from 'react-scroll';
 import { getLocalStorage, removeLocalStorage } from '../../../utils';
 import { PATH } from '../../../routes/path';
 import { useDispatch } from 'react-redux';
+import { removeUser } from "../../../redux/slices/user.slice";
 
 const Navbar = () => {
 
