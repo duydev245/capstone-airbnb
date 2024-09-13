@@ -16,7 +16,7 @@ const userSlice = createSlice({
       state.currentUser = action.payload;
     },
     removeUser: (state) => {
-      state.searchParams = null;
+      state.currentUser = null;
     },
     // Search 
     setSearchParams: (state, action) => {
