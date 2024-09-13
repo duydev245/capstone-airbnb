@@ -34,6 +34,7 @@ const AdminLayout = ({ children }) => {
     removeLocalStorage("user");
     removeLocalStorage("token");
     navigate(PATH.HOME);
+    window.location.reload();
   };
 
   useEffect(() => {
