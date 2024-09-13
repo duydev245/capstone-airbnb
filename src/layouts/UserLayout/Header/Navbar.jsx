@@ -20,6 +20,7 @@ const Navbar = () => {
         removeLocalStorage("user");
         removeLocalStorage("token");
         navigate(PATH.HOME);
+        window.location.reload();
     };
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
