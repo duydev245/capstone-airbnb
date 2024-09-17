@@ -1,17 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-scroll';
 import { getLocalStorage, removeLocalStorage } from '../../../utils';
+import { PATH } from '../../../routes/path';
+import { useDispatch } from 'react-redux';
+import { removeUser } from "../../../redux/slices/user.slice";
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const [scroll, setScroll] = useState(false);
 
     const currentUser = getLocalStorage("user");
-    console.log('currentUser: ', currentUser);
 
     const handleLogOut = () => {
+        dispatch(removeUser(null));
         removeLocalStorage("user");
+        removeLocalStorage("token");
+        navigate(PATH.HOME);
         window.location.reload();
     };
 
