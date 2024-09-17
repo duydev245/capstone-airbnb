@@ -40,7 +40,7 @@ const RoomFilter = ({ filters, setFilters }) => {
                     >
                         <div>–</div>
                     </button>
-                    <div className='text-sm'>{filters[item.type]} {item.label}</div>
+                    <div className='text-sm text-center'>{filters[item.type]} {item.label}</div>
                     <button
                         className="font-bold w-6 h-6 text-white button-gradient rounded-md flex justify-center"
                         onClick={() => increaseCount(item.type)}

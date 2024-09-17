@@ -101,7 +101,7 @@ const Navbar = () => {
                         </li>
                         <li className='sm:block md:hidden'>
                             {!currentUser ? (<ul className=" list-none flex justify-end items-center w-full border-t-2 mt-3 pt-3">
-                                <li className='w-1/5 xs:w-1/3 xs-plus:w-1/3'>
+                                <li className='w-1/5 xs:w-1/2'>
                                     <Link
                                         to="/auth/login"
                                         className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
@@ -111,7 +111,7 @@ const Navbar = () => {
                                     </Link>
                                 </li>
                                 <span className="text-lg text-gray-400">|</span>
-                                <li className='w-1/5 xs:w-1/3'>
+                                <li className='w-1/5 xs:w-1/2'>
                                     <Link
                                         to="/auth/register"
                                         className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
