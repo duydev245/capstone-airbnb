@@ -103,7 +103,7 @@ const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handle
                 </div>
                 <div>
                     <span className='space-x-2 flex items-center justify-center'>
-                        <StarFilled style={{ color: "#fe6b6e" }} />
+                        <StarFilled style={{ color: "#ea580c" }} />
                         <span className='text-black font-bold'>{avgRate}</span>
 
                         <span className="underline cursor-pointer text-gray-600">
@@ -120,13 +120,13 @@ const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handle
                     <div className="mb-3 font-bold">Khách</div>
                     <div className='flex justify-between items-center'>
                         <div>
-                            <button className="font-bold w-9 h-9 text-white btn-rate hover:btn-rate rounded-full duration-300 flex items-center justify-center" onClick={decreaseGuestCount}>
+                            <button className="font-bold w-9 h-9 text-white btn-rate rounded-full duration-300 flex items-center justify-center" onClick={decreaseGuestCount}>
                                 <div>–</div>
                             </button>
                         </div>
                         <div className='font-semibold'>{guestCount} khách</div>
                         <div>
-                            <button className="font-bold w-9 h-9 text-white btn-rate hover:btn-rate rounded-full duration-300 flex items-center justify-center" onClick={increaseGuestCount}>
+                            <button className="font-bold w-9 h-9 text-white btn-rate rounded-full duration-300 flex items-center justify-center" onClick={increaseGuestCount}>
                                 <div>+</div>
                             </button>
                         </div>
@@ -142,7 +142,7 @@ const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handle
                 okText="XÁC NHẬN"
                 cancelText="HỦY"
             >
-                <button className="btn-rate w-full py-3 rounded-lg font-bold text-white duration-300 hover:bg-pink-800">
+                <button className="btn-rate w-full py-3 rounded-lg font-bold text-white duration-300">
                     Đặt phòng
                 </button>
             </Popconfirm>

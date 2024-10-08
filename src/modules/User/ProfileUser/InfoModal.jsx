@@ -119,6 +119,7 @@ const InfoModal = (
                                         className="mt-1"
                                         placeholder="Vui lòng nhập email..."
                                         status={errors.email ? "error" : ""}
+                                        readOnly
                                     />
                                 );
                             }}

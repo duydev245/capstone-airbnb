@@ -9,7 +9,7 @@ const Header = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar notChange={true}/>
             <Banner />
             <SearchBar />
         </>

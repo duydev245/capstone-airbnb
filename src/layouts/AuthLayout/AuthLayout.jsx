@@ -24,7 +24,7 @@ const AuthLayout = ({ children }) => {
             <div className="spinner"></div>
           </div>
         ) : (
-          <div className="py-8 px-10" id="overlayCompo">
+          <div className="py-5 px-10" id="overlayCompo">
             <div className="flex justify-center">
               <img
                 className="cursor-pointer"

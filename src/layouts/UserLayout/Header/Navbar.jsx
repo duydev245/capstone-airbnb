@@ -5,8 +5,9 @@ import { getLocalStorage, removeLocalStorage } from '../../../utils';
 import { PATH } from '../../../routes/path';
 import { useDispatch } from 'react-redux';
 import { removeUser } from "../../../redux/slices/user.slice";
+import 'animate.css'
 
-const Navbar = () => {
+const Navbar = ({ notChange }) => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const Navbar = () => {
         navigate(PATH.HOME);
         window.location.reload();
     };
+    const isNotChange = notChange;
 
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -63,7 +65,7 @@ const Navbar = () => {
                             className="cursor-pointer h-9 "
                             alt="Airbnb Logo"
                         />
-                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-red-600 cursor-pointer'>AirBnb</span>
+                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-orange-800 duration-300 cursor-pointer'>airbnb</span>
                     </div>
                 </Link>
                 <div className='h-full flex items-center md:hidden '>
@@ -99,13 +101,13 @@ const Navbar = () => {
                             <a href="/" className="block py-2 px-3 md:p-0 xs:text-white xs-plus:text-white sm:text-white rounded md:bg-transparent xs:bg-orange-500 xs-plus:bg-orange-500 sm:bg-orange-500 md:text-orange-600 font-sans text-lg" aria-current="page">Home</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? 'navbar' : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>About</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>About</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? 'navbar' : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Services</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Services</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? 'navbar' : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Contact</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Contact</a>
                         </li>
                         <li className='sm:block md:hidden'>
                             {!currentUser ? (<ul className=" list-none flex justify-end items-center w-full border-t-2 mt-3 pt-3">

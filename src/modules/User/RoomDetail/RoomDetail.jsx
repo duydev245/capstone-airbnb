@@ -85,8 +85,8 @@ const RoomDetail = () => {
 
     return (
         <>
-            <Navbar />
-            <div className="pb-16 border-b-2 bg-black"></div>
+            <Navbar notChange={false}/>
+            <div className="pb-16 border-b-2"></div>
             {/* <Banner /> */}
             {contextHolder}
 

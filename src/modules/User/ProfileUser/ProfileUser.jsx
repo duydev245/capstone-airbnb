@@ -95,7 +95,7 @@ const ProfileUser = () => {
 
     return (
         <>
-            <Navbar />
+            <Navbar notChange={true}/>
             {contextHolder}
             {/* banner */}
             <div className="uppercase">
@@ -110,7 +110,7 @@ const ProfileUser = () => {
             </div>
 
             {/* main */}
-            <div className='container mx-auto grid lg:flex gap-10 py-5'>
+            <div className='container mx-auto grid lg:flex gap-10 py-5 my-5'>
                 {/* left section */}
                 <Card
                     hoverable
