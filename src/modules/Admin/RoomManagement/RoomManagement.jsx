@@ -19,6 +19,8 @@ const RoomManagement = () => {
 
   const [idEdit, setIdEdit] = useState(0);
   console.log('idEdit: ', idEdit);
+  const [values, setFormValues] = useState();
+  console.log('values: ', values);
 
   const { isOpen: isOpenAddModal, openModal: openAddModal, closeModal: closeAddModal } = useOpenModal();
   console.log('closeAddModal: ', closeAddModal);
@@ -45,6 +47,17 @@ const RoomManagement = () => {
         type: "success",
         duration: 3,
       });
+      const idRoom = payload?.id;
+      if (values.hinhAnh && idRoom) {
+        const formData = new FormData();
+        formData.append("formFile", values.hinhAnh);
+        handleUploadImg({ idRoom, formData });
+      }
+      closeAddModal();
+      queryClient.refetchQueries({
+        queryKey: ["list-location"],
+        type: "active",
+      });
       closeAddModal();
     },
     onError: (error) => {
@@ -61,32 +74,58 @@ const RoomManagement = () => {
   //Edit Room
   const { mutate: handleUpdateRoomApi, isPending: isUpdating } = useMutation({
     mutationFn: (payload) => roomApi.updateRoom(payload),
-    onSuccess: (payload) => {
-      console.log('data: ', payload);
-      queryClient.refetchQueries({
-        queryKey: ["list-rooms"],
-        type: 'active'
-      });
+    // onSuccess: () => {
+    //   // console.log('data: ', payload);
+    //   queryClient.refetchQueries({
+    //     queryKey: ["list-rooms"],
+    //     type: 'active',
+    //   });
+    //   messageApi.open({
+    //     content: "Cập nhật phòng thành công",
+    //     type: "success",
+    //     duration: 3,
+    //   });
+    //   closeEditModal();
+    //   setIdEdit('')
+
+    // },
+    // onError: (error) => {
+    //   console.log('error: ', error);
+    //   messageApi.open({
+    //     content: "Cập nhật phòng thất bại",
+    //     type: "error",
+    //     duration: 3,
+    //   });
+    //   closeEditModal()
+    // }
+    onSuccess: () => {
       messageApi.open({
-        content: "Cập nhật phòng thành công",
+        content: "Cập nhật vị trí thành công",
         type: "success",
         duration: 3,
       });
-      // handleUploadImg(payload)
-      closeEditModal();
-      setIdEdit('')
+      if (typeof values.hinhAnh !== "string") {
+        const formData = new FormData();
+        formData.append("formFile", values.hinhAnh);
 
+        handleUploadImg({ idRoom: idEdit, formData });
+      }
+      closeEditModal();
+      queryClient.refetchQueries({
+        queryKey: ["list-rooms"],
+        type: "active",
+      });
     },
     onError: (error) => {
-      console.log('error: ', error);
+      console.log("🚀 ~ LocationManagement ~ error:", error)
       messageApi.open({
-        content: "Cập nhật phòng thất bại",
+        content: error?.message,
         type: "error",
         duration: 3,
       });
-      closeEditModal()
-    }
+    },
   })
+
   //Delete Room 
   const { mutate: handleDeleteRoomApi, isPending: isDeleting } = useMutation({
     mutationFn: (idRoom) => roomApi.deleteRoom(idRoom),
@@ -110,28 +149,28 @@ const RoomManagement = () => {
       });
     }
   })
-  //Upload Img
-  // const { mutate: handleUploadImg } = useMutation({
-  //   mutationFn: (payload) => roomApi.updateImgRoom(payload.idRoom, payload.formData),
-  //   onSuccess: () => {
-  //     queryClient.refetchQueries({
-  //       queryKey: ["list-rooms"],
-  //       type: "active",
-  //     });
-  //   },
-  //   onError: (error) => {
-  //     console.log('error: ', error);
 
-  //   }
-  // })
+  // Upload Img
+  const { mutate: handleUploadImg } = useMutation({
+    mutationFn: (payload) => roomApi.uploadImgRoom(payload.idRoom, payload.formData),
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["list-rooms"],
+        type: "active",
+      });
+    },
+    onError: (error) => {
+      console.log('error: ', error);
+
+    }
+  })
 
   const handleSubmit = (values) => {
     console.log('values: ', values);
-
+    setFormValues(values)
     const payload = {
       id: idEdit ? idEdit : 0,
       maViTri: values.maViTri,
-      // hinhAnh: values.hinhAnh,
       tenPhong: values.tenPhong,
       moTa: values.moTa,
       khach: values.khach,

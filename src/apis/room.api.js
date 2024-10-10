@@ -67,21 +67,21 @@ export const roomApi = {
         }
     },
 
-    // updateImgRoom: async (idRoom, payload) => {
-    //     try {
-    //         const response = await fetcher.put(`/phong-thue/upload-hinh-phong?maPhong=${idRoom}`, payload,
-    //             {
-    //                 headers: {
-    //                     'Content-Type': 'multipart/form-data'
-    //                 },
-    //             }
-    //         )
-    //         return response.data.content
-    //     } catch (error) {
-    //         throw Error(error.response.data.content)
+    uploadImgRoom: async (idRoom, payload) => {
+        try {
+            const response = await fetcher.post(`/phong-thue/upload-hinh-phong?maPhong=${idRoom}`, payload,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                }
+            )
+            return response.data.content
+        } catch (error) {
+            throw Error(error.response.data.content)
 
-    //     }
-    // },
+        }
+    },
 
     getRoomDetail: async (id) => {
         try {

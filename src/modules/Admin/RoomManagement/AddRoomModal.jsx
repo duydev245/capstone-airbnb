@@ -2,7 +2,7 @@
 
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Col, Form, Input, Modal, Row, Typography, Upload } from 'antd';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -67,8 +67,15 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
         criteriaMode: "all",
     })
 
-    // const [imageUpload, setImageUpload] = useState(undefined);
+    const [imageUpload, setImageUpload] = useState(undefined);
     const watchHinhAnh = watch("hinhAnh");
+
+    const getErrorMessage = (error) => {
+        if (!error) return undefined;
+        if (typeof error === "string") return error;
+        if ("message" in error) return error.message;
+        return undefined;
+    };
 
     useEffect(() => {
         if (!isOpen) {
@@ -121,12 +128,12 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                             <span className="text-red-600">* </span>
                             Hình ảnh
                         </label>
-                        {/* {errors.hinhAnh && (
+                        {errors.hinhAnh && (
                             <span className="mt-1 text-base text-red-500">
                                 {" "}
                                 {getErrorMessage(errors.hinhAnh)}
                             </span>
-                        )} */}
+                        )}
                         <Controller
                             name='hinhAnh'
                             control={control}
@@ -151,7 +158,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                             }}
                                             type="button"
                                         >
-                                            {watchHinhAnh
+                                            {/* {watchHinhAnh
                                                 ? (
                                                     <div>
                                                         <img className='w-10 h-10 object-cover' src={URL.createObjectURL(new Blob([watchHinhAnh]))} />
@@ -168,7 +175,40 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                                 }}
                                             >
                                                 Upload
-                                            </div>
+                                            </div> */}
+
+                                            {watchHinhAnh || imageUpload ? (
+                                                <div className="relative w-full h-full">
+                                                    <img
+                                                        className="w-[105px] h-[105px] rounded-lg"
+                                                        src={
+                                                            imageUpload ||
+                                                            (watchHinhAnh instanceof File
+                                                                ? URL.createObjectURL(watchHinhAnh)
+                                                                : undefined)
+                                                        }
+                                                        onClick={(event) => {
+                                                            event.stopPropagation();
+                                                        }}
+                                                    />
+
+                                                    <div
+                                                        className="absolute top-1 right-1 cursor-pointer text-red-500 text-base"
+                                                        onClick={(event) => {
+                                                            event.stopPropagation();
+                                                            setValue("hinhAnh", undefined);
+                                                            setImageUpload(undefined);
+                                                        }}
+                                                    >
+                                                        <DeleteOutlined />
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <>
+                                                    <PlusOutlined />
+                                                    <div style={{ marginTop: 8 }}>Upload</div>
+                                                </>
+                                            )}
                                         </button>
                                     </Upload>)
                             }}
