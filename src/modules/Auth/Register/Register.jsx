@@ -15,29 +15,29 @@ const Register = () => {
     email: yup
       .string()
       .trim()
-      .required("*Email không được bỏ trống !")
-      .email("*Email không hợp lệ !"),
+      .required("*Email không được bỏ trống")
+      .email("*Email không hợp lệ"),
     password: yup
       .string()
       .trim()
-      .required("*Mật khẩu không được bỏ trống !"),
+      .required("*Mật khẩu không được bỏ trống"),
     confirmPassword: yup
       .string()
       .trim()
-      .required("*Xác Nhận mật khẩu không được bỏ trống !")
+      .required("*Xác nhận mật khẩu không được bỏ trống")
       .oneOf([yup.ref("password")], "Xác Nhận Mật Khẩu Sai"),
-    name: yup.string().trim().required("*Họ và tên không được bỏ trống !"),
+    name: yup.string().trim().required("*Họ và tên không được bỏ trống"),
     phone: yup
       .string()
       .trim()
-      .required("*Số điện thoại không được bỏ trống !")
-      .matches(/^[0-9]+$/, "*Số điện thoại không được là kí tự !")
-      .min(9, "*Số điện thoại phải trên 9 kí tự !")
-      .max(15, "*Số điện thoại không được quá 15 kí tự !"),
+      .required("*Số điện thoại không được bỏ trống")
+      .matches(/^[0-9]+$/, "*Số điện thoại không được là kí tự")
+      .min(9, "*Số điện thoại phải trên 9 kí tự")
+      .max(15, "*Số điện thoại không được quá 15 kí tự"),
     birthday: yup
       .string()
       .nullable()
-      .required("*Ngày Sinh Nhật không được bỏ trống ! "),
+      .required("*Ngày sinh nhật không được bỏ trống"),
   });
 
   const {
@@ -100,23 +100,15 @@ const Register = () => {
       {contextHolder}
       <div className="mt-3 mb-3 text-center">
         <Typography className="text-black">
-          <Title level={2}>Đăng ký tài khoản Airbnb</Title>
+          <Title level={2}>Đăng ký tài khoản airbnb</Title>
         </Typography>
       </div>
 
       <Form layout="vertical" onFinish={handleSubmit(onSubmit)}>
-        <Row gutter={[48, 16]}>
+        <Row gutter={[40, 3]}>
           {/* Email */}
           <Col span={24}>
             <label className="text-base text-black">*Email:</label>
-            {errors?.email && (
-              <>
-                {" "}
-                <span className="mt-1 text-base text-red-500">
-                  {errors.email.message}
-                </span>
-              </>
-            )}
             <Controller
               name="email"
               control={control}
@@ -133,16 +125,18 @@ const Register = () => {
                 );
               }}
             />
+            {errors?.email && (
+              <>
+                {" "}
+                <span className="mt-1 text-base text-red-500">
+                  {errors.email.message}
+                </span>
+              </>
+            )}
           </Col>
           {/* Mật khẩu */}
           <Col span={24}>
             <label className="text-base text-black">*Mật khẩu:</label>
-            {errors?.password && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.password.message}
-              </span>
-            )}
             <Controller
               name="password"
               control={control}
@@ -162,18 +156,16 @@ const Register = () => {
                 );
               }}
             />
+            {errors?.password && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.password.message}
+              </span>
+            )}
           </Col>
           {/* Xác nhận mật khẩu */}
           <Col span={24}>
             <label className="text-base text-black">*Xác nhận mật khẩu:</label>
-            {errors?.confirmPassword && (
-              <>
-                {" "}
-                <span className="mt-1 text-base text-red-500">
-                  {errors.confirmPassword.message}
-                </span>
-              </>
-            )}
             <Controller
               name="confirmPassword"
               control={control}
@@ -192,16 +184,18 @@ const Register = () => {
                 );
               }}
             />
+            {errors?.confirmPassword && (
+              <>
+                {" "}
+                <span className="mt-1 text-base text-red-500">
+                  {errors.confirmPassword.message}
+                </span>
+              </>
+            )}
           </Col>
           {/* Họ và tên */}
           <Col span={24}>
             <label className="text-base text-black">*Họ và tên:</label>
-            {errors?.name && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.name.message}
-              </span>
-            )}
             <Controller
               name="name"
               control={control}
@@ -218,16 +212,16 @@ const Register = () => {
                 );
               }}
             />
+            {errors?.name && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.name.message}
+              </span>
+            )}
           </Col>
           {/* Số điện thoại */}
           <Col span={24}>
-            <label className="text-base text-black">*Số điện thoại:</label>
-            {errors?.phone && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.phone.message}
-              </span>
-            )}
+            <label className="text-base text-black">*Số điện thoại:</label>      
             <Controller
               name="phone"
               control={control}
@@ -244,16 +238,16 @@ const Register = () => {
                 );
               }}
             />
+            {errors?.phone && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.phone.message}
+              </span>
+            )}
           </Col>
           {/* Ngày Sinh Nhật */}
           <Col span={12}>
-            <label className="block text-base text-black">*Ngày Sinh Nhật:</label>
-            {errors.birthday && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.birthday.message}
-              </span>
-            )}
+            <label className="block text-base text-black">*Ngày sinh nhật:</label>
             <Controller
               name="birthday"
               control={control}
@@ -272,6 +266,12 @@ const Register = () => {
                 />
               )}
             />
+            {errors.birthday && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.birthday.message}
+              </span>
+            )}
           </Col>
           {/* Gender */}
           <Col span={12}>
@@ -288,7 +288,7 @@ const Register = () => {
             />
           </Col>
 
-          <Col span={24}>
+          <Col span={24} className="mt-3">
             <Typography className="text-sm text-black">
               Đã có tài khoản?{" "}
               <span

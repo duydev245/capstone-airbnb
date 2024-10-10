@@ -77,7 +77,7 @@
 .authLayout #overlayCompo {
   overflow-y: auto;
   max-width: 700px;
-  max-height: 95vh;
+  max-height: 100vh;
   z-index: 1000;
   position: relative;
   border-radius: 6px;

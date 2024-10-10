@@ -16,9 +16,9 @@ const Login = () => {
     email: yup
       .string()
       .trim()
-      .email("*Email không đúng định dạng !")
-      .required("*Email không được bỏ trống !"),
-    password: yup.string().trim().required("*Mật khẩu không được bỏ trống !"),
+      .email("*Email không đúng định dạng")
+      .required("*Email không được bỏ trống"),
+    password: yup.string().trim().required("*Mật khẩu không được bỏ trống"),
   });
 
   const {
@@ -70,7 +70,7 @@ const Login = () => {
       {contextHolder}
       <div className="mt-3 mb-3 text-center">
         <Typography className="text-black">
-          <Title level={2}>Đăng nhập Airbnb</Title>
+          <Title level={2}>Đăng nhập airbnb</Title>
         </Typography>
       </div>
 
@@ -78,14 +78,6 @@ const Login = () => {
         <Row gutter={[48, 16]}>
           <Col span={24}>
             <label className="text-base text-black">*Email:</label>
-            {errors?.email && (
-              <>
-                {" "}
-                <span className="mt-1 text-base text-red-500">
-                  {errors.email.message}
-                </span>
-              </>
-            )}
             <Controller
               name="email"
               control={control}
@@ -102,16 +94,18 @@ const Login = () => {
                 );
               }}
             />
+            {errors?.email && (
+              <>
+                {" "}
+                <span className="mt-1 text-base text-red-500">
+                  {errors.email.message}
+                </span>
+              </>
+            )}
           </Col>
 
           <Col span={24}>
             <label className="text-base text-black">*Mật khẩu:</label>
-            {errors?.password && (
-              <span className="mt-1 text-base text-red-500">
-                {" "}
-                {errors.password.message}
-              </span>
-            )}
             <Controller
               name="password"
               control={control}
@@ -131,6 +125,12 @@ const Login = () => {
                 );
               }}
             />
+            {errors?.password && (
+              <span className="mt-1 text-base text-red-500">
+                {" "}
+                {errors.password.message}
+              </span>
+            )}
           </Col>
 
           <Col span={24}>
