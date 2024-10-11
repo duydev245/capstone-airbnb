@@ -1,15 +1,31 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { DatePicker, Popconfirm } from 'antd';
 import { StarFilled } from "@ant-design/icons";
+import { useSelector } from 'react-redux';
 
 
 const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handleBookingRoom }) => {
 
+    const { searchParams } = useSelector((state) => state.user);
+
     const [guestCount, setGuestCount] = useState(1);
     const [dateCount, setDateCount] = useState(0);
     const [selectedDates, setSelectedDates] = useState([]);
+    // console.log("🚀 ~ BookingForm ~ selectedDates:", selectedDates)
+
+    useEffect(() => {
+        setGuestCount(searchParams?.guest);
+
+        if (searchParams?.date) {
+            const formattedDates = searchParams?.date.map((date) => dayjs(date, "DD/MM/YYYY"));
+            setSelectedDates(formattedDates);
+        } else {
+            setSelectedDates([]);
+        }
+    
+    }, [searchParams])
 
     let avgRate = 0;
     if (Array.isArray(listComment) && listComment.length > 0) {
@@ -114,7 +130,7 @@ const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handle
             </div>
             <div className='w-full'>
                 <div className='border-2 border-gray-600 rounded-lg'>
-                    <RangePicker className='w-full h-[50px] font-semibold' placeholder={[`Nhận phòng`, `Trả phòng`]} disabledDate={disabledDate} format="DD/MM/YYYY" onChange={handleOnChange} />
+                    <RangePicker className='w-full h-[50px] font-semibold' placeholder={[`Nhận phòng`, `Trả phòng`]} disabledDate={disabledDate} format="DD/MM/YYYY" onChange={handleOnChange} value={selectedDates}/>
                 </div>
                 <div className='p-3 border-2 border-gray-600 rounded-lg'>
                     <div className="mb-3 font-bold">Khách</div>
