@@ -6,6 +6,7 @@ import { PATH } from '../../../routes/path';
 import { useDispatch } from 'react-redux';
 import { removeUser } from "../../../redux/slices/user.slice";
 import 'animate.css'
+import { removeRole } from '../../../redux/slices/role.slice';
 
 const Navbar = ({ notChange }) => {
 
@@ -18,7 +19,9 @@ const Navbar = ({ notChange }) => {
 
     const handleLogOut = () => {
         dispatch(removeUser(null));
+        dispatch(removeRole(null));
         removeLocalStorage("user");
+        removeLocalStorage("role");
         removeLocalStorage("token");
         navigate(PATH.HOME);
         window.location.reload();
@@ -110,49 +113,55 @@ const Navbar = ({ notChange }) => {
                             <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Liên hệ</a>
                         </li>
                         <li className='sm:block md:hidden'>
-                            {!currentUser ? (<ul className=" list-none flex justify-end items-center w-full border-t-2 mt-3 pt-3">
-                                <li className='w-1/5 xs:w-1/2'>
-                                    <Link
-                                        to="/auth/login"
-                                        className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
-                                        aria-current="page"
-                                    >
-                                        Đăng nhập
-                                    </Link>
-                                </li>
-                                <span className="text-lg text-gray-400">|</span>
-                                <li className='w-1/5 xs:w-1/2'>
-                                    <Link
-                                        to="/auth/register"
-                                        className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
-                                        aria-current="page"
-                                    >
-                                        Đăng ký
-                                    </Link>
-                                </li>
-                            </ul>) : (<ul className="list-none flex items-center justify-between border-t-2 w-full mt-3">
-                                <li className='w-1/2'>
-                                    <Link
-                                        to='/profile'
-                                        className="no-underline flex justify-start items-center w-fit gap-3 py-2 px-3 text-white text-xl rounded"
-                                        aria-current="page"
-                                    >
-                                        <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className='w-[50px] h-[50px] rounded-full object-cover' />
-                                        <span className={` text-sm hover:text-gray-400`}>{currentUser?.name}</span>
-                                    </Link>
-                                </li>
-                                <li className='w-1/5 xs:w-1/3 xs-plus:w-1/3'>
-                                    <Button
-                                        onClick={handleLogOut}
-                                        className="button-gradient block text-center w-full sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
-                                        size="small"
-                                        type="default"
-                                        danger
-                                    >
-                                        Đăng xuất
-                                    </Button>
-                                </li>
-                            </ul>)}
+                            {!currentUser ?
+                                (
+                                    <ul className=" list-none flex justify-end items-center w-full border-t-2 mt-3 pt-3">
+                                        <li className='w-1/5 xs:w-1/2'>
+                                            <Link
+                                                to="/auth/login"
+                                                className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
+                                                aria-current="page"
+                                            >
+                                                Đăng nhập
+                                            </Link>
+                                        </li>
+                                        <span className="text-lg text-gray-400">|</span>
+                                        <li className='w-1/5 xs:w-1/2'>
+                                            <Link
+                                                to="/auth/register"
+                                                className="button-gradient block text-center sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
+                                                aria-current="page"
+                                            >
+                                                Đăng ký
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                ) : (
+                                    <ul className="list-none flex items-center justify-between border-t-2 w-full mt-3">
+                                        <li className='w-1/2'>
+                                            <Link
+                                                to='/profile'
+                                                className="no-underline flex justify-start items-center w-fit gap-3 py-2 px-3 text-white text-xl rounded"
+                                                aria-current="page"
+                                            >
+                                                <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className='w-[50px] h-[50px] rounded-full object-cover' />
+                                                <span className={` text-md hover:text-black duration-300`}>{currentUser?.name}</span>
+                                            </Link>
+                                        </li>
+                                        <li className='w-1/2 xs:w-1/2 xs-plus:w-1/2'>
+                                            <Button
+                                                onClick={handleLogOut}
+                                                className="button-gradient block text-center w-full sm:p-1 sm:flex sm:justify-center py-2 px-3 rounded-md p-1 text-white no-underline cursor-pointer"
+                                                size="small"
+                                                type="default"
+                                                danger
+                                            >
+                                                Đăng xuất
+                                            </Button>
+                                        </li>
+                                    </ul>
+                                )
+                            }
                         </li>
                     </ul>
 
@@ -187,7 +196,7 @@ const Navbar = ({ notChange }) => {
                                 aria-current="page"
                             >
                                 <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className=' w-[40px] h-[40px] rounded-full object-cover' />
-                                <span className={` ${!scroll ? 'navbar' : 'navbar-scroll'} text-sm hover:text-red-600`}>{currentUser?.name}</span>
+                                <span className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll'} text-sm hover:text-red-600`}>{currentUser?.name}</span>
                             </Link>
                         </li>
                         <li className='w-1/2'>

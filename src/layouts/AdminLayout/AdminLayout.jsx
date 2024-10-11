@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { removeLocalStorage } from "../../utils";
 import { useDispatch } from "react-redux";
 import { removeUser } from "../../redux/slices/user.slice";
+import { removeRole } from "../../redux/slices/role.slice";
 
 const { Header, Sider, Content } = Layout;
 
@@ -31,7 +32,9 @@ const AdminLayout = ({ children }) => {
 
   const handleLogOut = () => {
     dispatch(removeUser(null));
+    dispatch(removeRole(null));
     removeLocalStorage("user");
+    removeLocalStorage("role");
     removeLocalStorage("token");
     navigate(PATH.HOME);
     window.location.reload();
