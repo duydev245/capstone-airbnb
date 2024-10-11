@@ -12,21 +12,24 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    // User
     setUser: (state, action) => {
       state.currentUser = action.payload;
     },
     removeUser: (state) => {
       state.currentUser = null;
     },
-    // Search 
+    // Search Params
     setSearchParams: (state, action) => {
       state.searchParams = action.payload;
     },
-    clearSearchParams: (state) => {
-      state.searchParams = null;
+    clearGuestSearchParams: (state) => {
+      if (state.searchParams) {
+        state.searchParams.guest = '';
+      }
     },
   },
 });
 
-export const { setUser, removeUser, setSearchParams, clearSearchParams } = userSlice.actions;
+export const { setUser, removeUser, setSearchParams, clearGuestSearchParams } = userSlice.actions;
 export default userSlice;

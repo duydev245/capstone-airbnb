@@ -14,6 +14,7 @@ const Navbar = ({ notChange }) => {
     const dispatch = useDispatch();
 
     const [scroll, setScroll] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const currentUser = getLocalStorage("user");
 
@@ -24,12 +25,10 @@ const Navbar = ({ notChange }) => {
         removeLocalStorage("role");
         removeLocalStorage("token");
         navigate(PATH.HOME);
-        window.location.reload();
+
     };
+
     const isNotChange = notChange;
-
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
 
     const handleDropdownToggle = () => {
         setDropdownOpen(!dropdownOpen);
@@ -49,6 +48,7 @@ const Navbar = ({ notChange }) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
+
     }, []);
 
 

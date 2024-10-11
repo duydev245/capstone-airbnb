@@ -8,7 +8,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import Maps from './Maps'
 import RoomFilter from './RoomFilter'
-import { clearSearchParams } from '../../../redux/slices/user.slice'
+import { clearGuestSearchParams } from '../../../redux/slices/user.slice'
 import { Element } from 'react-scroll'
 
 const RoomsList = () => {
@@ -101,7 +101,7 @@ const RoomsList = () => {
                 phongTam: 0,
             });
 
-            dispatch(clearSearchParams());
+            dispatch(clearGuestSearchParams());
 
         }
     }, [listLocation, roomsById, searchParams, showAll])
@@ -122,16 +122,13 @@ const RoomsList = () => {
                 </Typography>
 
             ))}
-            <div className='flex gap-1'>
+            <div className='flex gap-1 mb-3'>
                 <Typography className='text-md font-md'>Có {filterRooms.length} phòng có thể đặt
                 </Typography>
                 {searchParams && (<Typography className='text-md font-md'>{searchParams.date[0]} - {searchParams.date[1]}</Typography>)}
             </div>
-            <Row gutter={24} style={{ margin: 'auto' }} className='mb-[50px] mt-5'>
+            <Row gutter={24} style={{ margin: 'auto' }}>
                 <Col xs={{ span: 24 }} md={{ span: 6 }} xl={{ span: 3 }} className=' border border-gray-200 rounded-lg p-2 mt-3 lg:sticky lg:top-20 h-fit'>
-                    <Typography className='text-lg font-semibold'>
-                        Tùy chọn chỗ nghỉ :
-                    </Typography>
                     <RoomFilter filters={filters} setFilters={setFilters} showSkeleton={showSkeleton} />
                     <div className=' lg:block xl:hidden text-center mt-4'>
                         <button onClick={() => setIsModalOpen(true)} className='button-gradient text-white font-mono rounded-md px-3 py-2'>
@@ -246,7 +243,7 @@ const RoomsList = () => {
                         </Card>)
                     }
                 </Col>
-                <Col span={8} xl={{ span: 8 }} className='flex xs:hidden lg:hidden xl:block 2xl:block justify-center lg:sticky lg:top-20 h-fit mt-3'>
+                <Col style={{ padding: '0' }} span={8} xl={{ span: 8 }} className='flex xs:hidden lg:hidden xl:block 2xl:block justify-center lg:sticky lg:top-20 h-fit mt-3'>
                     <Maps id={id} listLocation={listLocation} />
                 </Col>
             </Row>
