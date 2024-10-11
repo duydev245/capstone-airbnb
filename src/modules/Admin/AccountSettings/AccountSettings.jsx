@@ -175,7 +175,6 @@ const AccountSettings = () => {
             <Controller
               name="email"
               control={control}
-
               render={({ field }) => {
                 return (
                   <Input
@@ -185,6 +184,7 @@ const AccountSettings = () => {
                     className="mt-1"
                     placeholder="Vui lòng nhập email..."
                     status={errors.email ? "error" : ""}
+                    readOnly
                   />
                 );
               }}
