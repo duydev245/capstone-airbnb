@@ -5,7 +5,7 @@ import { Rate } from 'antd';
 
 const CommentList = ({ listComment }) => {
     return (
-        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 false overscroll-y-auto overflow-y-auto px-2'>
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 false overscroll-y-auto overflow-y-auto px-2 max-h-[350px] mb-5'>
             {listComment?.map((cmt) => (
                 <div key={cmt?.id} className="space-y-3">
                     <div className='flex items-center gap-3'>

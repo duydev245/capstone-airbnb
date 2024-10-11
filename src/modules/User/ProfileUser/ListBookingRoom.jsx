@@ -30,7 +30,7 @@ const ListBookingRoom = ({ dataBookingRoom, isLoadingBooking }) => {
                                 <Col span={24} className='mb-2'>
                                     <p className='text-base'>
                                         <span className="font-semibold">Ngày trả phòng: </span>
-                                        <span>{dayjs(room.ngaydi).format('DD/MM/YYYY')}</span>
+                                        <span>{dayjs(room.ngayDi).format('DD/MM/YYYY')}</span>
                                     </p>
                                 </Col>
                                 <Col span={24} className='mb-2'>
