@@ -159,7 +159,7 @@ const SearchBar = () => {
                             </div>
                         )}
                     />
-                    <button onClick={() => { handleSearchRoom(locationSelected) }} className='button-gradient text-white p-1 h-full w-[100px] rounded-md font-medium    '>
+                    <button onClick={() => { handleSearchRoom(locationSelected) }} className='button-gradient text-white p-1 h-full w-[100px] rounded-md font-medium'>
                         <SearchOutlined style={{ marginRight: 3 }} /> Tìm
                     </button>
 

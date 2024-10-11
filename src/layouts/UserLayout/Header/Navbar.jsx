@@ -65,7 +65,7 @@ const Navbar = ({ notChange }) => {
                             className="cursor-pointer h-9 "
                             alt="Airbnb Logo"
                         />
-                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-orange-800 duration-300 cursor-pointer'>airbnb</span>
+                        <span className='text-2xl w-3/4 font-semibold text-orange-600 hover:text-orange-800 duration-300 cursor-pointer'>Airbnb</span>
                     </div>
                 </Link>
                 <div className='h-full flex items-center md:hidden '>
@@ -98,16 +98,16 @@ const Navbar = ({ notChange }) => {
                 <div className={`${dropdownOpen ? 'block' : 'hidden'} block w-full md:block md:w-auto`} id="navbar-dropdown">
                     <ul className="list-none flex flex-col font-medium p-4 md:p-0 mt-4 border rounded-lg xs:bg-gray-400 md:bg-transparent md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
                         <li>
-                            <a href="/" className="block py-2 px-3 md:p-0 xs:text-white xs-plus:text-white sm:text-white rounded md:bg-transparent xs:bg-orange-500 xs-plus:bg-orange-500 sm:bg-orange-500 md:text-orange-600 font-sans text-lg" aria-current="page">Home</a>
+                            <a href="/" className="block py-2 px-3 md:p-0 xs:text-white xs-plus:text-white sm:text-white rounded md:bg-transparent xs:bg-orange-500 xs-plus:bg-orange-500 sm:bg-orange-500 md:text-orange-600 font-sans text-lg" aria-current="page">Trang Chủ</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>About</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Giới thiệu</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Services</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll lg:text-black'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Dịch vụ</a>
                         </li>
                         <li>
-                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Contact</a>
+                            <a href="#" className={`${!scroll ? `navbar ${isNotChange ? `lg:text-white` : ``}` : 'navbar-scroll'} block py-2 px-3 md:p-0 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:text-orange-600 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700 font-sans text-lg`}>Liên hệ</a>
                         </li>
                         <li className='sm:block md:hidden'>
                             {!currentUser ? (<ul className=" list-none flex justify-end items-center w-full border-t-2 mt-3 pt-3">
@@ -179,11 +179,11 @@ const Navbar = ({ notChange }) => {
                                 Đăng ký
                             </Link>
                         </li>
-                    </ul>) : (<ul className="list-none flex items-center justify-between w-full h-full">
+                    </ul>) : (<ul className="list-none flex items-center justify-between w-full">
                         <li className='w-1/2'>
                             <Link
                                 to='/profile'
-                                className="no-underline flex justify-center items-center gap-1 py-2 px-3 text-gray-700 text-xl bg-blue-700 rounded md:bg-transparent md:p-1 dark:bg-blue-600 md:dark:bg-transparent hover:text-red-600"
+                                className="no-underline flex justify-center items-center gap-1 py-2 px-3 text-gray-700 text-xl rounded md:p-1 md:dark:bg-transparent hover:text-red-600"
                                 aria-current="page"
                             >
                                 <img src={currentUser.avatar ? currentUser.avatar : 'https://cdn-icons-png.flaticon.com/512/6596/6596121.png'} alt="" className=' w-[40px] h-[40px] rounded-full object-cover' />
@@ -193,7 +193,7 @@ const Navbar = ({ notChange }) => {
                         <li className='w-1/2'>
                             <Button
                                 onClick={handleLogOut}
-                                className="button-gradient block w-full text-center py-2 px-3 text-black bg-blue-700 rounded-md md:bg-transparent md:text-blue-700 md:p-1 md:dark:text-white no-underline cursor-pointer"
+                                className="button-gradient block w-full text-center py-2 px-3 rounded-md md:p-1 md:dark:text-white no-underline cursor-pointer"
                                 size="small"
                                 type="default"
                                 danger

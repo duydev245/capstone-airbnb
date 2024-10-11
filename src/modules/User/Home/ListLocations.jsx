@@ -13,7 +13,7 @@ const ListLocations = () => {
             <div className='container mx-auto xs:mt-5 xs-plus:mt-5'>
                 <Typography className=' text-2xl font-bold'>Khám phá Việt Nam</Typography>
                 <Typography className=' text-md font-md'>Các điểm đến du lịch phổ biến</Typography>
-                <div className='grid xs:grid-cols-2 xs-plus:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mt-5'>
+                <div className='grid xs:grid-cols-2 xs-plus:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 mt-5'>
                     {listLocation?.map((location) => (
                         <div key={location.id} className='hover-card cursor-pointer p-3'>
                             <Link to={`/rooms/${location.id}`}>

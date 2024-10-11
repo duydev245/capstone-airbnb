@@ -1,8 +1,9 @@
 
 
 import React, { useEffect } from 'react';
+import { Link as ScrollLink } from "react-scroll";
 
-const RoomFilter = ({ filters, setFilters }) => {
+const RoomFilter = ({ filters, setFilters, showSkeleton }) => {
     console.log('filters: ', filters);
 
     const filterItem = [
@@ -13,6 +14,7 @@ const RoomFilter = ({ filters, setFilters }) => {
     ]
 
     const increaseCount = (type) => {
+        showSkeleton()
         setFilters(prevFilters => ({
             ...prevFilters,
             [type]: (prevFilters[type] || 0) + 1,
@@ -20,10 +22,14 @@ const RoomFilter = ({ filters, setFilters }) => {
     };
 
     const decreaseCount = (type) => {
-        setFilters(prevFilters => ({
-            ...prevFilters,
-            [type]: Math.max((prevFilters[type] || 0) - 1, 0),
-        }));
+        const currentCount = filters[type] || 0;
+        if (currentCount > 0) {
+            showSkeleton();
+            setFilters(prevFilters => ({
+                ...prevFilters,
+                [type]: currentCount - 1,
+            }));
+        }
     };
 
     useEffect(() => {
@@ -33,20 +39,24 @@ const RoomFilter = ({ filters, setFilters }) => {
     return (
         <>
             {filterItem.map((item) => (
-                <div key={item.type} className='flex justify-between items-center mt-5 border-b'>
-                    <button
+                <div key={item.type} className='flex justify-between items-center h-10 my-5 border-b'>
+                    <ScrollLink
+                        to='list'
+                        smooth={true}
                         className="font-bold w-6 h-6 text-white button-gradient rounded-md flex justify-center"
                         onClick={() => decreaseCount(item.type)}
                     >
-                        <div>–</div>
-                    </button>
+                        -
+                    </ScrollLink>
                     <div className='text-sm text-center'>{filters[item.type]} {item.label}</div>
-                    <button
+                    <ScrollLink
+                        to='list'
+                        smooth={true}
                         className="font-bold w-6 h-6 text-white button-gradient rounded-md flex justify-center"
                         onClick={() => increaseCount(item.type)}
                     >
-                        <div>+</div>
-                    </button>
+                        +
+                    </ScrollLink>
                 </div>
             ))}
         </>
