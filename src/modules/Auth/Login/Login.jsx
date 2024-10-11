@@ -10,6 +10,7 @@ import { PATH } from "../../../routes/path";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
+import { setRole } from "../../../redux/slices/role.slice";
 
 const Login = () => {
   const schema = yup.object({
@@ -43,6 +44,8 @@ const Login = () => {
     mutationFn: (payload) => userApi.login(payload),
     onSuccess: (data) => {
       setLocalStorage("user", data?.user);
+      setLocalStorage("role", data?.user.role);
+      dispatch(setRole(data?.user.role));
       setLocalStorage("token", data?.token);
       dispatch(setUser(data?.user));
     },

@@ -18,13 +18,13 @@ import { ProfileUser } from "../modules/User/ProfileUser";
 
 
 const RejectedRouter = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentRole } = useSelector((state) => state.role);
 
-  if (currentUser === null) {
+  if (currentRole === null) {
     return <Outlet />;
   }
 
-  return currentUser.role === "ADMIN" ? (
+  return currentRole === "ADMIN" ? (
     <Navigate to={PATH.ADMIN} />
   ) : (
     <Navigate to={PATH.HOME} />
@@ -32,13 +32,13 @@ const RejectedRouter = () => {
 };
 
 const ProtectedRouter = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentRole } = useSelector((state) => state.role);
 
-  if (currentUser === null) {
+  if (currentRole === null) {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  return currentUser.role === "ADMIN" ? (
+  return currentRole === "ADMIN" ? (
     <Outlet />
   ) : (
     <Navigate to={PATH.HOME} />
@@ -46,21 +46,20 @@ const ProtectedRouter = () => {
 };
 
 const ProtectedUserRouter = () => {
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentRole } = useSelector((state) => state.role);
 
-  if (!currentUser) {
+  if (!currentRole) {
     return <Navigate to={PATH.LOGIN} />;
   }
 
-  if (currentUser.role === 'ADMIN') {
+  if (currentRole === 'ADMIN') {
     return <Navigate to={PATH.ADMIN} />;
   }
 
-  if (currentUser.role === 'USER') {
+  if (currentRole === 'USER') {
     return <ProfileUser />;
   }
 
-  // Fallback redirect if role is not 'ADMIN' or 'USER'
   return <Navigate to={PATH.HOME} />;
 };
 
