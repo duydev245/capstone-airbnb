@@ -53,7 +53,7 @@ const Navbar = ({ notChange }) => {
 
     return (
         <nav
-            style={{ backgroundColor: `${!scroll ? 'transparent' : 'white'} `, transition: "1s" }}
+            style={{ backgroundColor: `${isNotChange ? `${!scroll ? 'transparent' : 'white'}` : `white`} `, transition: "1s" }}
             className="border-gray-200 dark:border-gray-700 z-10 w-full fixed shadow-xl"
         >
             <div className=" container flex flex-wrap items-center justify-between mx-auto h-16 sm:w-full md:w-full ">

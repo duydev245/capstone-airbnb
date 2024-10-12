@@ -186,7 +186,7 @@ const RoomManagement = () => {
           <img
             src={record.hinhAnh}
             alt={record.tenViTri}
-            className="w-full h-[140px] rounded-sm object-cover"
+            className="w-full rounded-sm object-cover"
           />
         )
       },
