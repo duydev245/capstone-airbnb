@@ -155,16 +155,17 @@ const RoomsList = () => {
                             {loading ? <Row gutter={24} className='md:h-[200px]'>
                                 <Col xs={{ span: 24 }} sm={{ span: 9 }} className='flex justify-center items-center'>
                                     <Skeleton.Image active style={{
-                                        width: 160, height: 180,
+                                        width: 200, height: 200,
                                     }} />
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 15 }} className='flex flex-col justify-center'>
                                     <Skeleton active />
                                 </Col>
                             </Row> : <Row gutter={24} className='md:h-[200px]'>
-                                <Col xs={{ span: 24 }} sm={{ span: 9 }} className='flex justify-center'>
-                                    <img className='img-position md:h-full xs:h-[260px] md:w-[290px] xl:w-[290px] rounded-lg' alt="example" src={room.id === 232926 ? "https://shac.vn/wp-content/uploads/2019/05/y-tuong-trang-tri-noi-that-phong-ngu-hien-dai-doc-dao-theo-ca-tinh-cua-chu-nhan-can-phong.jpg" : room.hinhAnh}
-                                    />
+                                <Col xs={{ span: 24 }} sm={{ span: 9 }} className='flex justify-center items-center'>
+                                    {room.hinhAnh ? (<img className='img-position md:h-full xs:h-[260px] md:w-[290px] xl:w-[290px] rounded-lg' alt="example" src={room.id === 232926 ? "https://shac.vn/wp-content/uploads/2019/05/y-tuong-trang-tri-noi-that-phong-ngu-hien-dai-doc-dao-theo-ca-tinh-cua-chu-nhan-can-phong.jpg" : room.hinhAnh} />) : (<Skeleton.Image active style={{
+                                        width: 200, height: 200,
+                                    }} />)}
                                 </Col>
                                 <Col xs={{ span: 24 }} sm={{ span: 15 }} className='flex flex-col justify-between'>
                                     <Typography className='title-changes-color text-lg font-semibold'>{room.tenPhong}</Typography>
