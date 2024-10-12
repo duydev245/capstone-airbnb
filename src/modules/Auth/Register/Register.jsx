@@ -70,7 +70,7 @@ const Register = () => {
         type: "success",
         duration: 3,
       });
-      navigate(PATH.LOGIN);
+      setTimeout(() => navigate(PATH.LOGIN), (1500))
     },
     onError: (error) => {
       messageApi.open({
@@ -221,7 +221,7 @@ const Register = () => {
           </Col>
           {/* Số điện thoại */}
           <Col span={24}>
-            <label className="text-base text-black">*Số điện thoại:</label>      
+            <label className="text-base text-black">*Số điện thoại:</label>
             <Controller
               name="phone"
               control={control}

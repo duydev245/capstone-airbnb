@@ -148,26 +148,31 @@
   padding: 10px 0px;
   border: none;
   border-radius: 6px;
-  background-color: var(--primaryColor);
+  /* background-color: var(--primaryColor); */
   color: black;
   font-size: large;
   font-weight: bold;
-  transition: all .5s;
+  background-size: 300%;
+  transition: 0.5s ease;
+  background-image: linear-gradient(135deg, #ea580c 10%, #F7CE68 55%, #be3434 100%);
 }
 
 .btn-theme:hover {
   color: #f8f9fa;
-  background-color: rgb(234, 88, 12, 0.50);
+  background-position: right;
 }
 
 .btn-rate {
-  color: white;
+  /* color: white;
   background-color: var(--primaryColor);
-  transition: all .5s;
+  transition: all .5s; */
+  background-size: 300%;
+  transition: 0.5s ease;
+  background-image: linear-gradient(135deg, #ea580c 10%, #F7CE68 55%, #be3434 100%);
 }
 
 .btn-rate:hover {
-  background-color: rgb(234, 88, 12, 0.50);
+  background-position: right;
 }
 
 /* profile */
