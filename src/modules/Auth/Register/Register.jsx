@@ -64,13 +64,13 @@ const Register = () => {
 
   const { mutate: handleRegister } = useMutation({
     mutationFn: (payload) => userApi.register(payload),
-    onSuccess: () => {
+    onSuccess: (data) => {
       messageApi.open({
         content: "Đăng ký thành công",
         type: "success",
         duration: 3,
       });
-      setTimeout(() => navigate(PATH.LOGIN), (1500))
+      setTimeout(() => navigate(PATH.LOGIN, { state: { userData: data } }), (1500))
     },
     onError: (error) => {
       messageApi.open({

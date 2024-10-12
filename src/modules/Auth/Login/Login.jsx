@@ -5,14 +5,21 @@ import { Controller, useForm } from "react-hook-form";
 import { userApi } from "../../../apis/user.api";
 import { setUser } from "../../../redux/slices/user.slice";
 import { setLocalStorage } from "../../../utils";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "../../../routes/path";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch } from "react-redux";
 import { setRole } from "../../../redux/slices/role.slice";
+import { useEffect } from "react";
 
 const Login = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const schema = yup.object({
     email: yup
       .string()
@@ -26,6 +33,7 @@ const Login = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm({
     defaultValues: {
       email: "",
@@ -35,10 +43,14 @@ const Login = () => {
     criteriaMode: "all",
   });
 
-  const [messageApi, contextHolder] = message.useMessage();
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.state?.userData) {
+      const { userData } = location.state;
+      // console.log("🚀 ~ useEffect ~ userData:", userData)
+      setValue("email", userData.email);
+      setValue("password", userData.password);
+    }
+  }, [location, setValue])
 
   const { mutate: handleLogin } = useMutation({
     mutationFn: (payload) => userApi.login(payload),
