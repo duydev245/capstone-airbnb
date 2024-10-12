@@ -13,12 +13,13 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
 
     const schema = yup.object({
         maViTri: yup.number()
-            .min(1, "*Tên phòng phải có ít nhất 1 số !")
-            .required("*Mã vị trí không được bỏ trống !"),
-        // .notOneOf(["0"], "*Tên vị trí không được là '0' !"),
-        // hinhAnh: yup.string()
-        //     .trim()
-        //     .required("*Tên vị trí không được bỏ trống !"),
+            .min(1, "*Mã vị tríphải có ít nhất 1 số !")
+            .required("*Mã vị trí không được bỏ trống !")
+            .typeError("*Mã vị trí không được bỏ trống !"),
+        hinhAnh: yup
+            .mixed()
+            .nullable()
+            .required("*Hình ảnh không được bỏ trống !"),
         tenPhong: yup.string()
             .trim()
             .required("*Tên phòng không được bỏ trống !")
@@ -75,11 +76,9 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
         queryFn: () => roomApi.getInfoRoom(idEdit),
         enabled: !!idEdit,
     });
-    console.log('data: ', data);
 
     const [imageUpload, setImageUpload] = useState(undefined);
     const watchHinhAnh = watch('hinhAnh')
-    console.log('watchHinhAnh: ', watchHinhAnh);
 
     const getErrorMessage = (error) => {
         if (!error) return undefined;
@@ -194,24 +193,6 @@ const EditRoomModal = ({ idEdit, setIdEdit, isOpen, isPending, onCloseModal, onS
                                             }}
                                             type="button"
                                         >
-                                            {/* {watchHinhAnh || data
-                                                ? (
-                                                    <div>
-                                                        <img className='w-10 h-10 object-cover' src={data?.hinhAnh || URL.createObjectURL(new Blob([watchHinhAnh]))} />
-                                                        <div onClick={(event) => { event.stopPropagation(); setValue('hinhAnh', undefined) }} className='absolute top-2 right-2 cursor-pointer hover:text-red-500'>
-                                                            <DeleteOutlined />
-                                                        </div>
-                                                    </div>)
-                                                : (
-                                                    <PlusOutlined />
-                                                )}
-                                            <div
-                                                style={{
-                                                    marginTop: 8,
-                                                }}
-                                            >
-                                                Upload
-                                            </div> */}
                                             {watchHinhAnh || imageUpload ? (
                                                 <div className="relative w-full h-full">
                                                     <img

@@ -22,10 +22,9 @@ const SearchBar = () => {
     const [guestCount, setGuestCount] = useState(0);
 
     const dispatch = useDispatch()
-
     const navigate = useNavigate()
 
-    const { data: listLocation, isLoading, error } = useQuery({
+    const { data: listLocation, error } = useQuery({
         queryKey: ['list-location'],
         queryFn: () => locationApi.getLocation(),
     });
@@ -46,7 +45,7 @@ const SearchBar = () => {
         }
     }
 
-    //Date Select
+    // Date Select
     dayjs.extend(customParseFormat);
     const { RangePicker } = DatePicker;
 
@@ -54,20 +53,27 @@ const SearchBar = () => {
         return current && current < dayjs().endOf('day');
     };
 
-    // guestCount quantity
+    // GuestCount
     const handleDropdownVisibleChange = (open) => {
         if (open && guestCount === 0) {
             setGuestCount(1);
         }
     };
+
+    const increaseGuestCount = () => {
+        setGuestCount(guestCount + 1);
+    };
+
     const decreaseGuestCount = () => {
         if (guestCount > 1) {
             setGuestCount(guestCount - 1);
         }
 
     };
-    const increaseGuestCount = () => {
-        setGuestCount(guestCount + 1);
+
+    const searchParams = {
+        date: datesSelected,
+        guest: guestCount,
     };
 
     const handleSearchRoom = (room) => {
@@ -84,20 +90,14 @@ const SearchBar = () => {
                 },
             });
         }
-    }
-
-    const searchParams = {
-        date: datesSelected,
-        guest: guestCount,
-    }
+    };
 
     useEffect(() => {
 
         dispatch(setLocation(listLocation))
 
-    }, [listLocation, searchParams, guestCount])
+    }, [listLocation, searchParams, guestCount]);
 
-    if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Something went wrong</div>;
     if (!listLocation) return ''
 

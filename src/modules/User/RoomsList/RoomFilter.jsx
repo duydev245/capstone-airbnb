@@ -5,7 +5,6 @@ import React, { useEffect } from 'react';
 import { Link as ScrollLink } from "react-scroll";
 
 const RoomFilter = ({ filters, setFilters, showSkeleton }) => {
-    console.log('filters: ', filters);
 
     const filterItem = [
         { label: 'Khách', type: 'khach' },

@@ -25,7 +25,6 @@ const RoomsList = () => {
     const listLocation = useSelector((state) => state.dataLocation.listLocation)
 
     const searchParams = useSelector((state) => state.user.searchParams);
-    console.log('searchParams: ', searchParams);
 
     const [showAll, setShowAll] = useState(false);
 
@@ -33,7 +32,6 @@ const RoomsList = () => {
         queryKey: ['list-roomsbyid'],
         queryFn: () => roomApi.getRoomsById(id),
     });
-    console.log(roomsById)
 
     const [filters, setFilters] = useState(
         {
@@ -123,7 +121,7 @@ const RoomsList = () => {
 
             ))}
             <div className='flex gap-1 mb-3'>
-                <Typography className='text-md font-md'>Có {filterRooms.length} phòng có thể đặt
+                <Typography className='text-md font-md'>Có <span className='text-green-500'>{filterRooms.length}</span> phòng có thể đặt
                 </Typography>
                 {searchParams && (<Typography className='text-md font-md'>{searchParams.date[0]} - {searchParams.date[1]}</Typography>)}
             </div>
@@ -237,7 +235,7 @@ const RoomsList = () => {
                             className=" flex justify-center text-center h-full "
                         >
                             <Typography className=' text-xl text-red-500'>Danh sách trống!</Typography>
-                            <Typography className=' text-sm text-gray-400'>không có phòng phù hợp {filters.khach > 0 ? `> ${filters.khach} khách` : ''} {filters.giuong > 0 ? `> ${filters.giuong} giường` : ''} {filters.phongNgu > 0 ? `> ${filters.phongNgu} phòng ngủ` : ''} {filters.phongTam > 0 ? `> ${filters.phongTam} phòng tắm` : ''}
+                            <Typography className=' text-sm text-gray-400'>không có phòng phù hợp {filters.khach > 0 ? `>> ${filters.khach} khách` : ''} {filters.giuong > 0 ? `>> ${filters.giuong} giường` : ''} {filters.phongNgu > 0 ? `>> ${filters.phongNgu} phòng ngủ` : ''} {filters.phongTam > 0 ? `>> ${filters.phongTam} phòng tắm` : ''}
                             </Typography>
                             <button onClick={handleShowAll} className="button-gradient text-center py-2 px-3 mt-5 font-semibold rounded-md md:dark:text-white no-underline cursor-pointer">Xem tất cả phòng</button>
                         </Card>)

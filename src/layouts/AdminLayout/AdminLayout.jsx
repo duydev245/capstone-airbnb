@@ -111,11 +111,10 @@ const AdminLayout = ({ children }) => {
                     height: 64,
                   }}
                 />
-
                 <Button
                   onClick={handleLogOut}
                   className="mx-5 font-medium"
-                  size="large"
+                  size="middle"
                   type="default"
                   danger
                 >

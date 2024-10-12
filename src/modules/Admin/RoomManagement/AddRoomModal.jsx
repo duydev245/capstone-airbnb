@@ -11,12 +11,13 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
 
     const schema = yup.object({
         maViTri: yup.number()
-            .min(1, "*Tên phòng phải có ít nhất 1 số !")
-            .required("*Mã vị trí không được bỏ trống !"),
-        // .notOneOf(["0"], "*Tên vị trí không được là '0' !"),
-        // hinhAnh: yup.string()
-        //     .trim()
-        //     .required("*Tên vị trí không được bỏ trống !"),
+            .min(1, "*Mã vị trí phải có ít nhất 1 số !")
+            .required("*Mã vị trí không được bỏ trống !")
+            .typeError("*Mã vị trí không được bỏ trống !"),
+        hinhAnh: yup
+            .mixed()
+            .nullable()
+            .required("*Hình ảnh không được bỏ trống !"),
         tenPhong: yup.string()
             .trim()
             .required("*Tên phòng không được bỏ trống !")
@@ -40,7 +41,7 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
         giaTien: yup.number()
             .required("*Giá tiền không được bỏ trống !")
             .min(0, "*Giá tiền không được âm !")
-            .typeError("*Giá tiền phải là số !"),
+            .typeError("*Giá tiền không được bỏ trống !"),
     });
 
     const { handleSubmit, control, setValue, watch, reset, formState: { errors } } = useForm({
@@ -158,25 +159,6 @@ const AddRoomModal = ({ isOpen, onCloseModal, onSubmit, isPending }) => {
                                             }}
                                             type="button"
                                         >
-                                            {/* {watchHinhAnh
-                                                ? (
-                                                    <div>
-                                                        <img className='w-10 h-10 object-cover' src={URL.createObjectURL(new Blob([watchHinhAnh]))} />
-                                                        <div onClick={(event) => { event.stopPropagation(); setValue('hinhAnh', undefined) }} className='absolute top-2 right-2 cursor-pointer hover:text-red-500'>
-                                                            <DeleteOutlined />
-                                                        </div>
-                                                    </div>)
-                                                : (
-                                                    <PlusOutlined />
-                                                )}
-                                            <div
-                                                style={{
-                                                    marginTop: 8,
-                                                }}
-                                            >
-                                                Upload
-                                            </div> */}
-
                                             {watchHinhAnh || imageUpload ? (
                                                 <div className="relative w-full h-full">
                                                     <img

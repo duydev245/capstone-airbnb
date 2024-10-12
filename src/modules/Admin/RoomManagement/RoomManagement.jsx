@@ -18,12 +18,9 @@ const RoomManagement = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [idEdit, setIdEdit] = useState(0);
-  console.log('idEdit: ', idEdit);
   const [values, setFormValues] = useState();
-  console.log('values: ', values);
 
   const { isOpen: isOpenAddModal, openModal: openAddModal, closeModal: closeAddModal } = useOpenModal();
-  console.log('closeAddModal: ', closeAddModal);
   const { isOpen: isOpenEditModal, openModal: openEditModal, closeModal: closeEditModal } = useOpenModal();
 
   const queryClient = useQueryClient();
@@ -37,29 +34,29 @@ const RoomManagement = () => {
   const { mutate: handleAddRoomApi, isPending: isCreating } = useMutation({
     mutationFn: (payload) => roomApi.addRoom(payload),
     onSuccess: (payload) => {
-      console.log('data: ', payload);
+
       queryClient.refetchQueries({
         queryKey: ["list-rooms"],
         type: 'active'
       });
+
       messageApi.open({
         content: "Thêm phòng thành công",
         type: "success",
         duration: 3,
       });
+
       const idRoom = payload?.id;
+
       if (values.hinhAnh && idRoom) {
         const formData = new FormData();
         formData.append("formFile", values.hinhAnh);
         handleUploadImg({ idRoom, formData });
       }
-      closeAddModal();
-      queryClient.refetchQueries({
-        queryKey: ["list-location"],
-        type: "active",
-      });
+
       closeAddModal();
     },
+
     onError: (error) => {
       console.log('error: ', error);
       messageApi.open({
@@ -74,30 +71,6 @@ const RoomManagement = () => {
   //Edit Room
   const { mutate: handleUpdateRoomApi, isPending: isUpdating } = useMutation({
     mutationFn: (payload) => roomApi.updateRoom(payload),
-    // onSuccess: () => {
-    //   // console.log('data: ', payload);
-    //   queryClient.refetchQueries({
-    //     queryKey: ["list-rooms"],
-    //     type: 'active',
-    //   });
-    //   messageApi.open({
-    //     content: "Cập nhật phòng thành công",
-    //     type: "success",
-    //     duration: 3,
-    //   });
-    //   closeEditModal();
-    //   setIdEdit('')
-
-    // },
-    // onError: (error) => {
-    //   console.log('error: ', error);
-    //   messageApi.open({
-    //     content: "Cập nhật phòng thất bại",
-    //     type: "error",
-    //     duration: 3,
-    //   });
-    //   closeEditModal()
-    // }
     onSuccess: () => {
       messageApi.open({
         content: "Cập nhật vị trí thành công",
@@ -117,7 +90,7 @@ const RoomManagement = () => {
       });
     },
     onError: (error) => {
-      console.log("🚀 ~ LocationManagement ~ error:", error)
+      console.log(error)
       messageApi.open({
         content: error?.message,
         type: "error",
@@ -161,7 +134,6 @@ const RoomManagement = () => {
     },
     onError: (error) => {
       console.log('error: ', error);
-
     }
   })
 
@@ -294,7 +266,7 @@ const RoomManagement = () => {
         )
       },
     },
-    // giaTien
+    // Price
     {
       title: "Price",
       key: "giaTien",

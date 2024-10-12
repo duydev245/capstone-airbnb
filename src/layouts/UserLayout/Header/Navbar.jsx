@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-scroll';
@@ -25,11 +27,9 @@ const Navbar = ({ notChange }) => {
         removeLocalStorage("role");
         removeLocalStorage("token");
         navigate(PATH.HOME);
-
     };
 
     const isNotChange = notChange;
-
     const handleDropdownToggle = () => {
         setDropdownOpen(!dropdownOpen);
     };
@@ -48,7 +48,6 @@ const Navbar = ({ notChange }) => {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-
     }, []);
 
 

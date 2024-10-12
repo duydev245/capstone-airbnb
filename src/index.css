@@ -211,6 +211,11 @@
     height: 50vh !important;
   }
 
+  .container {
+    max-width: 1200px;
+    padding: 0;
+  }
+
   /* SearchBar */
   .navbar {
     /* color: white; */
