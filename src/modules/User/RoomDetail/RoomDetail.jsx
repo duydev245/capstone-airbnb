@@ -5,7 +5,7 @@ import Banner from '../../../layouts/UserLayout/Header/Banner'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Alert, Image, message } from 'antd';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { roomApi } from '../../../apis/room.api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -16,6 +16,7 @@ import { getLocalStorage } from '../../../utils';
 import CommentBox from './CommentBox';
 import BookingForm from './BookingForm';
 import { bookingApi } from '../../../apis/booking.api';
+import { PATH } from '../../../routes/path';
 
 const RoomDetail = () => {
     const { id } = useParams();
@@ -23,6 +24,7 @@ const RoomDetail = () => {
 
     const [messageApi, contextHolder] = message.useMessage();
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
 
     const { data: roomDetails, isLoading, error } = useQuery({
         queryKey: ['room-details'],
@@ -67,6 +69,7 @@ const RoomDetail = () => {
                 type: "success",
                 duration: 3,
             });
+            setTimeout(() => navigate(PATH.PROFILE), 1500);
         },
         onError: (error) => {
             console.log("🚀 ~ RoomDetail ~ error:", error)
@@ -85,7 +88,7 @@ const RoomDetail = () => {
 
     return (
         <>
-            <Navbar notChange={false}/>
+            <Navbar notChange={false} />
             <div className="pb-16 border-b-2"></div>
             {/* <Banner /> */}
             {contextHolder}

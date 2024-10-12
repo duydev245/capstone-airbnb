@@ -21,6 +21,12 @@ const BookingForm = ({ roomDetails, messageApi, listComment, currentUser, handle
         if (searchParams?.date) {
             const formattedDates = searchParams?.date.map((date) => dayjs(date, "DD/MM/YYYY"));
             setSelectedDates(formattedDates);
+            if (formattedDates && formattedDates.length === 2) {
+                const diff = formattedDates[1].diff(formattedDates[0], 'day');
+                setDateCount(diff);
+            } else {
+                setDateCount(0);
+            }
         } else {
             setSelectedDates([]);
         }
