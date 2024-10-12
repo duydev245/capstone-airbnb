@@ -199,7 +199,7 @@ const RoomManagement = () => {
       render: (record) => {
         return (
           <Typography className=''>
-            Mã vị trí: {record.maViTri}
+            {record.maViTri}
           </Typography>
         )
       }
@@ -268,6 +268,7 @@ const RoomManagement = () => {
     },
     // Price
     {
+      width: 150  ,
       title: "Price",
       key: "giaTien",
       render: (record) => {
