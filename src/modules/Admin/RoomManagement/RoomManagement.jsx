@@ -198,7 +198,7 @@ const RoomManagement = () => {
       key: "maViTri",
       render: (record) => {
         return (
-          <Typography className=''>
+          <Typography className='text-center'>
             {record.maViTri}
           </Typography>
         )
